@@ -70,19 +70,19 @@ function readPosts() {
   const postCollection = firebase.firestore().collection("posts")
 
   postCollection.get().then(snap => {
-    snap.forEach(doc => console.log(doc.data()))
+    snap.forEach(post => addPosts(post))
   })
 }
 
-// function addPosts (post) {
-//     const postTemplate = `
-//     <li id='${post.id}'>
+function addPosts (post) {
+  const postTemplate = `
+  <li id='${post.id}'>
+      ${post.data().text} ❤️${post.data().likes}
+  </li>
+  `
+  document.querySelector("#postados").innerHTML += postTemplate;
 
-//     </li>
-//     `
-//     document.querySelector("#postado").innerHTML += "lalal"
-
-// }
+}
 
 
 function register() {
