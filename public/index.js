@@ -11,6 +11,7 @@ function init() {
         firebase.auth().signOut();
       })
       post();
+      readPosts();
 
     } else if (!user) {
       container.innerHTML = '';
@@ -37,7 +38,7 @@ function init() {
 
 window.addEventListener('load', () => {
   init();
-  readPosts();
+  
 });
 
 function post() {
@@ -124,21 +125,20 @@ function register() {
 
   singInButton.addEventListener("click", () => {
     const userCollection = firebase.firestore().collection("users-info");
-
-    const user = {
-      name: nameRegisterInput.value,
-      email: emailRegisterInput.value,
-      birthday: dateRegisterInput.value,
-      password: passwordRegisterInput.value
-    }
-    firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
-      .then((cred) => cred.user.updateProfile({ displayName: user.name }))
+    
+    firebase.auth().createUserWithEmailAndPassword(emailRegisterInput.value, passwordRegisterInput.value)
+      .then((cred) => cred.user.updateProfile({ displayName: nameRegisterInput.value }))
       .then(() => {
 
-        user.uid = firebase.auth().currentUser.uid;
+        const uid = firebase.auth().currentUser.uid;
 
         console.log(uid);
-        userCollection.add(user);
+        userCollection.add({
+          name: nameRegisterInput.value,
+          email: emailRegisterInput.value,
+          birthday: dateRegisterInput.value,
+          password: passwordRegisterInput.value,
+          id_user: uid});
       })
   })
 }
