@@ -22,8 +22,11 @@ function init() {
       loginButton.addEventListener("click", () => {
         firebase
           .auth()
-          .signInWithEmailAndPassword(emailInput.value, passwordInput.value);
-      });
+          .signInWithEmailAndPassword(emailInput.value, passwordInput.value)
+          .catch((error) => {
+            alert(error.message);
+        });
+    })
       const registerButton = document.querySelector("#register");
       registerButton.addEventListener("click", () => {
         container.innerHTML = "";
@@ -86,8 +89,7 @@ function editPosts() {
   editar.forEach((element) => {
     element.addEventListener("click", (event) => {
       const textEdit = event.currentTarget.previousElementSibling;
-      const textContent =
-        event.currentTarget.previousElementSibling.textContent;
+      const textContent = event.currentTarget.previousElementSibling.textContent;
       console.log(textContent);
       textEdit.contentEditable = true;
 
@@ -95,8 +97,7 @@ function editPosts() {
         element.addEventListener("click", (event) => {
           const textEdit = event.currentTarget.previousElementSibling;
           textEdit.contentEditable = false;
-          const textContent =
-            event.currentTarget.previousElementSibling.textContent;
+          const textContent = event.currentTarget.previousElementSibling.textContent;
           const postID = event.currentTarget.parentElement.id;
           postCollection.doc(postID).update({ text: textContent });
           document.getElementById("postados").innerHTML = "";
@@ -145,14 +146,13 @@ function likePosts() {
 function addPosts(post) {
   const postTemplate = `
     <li id='${post.id}'>
-        <p id='text-${post.id}'>${
-    post.data().text
-  }</p> <span class="edit">Editar </span> <span class="delete"> Deletar </span>
-        <span class="like"> ❤️ </span><span class="like-value">${
-          post.data().likes
-        }</span> 
+      <p id='text-${post.id}'>${post.data().text}</p>
+      <span class="edit">Editar </span>
+      <span class="delete"> Deletar </span>
+      <span class="like"> ❤️ </span>
+      <span class="like-value">${post.data().likes}</span> 
     </li>
-    `;
+  `;
   document.querySelector("#postados").innerHTML += postTemplate;
 }
 
@@ -160,10 +160,14 @@ function register() {
   const emailRegisterInput = document.querySelector("#email-input-register");
   const nameRegisterInput = document.querySelector("#name-input-register");
   const dateRegisterInput = document.querySelector("#date-input-register");
-  const passwordRegisterInput = document.querySelector(
-    "#password-input-register"
-  );
+  const passwordRegisterInput = document.querySelector("#password-input-register");
   const singInButton = document.querySelector("#sign-in-button");
+  const backButton = document.querySelector("#back-button");
+
+  backButton.addEventListener("click", () => {
+    container.innerHTML = '';
+    container.appendChild(routes.home);
+  })
 
   singInButton.addEventListener("click", () => {
     const userCollection = firebase.firestore().collection("users-info");
@@ -190,26 +194,26 @@ function register() {
 }
 
 function googleLogin() {
-  var provider = new firebase.auth.GoogleAuthProvider();
+  let provider = new firebase.auth.GoogleAuthProvider();
 
   firebase
     .auth()
     .signInWithPopup(provider)
     .then(function (result) {
       // This gives you a Google Access Token. You can use it to access the Google API.
-      var token = result.credential.accessToken;
+      let token = result.credential.accessToken;
       // The signed-in user info.
-      var user = result.user;
+      let user = result.user;
       // ...
     })
     .catch(function (error) {
       // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
+      let errorCode = error.code;
+      let errorMessage = error.message;
       // The email of the user's account used.
-      var email = error.email;
+      let email = error.email;
       // The firebase.auth.AuthCredential type that was used.
-      var credential = error.credential;
+      let credential = error.credential;
       // ...
     });
 }
