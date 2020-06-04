@@ -3,7 +3,7 @@ export const register = () => {
 
   container.innerHTML = `
     <a href="/#">
-    <button >Voltar</button>
+    <button id="back-button">Voltar</button>
     </a>
         <label> Digite seu nome Completo </label>
         <input id="name-input-register" type="text">
