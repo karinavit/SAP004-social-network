@@ -22,8 +22,11 @@ function init() {
       loginButton.addEventListener("click", () => {
         firebase
           .auth()
-          .signInWithEmailAndPassword(emailInput.value, passwordInput.value);
-      });
+          .signInWithEmailAndPassword(emailInput.value, passwordInput.value)
+          .catch((error) => {
+            alert(error.message);
+        });
+    })
       const registerButton = document.querySelector("#register");
       registerButton.addEventListener("click", () => {
         container.innerHTML = "";
