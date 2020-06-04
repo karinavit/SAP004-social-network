@@ -1,7 +1,7 @@
 export const register = () => {
-    const container = document.createElement('div');
+  const container = document.createElement("div");
 
-    container.innerHTML = `
+  container.innerHTML = `
     <a href="/#">
     <button >Voltar</button>
     </a>
@@ -18,5 +18,5 @@ export const register = () => {
         </a>
 
     `;
-    return container;
+  return container;
 };
