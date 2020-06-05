@@ -1,0 +1,77 @@
+@font-face {
+  font-family: "futura book";
+  src: url('img/futura\ book\ font.ttf');
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+a.link-register {
+  text-decoration: none;
+  color: #FFCC00;
+  font-weight: bold;
+}
+
+.body {
+  background-image: url(img/istockphoto-1061591684-170667a.jpg);
+  width: 100%;
+  text-align: center;
+}
+
+main {
+  min-height: calc(100vh - 30px);
+}
+
+.img {
+  width: 63%;
+  margin: 20px 0px;
+}
+
+.img-g {
+  width: 15%;
+}
+
+.logo-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.display-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.style-input {
+  border-radius: 10px;
+  border: 2px solid #FFCC00;
+  width: 70%;
+  height: 30px;
+  margin: 5px 0px;
+}
+
+.button-login {
+  border-radius: 10px;
+  background-color: #FFCC00;
+  border: none;
+  height: 30px;
+  width: 100%;
+}
+
+.width-button-login {
+  width: 30%;
+  margin: 5px 0px;
+}
+
+.letter-color {
+  color: #FFCC00;
+  font-family: "futura book";
+  margin: 5px 0px;
+}
+
+footer {
+  height: 30px;
+}
