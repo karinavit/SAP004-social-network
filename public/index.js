@@ -73,6 +73,7 @@ function post() {
 
 function readPosts() {
   const postCollection = firebase.firestore().collection("posts");
+  document.getElementById("postados").innerHTML = "";
 
   postCollection
     .get()
@@ -95,7 +96,6 @@ function editPosts() {
     element.addEventListener("click", (event) => {
       const textEdit = event.currentTarget.parentElement.nextElementSibling;
       const textContent = event.currentTarget.parentElement.nextElementSibling.textContent;
-      console.log(textContent);
       textEdit.contentEditable = true;
 
       editar.forEach((element) => {
@@ -103,7 +103,7 @@ function editPosts() {
           const textEdit = event.currentTarget.parentElement.nextElementSibling;
           textEdit.contentEditable = false;
           const textContent = event.currentTarget.parentElement.nextElementSibling.textContent;
-          const postID = event.currentTarget.parentElement.id;
+          const postID = event.currentTarget.closest("li").id;
           postCollection.doc(postID).update({ text: textContent });
           document.getElementById("postados").innerHTML = "";
           readPosts();
@@ -140,10 +140,7 @@ function likePosts() {
     element.addEventListener("click", (event) => {
       const postID = event.currentTarget.closest("li").id;
       const likeNextElement = Number(event.currentTarget.nextElementSibling.textContent) + 1;
-      console.log(postID)
-      console.log(likeNextElement)
       postCollection.doc(postID).update({ likes: likeNextElement });
-      document.getElementById("postados").innerHTML = "";
       readPosts();
     });
   });
