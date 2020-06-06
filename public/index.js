@@ -1,11 +1,12 @@
 import { routes } from "./routes.js";
+import { signIn } from "./pages/posts/posts.js";
 const container = document.querySelector("#root");
 
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       container.innerHTML = "";
-      container.appendChild(routes.posts);
+      container.appendChild(signIn(firebase.auth().currentUser.displayName));
       const loggoutButton = document.querySelector("#loggout");
       const menuBar = document.querySelector("#bar-menu");
       menuBar.addEventListener("click", () => {
@@ -51,7 +52,7 @@ window.addEventListener("load", () => {
 
 function post() {
   const postar = document.querySelector("#postar");
-  const postTexto = document.querySelector("#porfavor");
+  const postTexto = document.querySelector("#post-text");
 
   postar.addEventListener("click", (event) => {
     event.preventDefault();
@@ -73,6 +74,7 @@ function post() {
 
 function readPosts() {
   const postCollection = firebase.firestore().collection("posts");
+  document.getElementById("postados").innerHTML = "";
 
   postCollection
     .get()
@@ -94,18 +96,16 @@ function editPosts() {
   editar.forEach((element) => {
     element.addEventListener("click", (event) => {
       const textEdit = event.currentTarget.parentElement.nextElementSibling;
-      const textContent = event.currentTarget.parentElement.nextElementSibling.textContent;
-      console.log(textContent);
       textEdit.contentEditable = true;
+      textEdit.focus();
 
       editar.forEach((element) => {
         element.addEventListener("click", (event) => {
           const textEdit = event.currentTarget.parentElement.nextElementSibling;
           textEdit.contentEditable = false;
           const textContent = event.currentTarget.parentElement.nextElementSibling.textContent;
-          const postID = event.currentTarget.parentElement.id;
+          const postID = event.currentTarget.closest("li").id;
           postCollection.doc(postID).update({ text: textContent });
-          document.getElementById("postados").innerHTML = "";
           readPosts();
         });
       });
@@ -138,11 +138,9 @@ function likePosts() {
 
   likeButton.forEach((element) => {
     element.addEventListener("click", (event) => {
-      const postID = event.currentTarget.parentElement.id;
-      const likeNextElement =
-        Number(event.currentTarget.nextSibling.textContent) + 1;
+      const postID = event.currentTarget.closest("li").id;
+      const likeNextElement = Number(event.currentTarget.nextElementSibling.textContent) + 1;
       postCollection.doc(postID).update({ likes: likeNextElement });
-      document.getElementById("postados").innerHTML = "";
       readPosts();
     });
   });
@@ -152,7 +150,7 @@ function addPosts(post) {
   const postTemplate = `
     <li class="each-post" id='${post.id}'>
       <div class="name-edit-post">
-        <p class="post-user-name">Nome de quem postou</p>
+        <p class="post-user-name">${post.data().name}</p>
         <span class="edit">
           <img src="img/edit-regular.svg" alt="edit-posts">
         </span>
