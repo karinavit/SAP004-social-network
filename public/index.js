@@ -97,6 +97,7 @@ function editPosts() {
     element.addEventListener("click", (event) => {
       const textEdit = event.currentTarget.parentElement.nextElementSibling;
       textEdit.contentEditable = true;
+      textEdit.focus();
 
       editar.forEach((element) => {
         element.addEventListener("click", (event) => {
@@ -105,7 +106,6 @@ function editPosts() {
           const textContent = event.currentTarget.parentElement.nextElementSibling.textContent;
           const postID = event.currentTarget.closest("li").id;
           postCollection.doc(postID).update({ text: textContent });
-          document.getElementById("postados").innerHTML = "";
           readPosts();
         });
       });
