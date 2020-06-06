@@ -200,7 +200,10 @@ function register() {
           birthday: dateRegisterInput.value,
           id_user: uid,
         });
-      });
+      })
+      .catch((error) => {
+        alert(error.message);
+    });
   });
 }
 
