@@ -3,6 +3,6 @@ import { signIn } from "./pages/posts/posts.js";
 import { register } from "./pages/loginpage/register.js";
 export const routes = {
   home: formLogin(),
-  posts: signIn(),
+  posts: signIn(name),
   register: register(),
 };

@@ -1,4 +1,4 @@
-export const signIn = () => {
+export const signIn = (name) => {
   const container = document.createElement('div');
   container.classList.add("display-column");
 
@@ -14,7 +14,7 @@ export const signIn = () => {
     <div class="margin-top-user id-user">
       <img class="img-user" src="img/startrek_spock.jpg" alt="spock">
       <div class="name-user">
-        <h1>Bem vindo "nome"</h1>
+        <h1>Bem vindo ${name}</h1>
         <br>
         <p>Number One - Classic</p>
       </div>
@@ -22,11 +22,11 @@ export const signIn = () => {
     <br>
     <div class="id-user">
       <form class="display-form">
-        <input class="input-posts" type=text id="porfavor">
+        <input class="input-posts" type=text id="post-text">
         <div class="display-posts">
           <img class="posts-img" src="img/image-solid.svg" alt="photo-to-post">
           <button class="button-login width-button-login" id="postar" type="submit">
-          Públicar
+          Publicar
           </button>
         </div>
       </form>
