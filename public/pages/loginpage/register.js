@@ -4,7 +4,7 @@ export const register = () => {
 
   container.innerHTML = `
     <img class="img" src="img/logo.png" alt="logo">
-    <img class="img" src="img/name.png" alt="name">
+    <h1 class="style-title">Social Trekkers</h1>
     <label class="letter-color">Digite seu nome Completo:</label>
     <input class="style-input" id="name-input-register" type="text">
     <label class="letter-color">Digite seu e-mail:</label>

@@ -3,9 +3,20 @@
   src: url('img/futura\ book\ font.ttf');
 }
 
+@font-face {
+  font-family: "startrek classic";
+  src: url('img/FEC_____.TTF');
+}
+
 html {
   height: 100%;
   width: 100%;
+}
+
+.style-title {
+  font-family: "startrek classic";
+  font-size: 40px;
+  color: #FFCC00;
 }
 
 a.link-register {
@@ -59,6 +70,7 @@ main {
   border: none;
   height: 30px;
   width: 100%;
+  font-weight: bold
 }
 
 .width-button-login {

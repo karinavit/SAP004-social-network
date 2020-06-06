@@ -4,7 +4,7 @@ export const formLogin = () => {
 
   container.innerHTML = `
       <img class="img" src="img/logo.png" alt="logo">
-      <img class="img" src="img/name.png" alt="name">
+      <h1 class="style-title">Social Trekkers</h1>
       <input class="style-input" id='email-input' type='email' placeholder="Digite seu e-mail...">
       <input class="style-input" id='password-input' type='password' placeholder="Digite sua senha...">
       <a class="width-button-login" href="/#posts">
