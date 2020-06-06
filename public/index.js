@@ -1,11 +1,12 @@
 import { routes } from "./routes.js";
+import { signIn } from "./pages/posts/posts.js";
 const container = document.querySelector("#root");
 
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       container.innerHTML = "";
-      container.appendChild(routes.posts);
+      container.appendChild(signIn(firebase.auth().currentUser.displayName));
       const loggoutButton = document.querySelector("#loggout");
       const menuBar = document.querySelector("#bar-menu");
       menuBar.addEventListener("click", () => {
@@ -51,7 +52,7 @@ window.addEventListener("load", () => {
 
 function post() {
   const postar = document.querySelector("#postar");
-  const postTexto = document.querySelector("#porfavor");
+  const postTexto = document.querySelector("#post-text");
 
   postar.addEventListener("click", (event) => {
     event.preventDefault();
@@ -95,7 +96,6 @@ function editPosts() {
   editar.forEach((element) => {
     element.addEventListener("click", (event) => {
       const textEdit = event.currentTarget.parentElement.nextElementSibling;
-      const textContent = event.currentTarget.parentElement.nextElementSibling.textContent;
       textEdit.contentEditable = true;
 
       editar.forEach((element) => {
