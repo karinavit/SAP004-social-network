@@ -152,7 +152,7 @@ function addPosts(post) {
   const postTemplate = `
     <li class="each-post" id='${post.id}'>
       <div class="name-edit-post">
-        <p class="post-user-name">Nome de quem postou</p>
+        <p class="post-user-name">${post.data().name}</p>
         <span class="edit">
           <img src="img/edit-regular.svg" alt="edit-posts">
         </span>
