@@ -4,10 +4,13 @@ export const signIn = () => {
 
   container.innerHTML = `
     <div class="nav-posts">
-      <img class="bar-menu" src="img/bars-solid.svg" alt="bar">
+      <img id="bar-menu" class="bar-menu" src="img/bars-solid.svg" alt="bar">
       <h1 class="logo-name-posts-nav">Social Trekkers</h1>
       <img class="menu-posts" src="img/logo.png" alt="logo">
     </div>
+    <a id="loggout" class="loggout" href="/#">
+      <div>Sair</div>
+    </a>
     <div class="margin-top-user id-user">
       <img class="img-user" src="img/startrek_spock.jpg" alt="spock">
       <div class="name-user">
@@ -29,9 +32,6 @@ export const signIn = () => {
       </form>
     </div>
     <ul class="width-list-post" id="postados"></ul>
-    <a href="/#">
-      <button id="loggout" >Sair</button>
-    </a>
   `;
   return container;
 };

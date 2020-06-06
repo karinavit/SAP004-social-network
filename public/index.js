@@ -7,6 +7,10 @@ function init() {
       container.innerHTML = "";
       container.appendChild(routes.posts);
       const loggoutButton = document.querySelector("#loggout");
+      const menuBar = document.querySelector("#bar-menu");
+      menuBar.addEventListener("click", () => {
+        loggoutButton.classList.toggle("show-loggout");
+      })
       loggoutButton.addEventListener("click", () => {
         firebase.auth().signOut();
       });
