@@ -66,6 +66,7 @@ function post() {
 
     postCollection.add(post);
     document.getElementById("postados").innerHTML = "";
+    postTexto.value = "";
     readPosts();
   });
 }
@@ -137,7 +138,7 @@ function likePosts() {
 
   likeButton.forEach((element) => {
     element.addEventListener("click", (event) => {
-      const postID = event.currentTarget.parentElement.parentElement.parentElement.id;
+      const postID = event.currentTarget.parentElement.id;
       const likeNextElement =
         Number(event.currentTarget.nextSibling.textContent) + 1;
       postCollection.doc(postID).update({ likes: likeNextElement });
