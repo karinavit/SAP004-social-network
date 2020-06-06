@@ -138,9 +138,10 @@ function likePosts() {
 
   likeButton.forEach((element) => {
     element.addEventListener("click", (event) => {
-      const postID = event.currentTarget.parentElement.id;
-      const likeNextElement =
-        Number(event.currentTarget.nextSibling.textContent) + 1;
+      const postID = event.currentTarget.closest("li").id;
+      const likeNextElement = Number(event.currentTarget.nextElementSibling.textContent) + 1;
+      console.log(postID)
+      console.log(likeNextElement)
       postCollection.doc(postID).update({ likes: likeNextElement });
       document.getElementById("postados").innerHTML = "";
       readPosts();
