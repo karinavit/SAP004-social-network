@@ -7,6 +7,10 @@ function init() {
       container.innerHTML = "";
       container.appendChild(routes.posts);
       const loggoutButton = document.querySelector("#loggout");
+      const menuBar = document.querySelector("#bar-menu");
+      menuBar.addEventListener("click", () => {
+        loggoutButton.classList.toggle("show-loggout");
+      })
       loggoutButton.addEventListener("click", () => {
         firebase.auth().signOut();
       });
@@ -62,6 +66,7 @@ function post() {
 
     postCollection.add(post);
     document.getElementById("postados").innerHTML = "";
+    postTexto.value = "";
     readPosts();
   });
 }
@@ -88,16 +93,16 @@ function editPosts() {
 
   editar.forEach((element) => {
     element.addEventListener("click", (event) => {
-      const textEdit = event.currentTarget.previousElementSibling;
-      const textContent = event.currentTarget.previousElementSibling.textContent;
+      const textEdit = event.currentTarget.parentElement.nextElementSibling;
+      const textContent = event.currentTarget.parentElement.nextElementSibling.textContent;
       console.log(textContent);
       textEdit.contentEditable = true;
 
       editar.forEach((element) => {
         element.addEventListener("click", (event) => {
-          const textEdit = event.currentTarget.previousElementSibling;
+          const textEdit = event.currentTarget.parentElement.nextElementSibling;
           textEdit.contentEditable = false;
-          const textContent = event.currentTarget.previousElementSibling.textContent;
+          const textContent = event.currentTarget.parentElement.nextElementSibling.textContent;
           const postID = event.currentTarget.parentElement.id;
           postCollection.doc(postID).update({ text: textContent });
           document.getElementById("postados").innerHTML = "";
@@ -114,7 +119,7 @@ function deletePosts() {
   const deletar = document.querySelectorAll(".delete");
   deletar.forEach((element) => {
     element.addEventListener("click", (event) => {
-      const postID = event.currentTarget.parentElement.id;
+      const postID = event.currentTarget.parentElement.parentElement.id;
       postCollection
         .doc(postID)
         .delete()
@@ -145,12 +150,23 @@ function likePosts() {
 
 function addPosts(post) {
   const postTemplate = `
-    <li id='${post.id}'>
-      <p id='text-${post.id}'>${post.data().text}</p>
-      <span class="edit">Editar </span>
-      <span class="delete"> Deletar </span>
-      <span class="like"> ❤️ </span>
-      <span class="like-value">${post.data().likes}</span> 
+    <li class="each-post" id='${post.id}'>
+      <div class="name-edit-post">
+        <p class="post-user-name">Nome de quem postou</p>
+        <span class="edit">
+          <img src="img/edit-regular.svg" alt="edit-posts">
+        </span>
+      </div>
+      <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
+      <div class="name-edit-post">
+        <div>
+          <span class="like">❤️</span>
+          <span class="like-value">${post.data().likes}</span> 
+        </div>
+        <span class="delete">
+          <img src="img/trash-alt-regular.svg" alt="delete-posts">
+        </span>
+      </div>
     </li>
   `;
   document.querySelector("#postados").innerHTML += postTemplate;
@@ -189,7 +205,10 @@ function register() {
           birthday: dateRegisterInput.value,
           id_user: uid,
         });
-      });
+      })
+      .catch((error) => {
+        alert(error.message);
+    });
   });
 }
 

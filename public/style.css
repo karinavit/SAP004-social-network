@@ -1,0 +1,225 @@
+@font-face {
+  font-family: "futura book";
+  src: url('img/futura\ book\ font.ttf');
+}
+
+@font-face {
+  font-family: "startrek classic";
+  src: url('img/FEC_____.TTF');
+}
+
+html {
+  height: 100%;
+  width: 100%;
+}
+
+.style-title {
+  font-family: "startrek classic";
+  font-size: 40px;
+  color: #FFCC00;
+}
+
+a.link-register,.show-loggout {
+  text-decoration: none;
+  color: #FFCC00;
+  font-weight: bold;
+}
+
+.body {
+  background-image: url(img/istockphoto-1061591684-170667a.jpg);
+  width: 100%;
+  text-align: center;
+}
+
+main {
+  min-height: calc(100vh - 30px);
+}
+
+.img {
+  width: 63%;
+  margin: 10px 0px;
+}
+
+.img-g {
+  width: 15%;
+}
+
+.logo-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.display-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.style-input {
+  border-radius: 10px;
+  border: 2px solid #FFCC00;
+  width: 70%;
+  height: 30px;
+  margin: 5px 0px;
+}
+
+.button-login {
+  border-radius: 10px;
+  background-color: #FFCC00;
+  border: none;
+  height: 30px;
+  width: 100%;
+  font-weight: bold
+}
+
+.width-button-login {
+  width: 30%;
+  margin: 5px 0px;
+}
+
+.letter-color {
+  color: #FFCC00;
+  font-family: "futura book";
+  margin: 5px 0px;
+}
+
+footer {
+  height: 30px;
+}
+
+.register-display-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.nav-posts {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  position: fixed;
+}
+
+.menu-posts {
+  width: 70px;
+}
+
+.bar-menu {
+  width: 40px;
+}
+
+.logo-name-posts-nav {
+  width: 65%;
+  font-family: "startrek classic";
+  font-size: 35px;
+  color: #FFCC00;
+}
+
+.margin-top-user {
+  margin-top: 90px;
+}
+
+.id-user {
+  display: flex;
+  width: 90%;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  background-color: white;
+  border-radius: 2px;
+  padding: 5px;
+}
+
+.img-user {
+  width: 30%;
+  border-radius: 2px;
+}
+
+.name-user {
+  width: 60%;
+  font-family: "futura book";
+}
+
+.display-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.input-posts {
+  width: 95%;
+  border-radius: 10px;
+  border: 2px solid #FFCC00;
+  height: 100px;
+  margin: 5px 0px;
+}
+
+.posts-img {
+  width: 30px;
+}
+
+.display-posts {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.width-list-post {
+  width: 92%;
+}
+
+.each-post {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  margin: 20px 0px;
+  border-radius: 2px;
+  font-family: "futura book";
+}
+
+.name-edit-post {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  background-color: #FFCC00;
+  align-items: center;
+}
+
+.post-user-name {
+  width: 60%;
+  font-size: 18px;
+}
+
+.edit {
+  width: 25px;
+}
+
+.delete {
+  width: 20px;
+}
+
+.post-text-area {
+  margin: 5px;
+  height: 50px;
+}
+
+.loggout {
+  display: none;
+  position: fixed;
+  margin-top: 60px;
+  background-color: white;
+  width: 100%;
+  height: 50px;
+}
+
+.show-loggout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-family: "futura book";
+}
