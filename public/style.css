@@ -26,7 +26,7 @@ main {
 
 .img {
   width: 63%;
-  margin: 20px 0px;
+  margin: 10px 0px;
 }
 
 .img-g {
@@ -74,4 +74,10 @@ main {
 
 footer {
   height: 30px;
+}
+
+.register-display-buttons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
 }
