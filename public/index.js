@@ -53,6 +53,13 @@ window.addEventListener("load", () => {
 function post() {
   const postar = document.querySelector("#postar");
   const postTexto = document.querySelector("#post-text");
+  const img = document.querySelector("#post-img")
+  const inputFile = document.querySelector("#input-file")
+
+  img.addEventListener("click", ()=> {
+    inputFile.click()
+  })
+
 
   postar.addEventListener("click", (event) => {
     event.preventDefault();
@@ -62,6 +69,7 @@ function post() {
       name: firebase.auth().currentUser.displayName,
       likes: 0,
       private: true,
+      date: getHoursPosted()
     };
     const postCollection = firebase.firestore().collection("posts");
 
@@ -72,8 +80,21 @@ function post() {
   });
 }
 
+function getHoursPosted () {
+  const date = new Date()
+  const fullDate = {
+    day: date.getDate()<10?"0"+date.getDate():date.getDate(),
+    month: date.getMonth()<10?"0"+date.getMonth():date.getMonth(),
+    year: date.getFullYear(),
+    hours: date.getHours(),
+    minutes: date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes(),
+    seconds: date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
+    }
+    return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`
+}
+
 function readPosts() {
-  const postCollection = firebase.firestore().collection("posts");
+  const postCollection = firebase.firestore().collection("posts").orderBy("date", "asc");
   document.getElementById("postados").innerHTML = "";
 
   postCollection
@@ -161,6 +182,7 @@ function addPosts(post) {
           <span class="like">❤️</span>
           <span class="like-value">${post.data().likes}</span> 
         </div>
+        <p> Postado em: ${post.data().date}</p>
         <span class="delete">
           <img src="img/trash-alt-regular.svg" alt="delete-posts">
         </span>
