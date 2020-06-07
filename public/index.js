@@ -70,11 +70,11 @@ function post() {
       name: firebase.auth().currentUser.displayName,
       likes: 0,
       private: true,
-      day: date.getDate(),
-      month: date.getMonth(),
+      day: date.getDate()<10?"0"+date.getDate():date.getDate(),
+      month: date.getMonth()<10?"0"+date.getMonth():date.getMonth(),
       year: date.getFullYear(),
       hours: date.getHours(),
-      minutes: date.getMinutes()
+      minutes: date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes()
     };
     const postCollection = firebase.firestore().collection("posts");
 
@@ -174,7 +174,7 @@ function addPosts(post) {
           <span class="like">❤️</span>
           <span class="like-value">${post.data().likes}</span> 
         </div>
-        <p> Postado em: ${post.data().day}/${post.data().month}/${post.data().year} at ${post.data().hours}:${post.data().minutes} </p>
+        <p> Postado em: ${post.data().day}/${post.data().month}/${post.data().year} as ${post.data().hours}:${post.data().minutes} </p>
         <span class="delete">
           <img src="img/trash-alt-regular.svg" alt="delete-posts">
         </span>
