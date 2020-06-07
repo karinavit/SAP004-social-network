@@ -53,6 +53,12 @@ window.addEventListener("load", () => {
 function post() {
   const postar = document.querySelector("#postar");
   const postTexto = document.querySelector("#post-text");
+  const img = document.querySelector("#post-img")
+  const inputFile = document.querySelector("#input-file")
+
+  img.addEventListener("click", ()=> {
+    inputFile.click()
+  })
 
   postar.addEventListener("click", (event) => {
     event.preventDefault();
