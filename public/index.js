@@ -89,7 +89,7 @@ function getHoursPosted () {
     day: date.getDate()<10?"0"+date.getDate():date.getDate(),
     month: date.getMonth()<10?"0"+date.getMonth():date.getMonth(),
     year: date.getFullYear(),
-    hours: date.getHours(),
+    hours: date.getHours()<10?"0"+date.getHours():date.getHours(),
     minutes: date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes(),
     seconds: date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
     }
@@ -97,7 +97,7 @@ function getHoursPosted () {
 }
 
 function readPosts() {
-  const postCollection = firebase.firestore().collection("posts").orderBy("date", "asc");
+  const postCollection = firebase.firestore().collection("posts").orderBy("date", "desc");
   document.getElementById("postados").innerHTML = "";
 
   postCollection
