@@ -55,6 +55,7 @@ function post() {
   const postTexto = document.querySelector("#post-text");
   const img = document.querySelector("#post-img")
   const inputFile = document.querySelector("#input-file")
+  const privateField = document.querySelector("#private")
 
   img.addEventListener("click", ()=> {
     inputFile.click()
@@ -62,6 +63,7 @@ function post() {
 
 
   postar.addEventListener("click", (event) => {
+
     event.preventDefault();
     const post = {
       text: postTexto.value,
@@ -69,6 +71,7 @@ function post() {
       name: firebase.auth().currentUser.displayName,
       likes: 0,
       private: true,
+      visibility: privateField.checked?"private": "public",
       date: getHoursPosted()
     };
     const postCollection = firebase.firestore().collection("posts");
