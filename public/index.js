@@ -55,6 +55,7 @@ function post() {
   const postTexto = document.querySelector("#post-text");
   const img = document.querySelector("#post-img")
   const inputFile = document.querySelector("#input-file")
+  const privateField = document.querySelector("#private")
 
   img.addEventListener("click", ()=> {
     inputFile.click()
@@ -62,6 +63,7 @@ function post() {
 
 
   postar.addEventListener("click", (event) => {
+
     event.preventDefault();
     const post = {
       text: postTexto.value,
@@ -69,6 +71,7 @@ function post() {
       name: firebase.auth().currentUser.displayName,
       likes: 0,
       private: true,
+      visibility: privateField.checked?"private": "public",
       date: getHoursPosted()
     };
     const postCollection = firebase.firestore().collection("posts");
@@ -86,7 +89,7 @@ function getHoursPosted () {
     day: date.getDate()<10?"0"+date.getDate():date.getDate(),
     month: date.getMonth()<10?"0"+date.getMonth():date.getMonth(),
     year: date.getFullYear(),
-    hours: date.getHours(),
+    hours: date.getHours()<10?"0"+date.getHours():date.getHours(),
     minutes: date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes(),
     seconds: date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
     }
@@ -94,14 +97,19 @@ function getHoursPosted () {
 }
 
 function readPosts() {
-  const postCollection = firebase.firestore().collection("posts").orderBy("date", "asc");
+  const postCollection = firebase.firestore().collection("posts").orderBy("date", "desc");
   document.getElementById("postados").innerHTML = "";
 
   postCollection
     .get()
     .then((snap) => {
       snap.forEach((post) => {
-        addPosts(post);
+        if(post.data().visibility == "public"){
+          addPosts(post);
+        }
+        else if (post.data().visibility == "private" && firebase.auth().currentUser.uid == post.data().id_user) {
+          addPosts(post);
+        }
       });
     })
     .then(() => deletePosts())
@@ -183,6 +191,7 @@ function addPosts(post) {
           <span class="like-value">${post.data().likes}</span> 
         </div>
         <p> Postado em: ${post.data().date}</p>
+        <p> ${post.data().visibility}</p>
         <span class="delete">
           <img src="img/trash-alt-regular.svg" alt="delete-posts">
         </span>
