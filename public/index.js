@@ -188,6 +188,7 @@ function addPosts(post) {
           <span class="like-value">${post.data().likes}</span> 
         </div>
         <p> Postado em: ${post.data().date}</p>
+        <p> ${post.data().visibility}</p>
         <span class="delete">
           <img src="img/trash-alt-regular.svg" alt="delete-posts">
         </span>
