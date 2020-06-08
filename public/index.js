@@ -101,7 +101,12 @@ function readPosts() {
     .get()
     .then((snap) => {
       snap.forEach((post) => {
-        addPosts(post);
+        if(post.data().visibility == "public"){
+          addPosts(post);
+        }
+        else if (post.data().visibility == "private" && firebase.auth().currentUser.uid == post.data().id_user) {
+          addPosts(post);
+        }
       });
     })
     .then(() => deletePosts())
