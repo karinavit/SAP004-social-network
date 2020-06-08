@@ -1,6 +1,7 @@
 import { routes } from "./routes.js";
 import { signIn } from "./pages/posts/posts.js";
 const container = document.querySelector("#root");
+teste;
 
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
