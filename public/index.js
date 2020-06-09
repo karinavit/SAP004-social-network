@@ -125,7 +125,7 @@ function editOrLikePost(postId,updateTextOrLike) {
 
   postCollection.doc(postId).update(updateTextOrLike).then(()=> false)
 }
-function likePost(event, postId) {
+function likePostDOM(event, postId) {
     const likeElement = document.querySelectorAll(".like-value")
     likeElement.forEach(element => {
       let likes = Number(element.textContent) + 1;
@@ -147,12 +147,17 @@ function editPostDOM (event, postId) {
     }
 }
 
-function deletePost(event, postId) {
-  const postCollection = firebase.firestore().collection("posts");
+function deletePost(postId) {
   postCollection.doc(postId).delete().then(() => {
-    let post = document.getElementById(`post-${postId}`);
-    post.remove();
+    
   })
+}
+
+function deletePostDOM (postId) {
+  deletePost(postId)
+  let post = document.getElementById(`post-${postId}`);
+  post.remove();
+
 }
 
 
@@ -186,10 +191,10 @@ function createElementPost(post) {
     editPostDOM(event, post.id);
   });
   postElement.getElementsByClassName("like")[0].addEventListener("click", (event) => {
-    likePost(event, post.id);
+    likePostDOM(event, post.id);
   });
   postElement.getElementsByClassName("delete")[0].addEventListener("click", (event) => {
-    deletePost(event, post.id);
+    deletePostDOM( post.id);
   });
   return postElement;
 }
