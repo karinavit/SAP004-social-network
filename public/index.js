@@ -120,11 +120,19 @@ function readPosts() {
   });
 }
 
-function editPost(postId,updateTextOrLike) {
+function editOrLikePost(postId,updateTextOrLike) {
   const postCollection = firebase.firestore().collection("posts");
 
   postCollection.doc(postId).update(updateTextOrLike).then(()=> false)
 }
+function likePost(event, postId) {
+    const likeElement = document.querySelectorAll(".like-value")
+    likeElement.forEach(element => {
+      let likes = Number(element.textContent) + 1;
+      editOrLikePost(postId, {likes: likes})
+        element.innerHTML = likes;
+    })
+    }
 
 function editPostDOM (event, postId) {
   let postElement = document.getElementById(`post-${postId}`);
@@ -135,7 +143,7 @@ function editPostDOM (event, postId) {
     textEditElement.focus();
   } else {
       textEditElement.contentEditable = false;
-      editPost(postId, {text: textEditElement.textContent})
+      editOrLikePost(postId, {text: textEditElement.textContent})
     }
 }
 
@@ -147,17 +155,7 @@ function deletePost(event, postId) {
   })
 }
 
-function likePost(event, postId) {
-  const postCollection = firebase.firestore().collection("posts");
-  postCollection.doc(postId).get().then((post) => {
-    let postElement = document.getElementById(`post-${postId}`);
-    let likeValueElement = postElement.getElementsByClassName("like-value")[0];
-    let likes = post.data().likes + 1;
-    postCollection.doc(postId).update({ likes: likes }).then(() => {
-      likeValueElement.innerHTML = likes;
-    })
-  })
-}
+
 
 function createElementPost(post) {
   const postTemplate = `
