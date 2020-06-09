@@ -53,12 +53,12 @@ window.addEventListener("load", () => {
 function post() {
   const postar = document.querySelector("#postar");
   const postTexto = document.querySelector("#post-text");
-  const img = document.querySelector("#post-img")
-  const inputFile = document.querySelector("#input-file")
-  const privateField = document.querySelector("#private")
+  const img = document.querySelector("#post-img");
+  const inputFile = document.querySelector("#input-file");
+  const privateField = document.querySelector("#private");
 
   img.addEventListener("click", () => {
-    inputFile.click()
+    inputFile.click();
   })
 
   postar.addEventListener("click", (event) => {
@@ -90,7 +90,7 @@ function post() {
 }
 
 function getHoursPosted() {
-  const date = new Date()
+  const date = new Date();
   const fullDate = {
     day: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
     month: date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth(),
@@ -99,7 +99,7 @@ function getHoursPosted() {
     minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
     seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
   }
-  return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`
+  return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
 }
 
 function readPosts() {
@@ -116,7 +116,7 @@ function readPosts() {
         let postElement = createElementPost(post);
         document.querySelector("#postados").appendChild(postElement);
       }
-    })
+    });
   });
 }
 
@@ -146,7 +146,7 @@ function deletePost(event, postId) {
 function likePost(event, postId) {
   const postCollection = firebase.firestore().collection("posts");
   postCollection.doc(postId).get().then((post) => {
-    let postElement = document.getElementById(`post_${postId}`);
+    let postElement = document.getElementById(`post-${postId}`);
     let likeValueElement = postElement.getElementsByClassName("like-value")[0];
     let likes = post.data().likes + 1;
     postCollection.doc(postId).update({ likes: likes }).then(() => {
@@ -177,8 +177,8 @@ function createElementPost(post) {
     </div>
   `;
   let postElement = document.createElement("li");
-  postElement.classList.add("each-post")
-  postElement.id = `post-${post.id}`
+  postElement.classList.add("each-post");
+  postElement.id = `post-${post.id}`;
   postElement.innerHTML = postTemplate;
   postElement.getElementsByClassName("edit")[0].addEventListener("click", (event) => {
     editPost(event, post.id);
