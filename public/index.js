@@ -121,7 +121,7 @@ function readPosts() {
 }
 
 function editPost(event, postId) {
-  let postElement = document.getElementById(`post_${postId}`);
+  let postElement = document.getElementById(`post-${postId}`);
   let textEditElement = postElement.getElementsByClassName("post-text-area")[0];
 
   if (textEditElement.contentEditable != "true") {
@@ -138,7 +138,7 @@ function editPost(event, postId) {
 function deletePost(event, postId) {
   const postCollection = firebase.firestore().collection("posts");
   postCollection.doc(postId).delete().then(() => {
-    let post = document.getElementById(`post_${postId}`);
+    let post = document.getElementById(`post-${postId}`);
     post.remove();
   })
 }
@@ -157,28 +157,28 @@ function likePost(event, postId) {
 
 function createElementPost(post) {
   const postTemplate = `
-      <div class="name-edit-post">
-        <p class="post-user-name">${post.data().name}</p>
-        <span class="edit">
-          <img src="img/edit-regular.svg" alt="edit-posts">
-        </span>
+    <div class="name-edit-post">
+      <p class="post-user-name">${post.data().name}</p>
+      <span class="edit">
+        <img src="img/edit-regular.svg" alt="edit-posts">
+      </span>
+    </div>
+    <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
+    <div class="name-edit-post">
+      <div>
+        <span class="like">❤️</span>
+        <span class="like-value">${post.data().likes}</span> 
       </div>
-      <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
-      <div class="name-edit-post">
-        <div>
-          <span class="like">❤️</span>
-          <span class="like-value">${post.data().likes}</span> 
-        </div>
-        <p> Postado em: ${post.data().date}</p>
-        <p> ${post.data().visibility}</p>
-        <span class="delete">
-          <img src="img/trash-alt-regular.svg" alt="delete-posts">
-        </span>
-      </div>
+      <p> Postado em: ${post.data().date}</p>
+      <p> ${post.data().visibility}</p>
+      <span class="delete">
+        <img src="img/trash-alt-regular.svg" alt="delete-posts">
+      </span>
+    </div>
   `;
   let postElement = document.createElement("li");
   postElement.classList.add("each-post")
-  postElement.id = `post_${post.id}`
+  postElement.id = `post-${post.id}`
   postElement.innerHTML = postTemplate;
   postElement.getElementsByClassName("edit")[0].addEventListener("click", (event) => {
     editPost(event, post.id);
