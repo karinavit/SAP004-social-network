@@ -30,8 +30,8 @@ function init() {
           .signInWithEmailAndPassword(emailInput.value, passwordInput.value)
           .catch((error) => {
             alert(error.message);
-        });
-    })
+          });
+      })
       const registerButton = document.querySelector("#register");
       registerButton.addEventListener("click", () => {
         container.innerHTML = "";
@@ -57,11 +57,11 @@ function post() {
   const inputFile = document.querySelector("#input-file")
   const privateField = document.querySelector("#private")
 
-  img.addEventListener("click", ()=> {
+  img.addEventListener("click", () => {
     inputFile.click()
   })
 
-  postar.addEventListener("click", async (event) => {
+  postar.addEventListener("click", (event) => {
     event.preventDefault();
     const post = {
       text: postTexto.value,
@@ -69,82 +69,90 @@ function post() {
       name: firebase.auth().currentUser.displayName,
       likes: 0,
       private: true,
-      visibility: privateField.checked?"private": "public",
+      visibility: privateField.checked ? "private" : "public",
       date: getHoursPosted()
     };
     const postCollection = firebase.firestore().collection("posts");
 
-    let posteAdded = await postCollection.add(post);
-    let newPost = await posteAdded.get();
-    postTexto.value = "";
-    privateField.checked = false;
-    
-    let postElement = createElementPost(newPost);
-    let postadosElement = document.querySelector("#postados")
-    postadosElement.prepend(postElement);
+    postCollection.add(post)
+      .then((postAdded) => {
+        postAdded.get()
+          .then((newPost) => {
+            postTexto.value = "";
+            privateField.checked = false;
+            let postElement = createElementPost(newPost);
+            let postadosElement = document.querySelector("#postados")
+            postadosElement.prepend(postElement);
+          })
+      });
   });
+
 }
 
-function getHoursPosted () {
+function getHoursPosted() {
   const date = new Date()
   const fullDate = {
-    day: date.getDate()<10?"0"+date.getDate():date.getDate(),
-    month: date.getMonth()<10?"0"+date.getMonth():date.getMonth(),
+    day: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
+    month: date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth(),
     year: date.getFullYear(),
-    hours: date.getHours()<10?"0"+date.getHours():date.getHours(),
-    minutes: date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes(),
-    seconds: date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
-    }
-    return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`
+    hours: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+    minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+    seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
+  }
+  return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`
 }
 
-async function readPosts() {
+function readPosts() {
   const postCollection = firebase.firestore().collection("posts").orderBy("date", "desc");
   document.getElementById("postados").innerHTML = "";
 
-  let posts = await postCollection.get()
-  posts.forEach((post) => {
-    if(post.data().visibility == "public"){
-      let postElement = createElementPost(post);
-      document.querySelector("#postados").appendChild(postElement);
-    }
-    else if (post.data().visibility == "private" && firebase.auth().currentUser.uid == post.data().id_user) {
-      let postElement = createElementPost(post);
-      document.querySelector("#postados").appendChild(postElement);
-    }
-     
+  postCollection.get().then((posts) => {
+    posts.forEach((post) => {
+      if (post.data().visibility == "public") {
+        let postElement = createElementPost(post);
+        document.querySelector("#postados").appendChild(postElement);
+      }
+      else if (post.data().visibility == "private" && firebase.auth().currentUser.uid == post.data().id_user) {
+        let postElement = createElementPost(post);
+        document.querySelector("#postados").appendChild(postElement);
+      }
+    })
   });
 }
 
-async function editPost(event, postId) {
+function editPost(event, postId) {
   let postElement = document.getElementById(`post_${postId}`);
   let textEditElement = postElement.getElementsByClassName("post-text-area")[0];
 
   if (textEditElement.contentEditable != "true") {
     textEditElement.contentEditable = true;
-    textEditElement.focus();  
+    textEditElement.focus();
   } else {
     const postCollection = firebase.firestore().collection("posts");
-    await postCollection.doc(postId).update({ text: textEditElement.innerHTML });
-    textEditElement.contentEditable = false;
+    postCollection.doc(postId).update({ text: textEditElement.innerHTML }).then(() =>{
+      textEditElement.contentEditable = false;
+    })
   }
 }
 
-async function deletePost(event, postId) {
+function deletePost(event, postId) {
   const postCollection = firebase.firestore().collection("posts");
-  await postCollection.doc(postId).delete();
-  let post = document.getElementById(`post_${postId}`);
-  post.remove();
+  postCollection.doc(postId).delete().then(() => {
+    let post = document.getElementById(`post_${postId}`);
+    post.remove();
+  })
 }
 
-async function likePost(event, postId) {
+function likePost(event, postId) {
   const postCollection = firebase.firestore().collection("posts");
-  let post = await postCollection.doc(postId).get(); 
-  let postElement = document.getElementById(`post_${postId}`);
-  let likeValueElement = postElement.getElementsByClassName("like-value")[0];
-  let likes = post.data().likes + 1;
-  await postCollection.doc(postId).update({ likes: likes });
-  likeValueElement.innerHTML = likes;
+  postCollection.doc(postId).get().then((post) => {
+    let postElement = document.getElementById(`post_${postId}`);
+    let likeValueElement = postElement.getElementsByClassName("like-value")[0];
+    let likes = post.data().likes + 1;
+    postCollection.doc(postId).update({ likes: likes }).then(() => {
+      likeValueElement.innerHTML = likes;
+    })
+  })
 }
 
 function createElementPost(post) {
@@ -172,14 +180,14 @@ function createElementPost(post) {
   postElement.classList.add("each-post")
   postElement.id = `post_${post.id}`
   postElement.innerHTML = postTemplate;
-  postElement.getElementsByClassName("edit")[0].addEventListener("click", async (event) => {
-    await editPost(event, post.id);
+  postElement.getElementsByClassName("edit")[0].addEventListener("click", (event) => {
+    editPost(event, post.id);
   });
-  postElement.getElementsByClassName("like")[0].addEventListener("click", async (event) => {
-    await likePost(event, post.id);
+  postElement.getElementsByClassName("like")[0].addEventListener("click", (event) => {
+    likePost(event, post.id);
   });
-  postElement.getElementsByClassName("delete")[0].addEventListener("click", async (event) => {
-    await deletePost(event, post.id);
+  postElement.getElementsByClassName("delete")[0].addEventListener("click", (event) => {
+    deletePost(event, post.id);
   });
   return postElement;
 }
@@ -210,17 +218,16 @@ function register() {
         cred.user.updateProfile({ displayName: nameRegisterInput.value })
       )
       .then(() => {
-        const uid = firebase.auth().currentUser.uid;
         userCollection.add({
           name: nameRegisterInput.value,
           email: emailRegisterInput.value,
           birthday: dateRegisterInput.value,
-          id_user: uid,
+          id_user: firebase.auth().currentUser.uid,
         });
       })
       .catch((error) => {
         alert(error.message);
-    });
+      });
   });
 }
 
