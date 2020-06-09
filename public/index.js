@@ -30,8 +30,8 @@ function init() {
           .signInWithEmailAndPassword(emailInput.value, passwordInput.value)
           .catch((error) => {
             alert(error.message);
-        });
-    })
+          });
+      })
       const registerButton = document.querySelector("#register");
       registerButton.addEventListener("click", () => {
         container.innerHTML = "";
@@ -53,17 +53,15 @@ window.addEventListener("load", () => {
 function post() {
   const postar = document.querySelector("#postar");
   const postTexto = document.querySelector("#post-text");
-  const img = document.querySelector("#post-img")
-  const inputFile = document.querySelector("#input-file")
-  const privateField = document.querySelector("#private")
+  const img = document.querySelector("#post-img");
+  const inputFile = document.querySelector("#input-file");
+  const privateField = document.querySelector("#private");
 
-  img.addEventListener("click", ()=> {
-    inputFile.click()
+  img.addEventListener("click", () => {
+    inputFile.click();
   })
 
-
   postar.addEventListener("click", (event) => {
-
     event.preventDefault();
     const post = {
       text: postTexto.value,
@@ -71,134 +69,127 @@ function post() {
       name: firebase.auth().currentUser.displayName,
       likes: 0,
       private: true,
-      visibility: privateField.checked?"private": "public",
+      visibility: privateField.checked ? "private" : "public",
       date: getHoursPosted()
     };
     const postCollection = firebase.firestore().collection("posts");
 
-    postCollection.add(post);
-    document.getElementById("postados").innerHTML = "";
-    postTexto.value = "";
-    readPosts();
+    postCollection.add(post)
+      .then((postAdded) => {
+        postAdded.get()
+          .then((newPost) => {
+            postTexto.value = "";
+            privateField.checked = false;
+            let postElement = createElementPost(newPost);
+            let postadosElement = document.querySelector("#postados")
+            postadosElement.prepend(postElement);
+          })
+      });
   });
+
 }
 
-function getHoursPosted () {
-  const date = new Date()
+function getHoursPosted() {
+  const date = new Date();
   const fullDate = {
-    day: date.getDate()<10?"0"+date.getDate():date.getDate(),
-    month: date.getMonth()<10?"0"+date.getMonth():date.getMonth(),
+    day: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
+    month: date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth(),
     year: date.getFullYear(),
-    hours: date.getHours()<10?"0"+date.getHours():date.getHours(),
-    minutes: date.getMinutes()<10?"0"+date.getMinutes():date.getMinutes(),
-    seconds: date.getSeconds()<10?"0"+date.getSeconds():date.getSeconds()
-    }
-    return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`
+    hours: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+    minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+    seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
+  }
+  return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
 }
 
 function readPosts() {
   const postCollection = firebase.firestore().collection("posts").orderBy("date", "desc");
   document.getElementById("postados").innerHTML = "";
 
-  postCollection
-    .get()
-    .then((snap) => {
-      snap.forEach((post) => {
-        if(post.data().visibility == "public"){
-          addPosts(post);
-        }
-        else if (post.data().visibility == "private" && firebase.auth().currentUser.uid == post.data().id_user) {
-          addPosts(post);
-        }
-      });
+  postCollection.get().then((posts) => {
+    posts.forEach((post) => {
+      if (post.data().visibility == "public") {
+        let postElement = createElementPost(post);
+        document.querySelector("#postados").appendChild(postElement);
+      }
+      else if (post.data().visibility == "private" && firebase.auth().currentUser.uid == post.data().id_user) {
+        let postElement = createElementPost(post);
+        document.querySelector("#postados").appendChild(postElement);
+      }
+    });
+  });
+}
+
+function editPost(event, postId) {
+  let postElement = document.getElementById(`post-${postId}`);
+  let textEditElement = postElement.getElementsByClassName("post-text-area")[0];
+
+  if (textEditElement.contentEditable != "true") {
+    textEditElement.contentEditable = true;
+    textEditElement.focus();
+  } else {
+    const postCollection = firebase.firestore().collection("posts");
+    postCollection.doc(postId).update({ text: textEditElement.innerHTML }).then(() =>{
+      textEditElement.contentEditable = false;
     })
-    .then(() => deletePosts())
-    .then(() => likePosts())
-    .then(() => editPosts());
+  }
 }
 
-function editPosts() {
+function deletePost(event, postId) {
   const postCollection = firebase.firestore().collection("posts");
-
-  const editar = document.querySelectorAll(".edit");
-
-  editar.forEach((element) => {
-    element.addEventListener("click", (event) => {
-      const textEdit = event.currentTarget.parentElement.nextElementSibling;
-      textEdit.contentEditable = true;
-      textEdit.focus();
-
-      editar.forEach((element) => {
-        element.addEventListener("click", (event) => {
-          const textEdit = event.currentTarget.parentElement.nextElementSibling;
-          textEdit.contentEditable = false;
-          const textContent = event.currentTarget.parentElement.nextElementSibling.textContent;
-          const postID = event.currentTarget.closest("li").id;
-          postCollection.doc(postID).update({ text: textContent });
-          readPosts();
-        });
-      });
-    });
-  });
+  postCollection.doc(postId).delete().then(() => {
+    let post = document.getElementById(`post-${postId}`);
+    post.remove();
+  })
 }
 
-function deletePosts() {
+function likePost(event, postId) {
   const postCollection = firebase.firestore().collection("posts");
-
-  const deletar = document.querySelectorAll(".delete");
-  deletar.forEach((element) => {
-    element.addEventListener("click", (event) => {
-      const postID = event.currentTarget.parentElement.parentElement.id;
-      postCollection
-        .doc(postID)
-        .delete()
-        .then(() => {
-          document.getElementById("postados").innerHTML = "";
-          readPosts();
-        });
-    });
-  });
+  postCollection.doc(postId).get().then((post) => {
+    let postElement = document.getElementById(`post-${postId}`);
+    let likeValueElement = postElement.getElementsByClassName("like-value")[0];
+    let likes = post.data().likes + 1;
+    postCollection.doc(postId).update({ likes: likes }).then(() => {
+      likeValueElement.innerHTML = likes;
+    })
+  })
 }
 
-function likePosts() {
-  const postCollection = firebase.firestore().collection("posts");
-
-  const likeButton = document.querySelectorAll(".like");
-
-  likeButton.forEach((element) => {
-    element.addEventListener("click", (event) => {
-      const postID = event.currentTarget.closest("li").id;
-      const likeNextElement = Number(event.currentTarget.nextElementSibling.textContent) + 1;
-      postCollection.doc(postID).update({ likes: likeNextElement });
-      readPosts();
-    });
-  });
-}
-
-function addPosts(post) {
+function createElementPost(post) {
   const postTemplate = `
-    <li class="each-post" id='${post.id}'>
-      <div class="name-edit-post">
-        <p class="post-user-name">${post.data().name}</p>
-        <span class="edit">
-          <img src="img/edit-regular.svg" alt="edit-posts">
-        </span>
+    <div class="name-edit-post">
+      <p class="post-user-name">${post.data().name}</p>
+      <span class="edit">
+        <img src="img/edit-regular.svg" alt="edit-posts">
+      </span>
+    </div>
+    <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
+    <div class="name-edit-post">
+      <div>
+        <span class="like">❤️</span>
+        <span class="like-value">${post.data().likes}</span> 
       </div>
-      <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
-      <div class="name-edit-post">
-        <div>
-          <span class="like">❤️</span>
-          <span class="like-value">${post.data().likes}</span> 
-        </div>
-        <p> Postado em: ${post.data().date}</p>
-        <p> ${post.data().visibility}</p>
-        <span class="delete">
-          <img src="img/trash-alt-regular.svg" alt="delete-posts">
-        </span>
-      </div>
-    </li>
+      <p> Postado em: ${post.data().date}</p>
+      <p> ${post.data().visibility}</p>
+      <span class="delete">
+        <img src="img/trash-alt-regular.svg" alt="delete-posts">
+      </span>
+    </div>
   `;
-  document.querySelector("#postados").innerHTML += postTemplate;
+  let postElement = document.createElement("li");
+  postElement.classList.add("each-post");
+  postElement.id = `post-${post.id}`;
+  postElement.innerHTML = postTemplate;
+  postElement.getElementsByClassName("edit")[0].addEventListener("click", (event) => {
+    editPost(event, post.id);
+  });
+  postElement.getElementsByClassName("like")[0].addEventListener("click", (event) => {
+    likePost(event, post.id);
+  });
+  postElement.getElementsByClassName("delete")[0].addEventListener("click", (event) => {
+    deletePost(event, post.id);
+  });
+  return postElement;
 }
 
 function register() {
@@ -227,17 +218,16 @@ function register() {
         cred.user.updateProfile({ displayName: nameRegisterInput.value })
       )
       .then(() => {
-        const uid = firebase.auth().currentUser.uid;
         userCollection.add({
           name: nameRegisterInput.value,
           email: emailRegisterInput.value,
           birthday: dateRegisterInput.value,
-          id_user: uid,
+          id_user: firebase.auth().currentUser.uid,
         });
       })
       .catch((error) => {
         alert(error.message);
-    });
+      });
   });
 }
 
