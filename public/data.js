@@ -1,3 +1,5 @@
+import {readPostsDOM} from "./main.js"
+
 
 export const firebaseActions = {
   editOrLikePost(postId, updateTextOrLike) {
@@ -49,9 +51,32 @@ export const firebaseActions = {
         let credential = error.credential;
         // ...
       });
-  }
+  },
+  postData(post) {
+    const postCollection = firebase.firestore().collection("posts");
 
+    postCollection.add(post)
+      .then((postAdded) => {
+        postAdded.get()
+          .then((newPost) => {
+            readPostsDOM(newPost)
+          })
+      });
+  },
 
 }
+
+
+export function readPosts() {
+  const postCollection = firebase.firestore().collection("posts").orderBy("date", "asc");
+  postCollection.get().then((posts) => {
+    posts.forEach((post) => {
+      if (firebase.auth().currentUser.uid == post.data().id_user || post.data().visibility == "public") {
+        readPostsDOM(post)
+      }
+    });
+  });
+}
+
 
 
