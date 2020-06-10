@@ -1,6 +1,7 @@
 import { routes } from "./routes.js";
 import { signIn } from "./pages/posts/posts.js";
-import { createElementPost } from "./main.js"
+import {registerDOM , postDOM} from "./main.js"
+import {readPosts, googleLogin} from "./data.js"
 const container = document.querySelector("#root");
 
 function init() {
@@ -18,7 +19,7 @@ function init() {
       });
       document.getElementById("postados").innerHTML = "";
       readPosts();
-      post();
+      postDOM();
     } else if (!user) {
       container.innerHTML = "";
       container.appendChild(routes.home);
@@ -42,7 +43,7 @@ function init() {
 
       const googleAuth = document.querySelector("#google");
 
-      googleAuth.addEventListener("click", elements.googleLogin);
+      googleAuth.addEventListener("click",googleLogin);
     }
   });
 }
@@ -52,61 +53,5 @@ window.addEventListener("load", () => {
 });
 
 
-function post() {
-  const postar = document.querySelector("#postar");
-  const postTexto = document.querySelector("#post-text");
-  const img = document.querySelector("#post-img");
-  const inputFile = document.querySelector("#input-file");
-  const privateField = document.querySelector("#private");
 
-  img.addEventListener("click", () => {
-    inputFile.click();
-  })
-
-  postar.addEventListener("click", (event) => {
-    event.preventDefault();
-    const post = {
-      text: postTexto.value,
-      id_user: firebase.auth().currentUser.uid,
-      name: firebase.auth().currentUser.displayName,
-      likes: 0,
-      private: true,
-      visibility: privateField.checked ? "private" : "public",
-      date: elements.getHoursPosted()
-    };
-    const postCollection = firebase.firestore().collection("posts");
-
-    postCollection.add(post)
-      .then((postAdded) => {
-        postAdded.get()
-          .then((newPost) => {
-            postTexto.value = "";
-            privateField.checked = false;
-            let postElement = createElementPost(newPost);
-            let postadosElement = document.querySelector("#postados")
-            postadosElement.prepend(postElement);
-          })
-      });
-  });
-
-}
-
-
-function readPosts() {
-  const postCollection = firebase.firestore().collection("posts").orderBy("date", "desc");
-  document.getElementById("postados").innerHTML = "";
-
-  postCollection.get().then((posts) => {
-    posts.forEach((post) => {
-      if (post.data().visibility == "public") {
-        let postElement = createElementPost(post);
-        document.querySelector("#postados").appendChild(postElement);
-      }
-      else if (post.data().visibility == "private" && firebase.auth().currentUser.uid == post.data().id_user) {
-        let postElement = createElementPost(post);
-        document.querySelector("#postados").appendChild(postElement);
-      }
-    });
-  });
-}
 
