@@ -1,3 +1,5 @@
+import { firebaseActions } from "./data.js"
+
 const elements = {
   registerDOM() {
     const emailRegisterInput = document.querySelector("#email-input-register");
@@ -81,6 +83,6 @@ const elements = {
     likeValueElement.innerHTML = likes;
     firebaseActions.editOrLikePost(postId, { likes: likes })
   },
-  
+
 
 }
