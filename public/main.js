@@ -1,6 +1,6 @@
 import { firebaseActions } from "./data.js"
 
-const elements = {
+export const elements = {
   registerDOM() {
     const emailRegisterInput = document.querySelector("#email-input-register");
     const nameRegisterInput = document.querySelector("#name-input-register");
