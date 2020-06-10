@@ -126,12 +126,11 @@ function editOrLikePost(postId,updateTextOrLike) {
   postCollection.doc(postId).update(updateTextOrLike).then(()=> false)
 }
 function likePostDOM(event, postId) {
-    const likeElement = document.querySelectorAll(".like-value")
-    likeElement.forEach(element => {
-      let likes = Number(element.textContent) + 1;
+    let postElement = document.getElementById(`post-${postId}`);
+    let likeValueElement = postElement.getElementsByClassName("like-value")[0];
+    let likes = Number(likeValueElement.textContent) + 1;
+      likeValueElement.innerHTML = likes;
       editOrLikePost(postId, {likes: likes})
-        element.innerHTML = likes;
-    })
     }
 
 function editPostDOM (event, postId) {
