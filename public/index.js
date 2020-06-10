@@ -1,5 +1,6 @@
 import { routes } from "./routes.js";
 import { signIn } from "./pages/posts/posts.js";
+import { elements } from "./main.js"
 const container = document.querySelector("#root");
 
 function init() {
@@ -36,12 +37,12 @@ function init() {
       registerButton.addEventListener("click", () => {
         container.innerHTML = "";
         container.appendChild(routes.register);
-        register();
+        registerDOM();
       });
 
       const googleAuth = document.querySelector("#google");
 
-      googleAuth.addEventListener("click", googleLogin);
+      googleAuth.addEventListener("click", elements.googleLogin);
     }
   });
 }
@@ -49,6 +50,7 @@ function init() {
 window.addEventListener("load", () => {
   init();
 });
+
 
 function post() {
   const postar = document.querySelector("#postar");
@@ -70,7 +72,7 @@ function post() {
       likes: 0,
       private: true,
       visibility: privateField.checked ? "private" : "public",
-      date: getHoursPosted()
+      date: elements.getHoursPosted()
     };
     const postCollection = firebase.firestore().collection("posts");
 
@@ -80,7 +82,7 @@ function post() {
           .then((newPost) => {
             postTexto.value = "";
             privateField.checked = false;
-            let postElement = createElementPost(newPost);
+            let postElement = elements.createElementPost(newPost);
             let postadosElement = document.querySelector("#postados")
             postadosElement.prepend(postElement);
           })
@@ -89,18 +91,6 @@ function post() {
 
 }
 
-function getHoursPosted() {
-  const date = new Date();
-  const fullDate = {
-    day: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
-    month: date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth(),
-    year: date.getFullYear(),
-    hours: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
-    minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
-    seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
-  }
-  return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
-}
 
 function readPosts() {
   const postCollection = firebase.firestore().collection("posts").orderBy("date", "desc");
@@ -109,149 +99,14 @@ function readPosts() {
   postCollection.get().then((posts) => {
     posts.forEach((post) => {
       if (post.data().visibility == "public") {
-        let postElement = createElementPost(post);
+        let postElement = elements.createElementPost(post);
         document.querySelector("#postados").appendChild(postElement);
       }
       else if (post.data().visibility == "private" && firebase.auth().currentUser.uid == post.data().id_user) {
-        let postElement = createElementPost(post);
+        let postElement = elements.createElementPost(post);
         document.querySelector("#postados").appendChild(postElement);
       }
     });
   });
 }
 
-function editPost(event, postId) {
-  let postElement = document.getElementById(`post-${postId}`);
-  let textEditElement = postElement.getElementsByClassName("post-text-area")[0];
-
-  if (textEditElement.contentEditable != "true") {
-    textEditElement.contentEditable = true;
-    textEditElement.focus();
-  } else {
-    const postCollection = firebase.firestore().collection("posts");
-    postCollection.doc(postId).update({ text: textEditElement.innerHTML }).then(() =>{
-      textEditElement.contentEditable = false;
-    })
-  }
-}
-
-function deletePost(event, postId) {
-  const postCollection = firebase.firestore().collection("posts");
-  postCollection.doc(postId).delete().then(() => {
-    let post = document.getElementById(`post-${postId}`);
-    post.remove();
-  })
-}
-
-function likePost(event, postId) {
-  const postCollection = firebase.firestore().collection("posts");
-  postCollection.doc(postId).get().then((post) => {
-    let postElement = document.getElementById(`post-${postId}`);
-    let likeValueElement = postElement.getElementsByClassName("like-value")[0];
-    let likes = post.data().likes + 1;
-    postCollection.doc(postId).update({ likes: likes }).then(() => {
-      likeValueElement.innerHTML = likes;
-    })
-  })
-}
-
-function createElementPost(post) {
-  const postTemplate = `
-    <div class="name-edit-post">
-      <p class="post-user-name">${post.data().name}</p>
-      <span class="edit">
-        <img src="img/edit-regular.svg" alt="edit-posts">
-      </span>
-    </div>
-    <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
-    <div class="name-edit-post">
-      <div>
-        <span class="like">❤️</span>
-        <span class="like-value">${post.data().likes}</span> 
-      </div>
-      <p> Postado em: ${post.data().date}</p>
-      <p> ${post.data().visibility}</p>
-      <span class="delete">
-        <img src="img/trash-alt-regular.svg" alt="delete-posts">
-      </span>
-    </div>
-  `;
-  let postElement = document.createElement("li");
-  postElement.classList.add("each-post");
-  postElement.id = `post-${post.id}`;
-  postElement.innerHTML = postTemplate;
-  postElement.getElementsByClassName("edit")[0].addEventListener("click", (event) => {
-    editPost(event, post.id);
-  });
-  postElement.getElementsByClassName("like")[0].addEventListener("click", (event) => {
-    likePost(event, post.id);
-  });
-  postElement.getElementsByClassName("delete")[0].addEventListener("click", (event) => {
-    deletePost(event, post.id);
-  });
-  return postElement;
-}
-
-function register() {
-  const emailRegisterInput = document.querySelector("#email-input-register");
-  const nameRegisterInput = document.querySelector("#name-input-register");
-  const dateRegisterInput = document.querySelector("#date-input-register");
-  const passwordRegisterInput = document.querySelector("#password-input-register");
-  const singInButton = document.querySelector("#sign-in-button");
-  const backButton = document.querySelector("#back-button");
-
-  backButton.addEventListener("click", () => {
-    container.innerHTML = '';
-    container.appendChild(routes.home);
-  })
-
-  singInButton.addEventListener("click", () => {
-    const userCollection = firebase.firestore().collection("users-info");
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(
-        emailRegisterInput.value,
-        passwordRegisterInput.value
-      )
-      .then((cred) =>
-        cred.user.updateProfile({ displayName: nameRegisterInput.value })
-      )
-      .then(() => {
-        userCollection.add({
-          name: nameRegisterInput.value,
-          email: emailRegisterInput.value,
-          birthday: dateRegisterInput.value,
-          id_user: firebase.auth().currentUser.uid,
-        });
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  });
-}
-
-function googleLogin() {
-  let provider = new firebase.auth.GoogleAuthProvider();
-
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then(function (result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      let token = result.credential.accessToken;
-      // The signed-in user info.
-      let user = result.user;
-      // ...
-    })
-    .catch(function (error) {
-      // Handle Errors here.
-      let errorCode = error.code;
-      let errorMessage = error.message;
-      // The email of the user's account used.
-      let email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      let credential = error.credential;
-      // ...
-    });
-}
