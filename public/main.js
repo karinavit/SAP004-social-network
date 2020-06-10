@@ -58,7 +58,7 @@ export const elements = {
     });
     return postElement;
   },
-   getHoursPosted() {
+  getHoursPosted() {
     const date = new Date();
     const fullDate = {
       day: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
@@ -70,10 +70,10 @@ export const elements = {
     }
     return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
   },
- editPostDOM(postId) {
+  editPostDOM(postId) {
     let postElement = document.getElementById(`post-${postId}`);
     let textEditElement = postElement.getElementsByClassName("post-text-area")[0];
-  
+
     if (textEditElement.contentEditable != "true") {
       textEditElement.contentEditable = true;
       textEditElement.focus();
@@ -82,13 +82,13 @@ export const elements = {
       firebaseActions.editOrLikePost(postId, { text: textEditElement.textContent })
     }
   },
-   deletePostDOM(postId) {
+  deletePostDOM(postId) {
     firebaseActions.deletePost(postId)
     let post = document.getElementById(`post-${postId}`);
     post.remove();
-  
+
   },
-   likePostDOM(postId) {
+  likePostDOM(postId) {
     let postElement = document.getElementById(`post-${postId}`);
     let likeValueElement = postElement.getElementsByClassName("like-value")[0];
     let likes = Number(likeValueElement.textContent) + 1;
