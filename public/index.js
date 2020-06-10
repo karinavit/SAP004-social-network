@@ -1,7 +1,7 @@
 import { routes } from "./routes.js";
 import { signIn } from "./pages/posts/posts.js";
 import {registerDOM , postDOM} from "./main.js"
-import {readPosts} from "./data.js"
+import {readPosts, googleLogin} from "./data.js"
 const container = document.querySelector("#root");
 
 function init() {
@@ -43,7 +43,7 @@ function init() {
 
       const googleAuth = document.querySelector("#google");
 
-      googleAuth.addEventListener("click", elements.googleLogin);
+      googleAuth.addEventListener("click",googleLogin);
     }
   });
 }
