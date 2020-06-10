@@ -158,6 +158,9 @@ footer {
   margin: 5px 0px;
 }
 
+.hidden {
+  display: none;
+}
 .posts-img {
   width: 30px;
 }
