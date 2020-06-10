@@ -1,6 +1,6 @@
 import { firebaseActions } from "./data.js"
 
-export const elements = {
+const elements = {
   registerDOM() {
     const emailRegisterInput = document.querySelector("#email-input-register");
     const nameRegisterInput = document.querySelector("#name-input-register");
@@ -21,42 +21,6 @@ export const elements = {
       }
       firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, user)
     })
-  },
-  createElementPost(post) {
-    const postTemplate = `
-      <div class="name-edit-post">
-        <p class="post-user-name">${post.data().name}</p>
-        <span class="edit">
-          <img src="img/edit-regular.svg" alt="edit-posts">
-        </span>
-      </div>
-      <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
-      <div class="name-edit-post">
-        <div>
-          <span class="like">❤️</span>
-          <span class="like-value">${post.data().likes}</span> 
-        </div>
-        <p> Postado em: ${post.data().date}</p>
-        <p> ${post.data().visibility}</p>
-        <span class="delete">
-          <img src="img/trash-alt-regular.svg" alt="delete-posts">
-        </span>
-      </div>
-    `;
-    let postElement = document.createElement("li");
-    postElement.classList.add("each-post");
-    postElement.id = `post-${post.id}`;
-    postElement.innerHTML = postTemplate;
-    postElement.getElementsByClassName("edit")[0].addEventListener("click", () => {
-      editPostDOM(post.id);
-    });
-    postElement.getElementsByClassName("like")[0].addEventListener("click", () => {
-      likePostDOM(post.id);
-    });
-    postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
-      deletePostDOM(post.id);
-    });
-    return postElement;
   },
   getHoursPosted() {
     const date = new Date();
@@ -97,4 +61,41 @@ export const elements = {
   },
 
 
+}
+
+export function createElementPost(post) {
+  const postTemplate = `
+    <div class="name-edit-post">
+      <p class="post-user-name">${post.data().name}</p>
+      <span class="edit">
+        <img src="img/edit-regular.svg" alt="edit-posts">
+      </span>
+    </div>
+    <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
+    <div class="name-edit-post">
+      <div>
+        <span class="like">❤️</span>
+        <span class="like-value">${post.data().likes}</span> 
+      </div>
+      <p> Postado em: ${post.data().date}</p>
+      <p> ${post.data().visibility}</p>
+      <span class="delete">
+        <img src="img/trash-alt-regular.svg" alt="delete-posts">
+      </span>
+    </div>
+  `;
+  let postElement = document.createElement("li");
+  postElement.classList.add("each-post");
+  postElement.id = `post-${post.id}`;
+  postElement.innerHTML = postTemplate;
+  postElement.getElementsByClassName("edit")[0].addEventListener("click", () => {
+    elements.editPostDOM(post.id);
+  });
+  postElement.getElementsByClassName("like")[0].addEventListener("click", () => {
+    elements.likePostDOM(post.id);
+  });
+  postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
+    elements.deletePostDOM(post.id);
+  });
+  return postElement;
 }
