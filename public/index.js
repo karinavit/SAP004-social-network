@@ -36,7 +36,7 @@ function init() {
       registerButton.addEventListener("click", () => {
         container.innerHTML = "";
         container.appendChild(routes.register);
-        register();
+        registerDOM();
       });
 
       const googleAuth = document.querySelector("#google");
@@ -200,10 +200,10 @@ function createElementPost(post) {
   return postElement;
 }
 
-function register() {
+function registerDOM () {
   const emailRegisterInput = document.querySelector("#email-input-register");
   const nameRegisterInput = document.querySelector("#name-input-register");
-  const dateRegisterInput = document.querySelector("#date-input-register");
+  const birthdayRegisterInput = document.querySelector("#date-input-register");
   const passwordRegisterInput = document.querySelector("#password-input-register");
   const singInButton = document.querySelector("#sign-in-button");
   const backButton = document.querySelector("#back-button");
@@ -214,30 +214,31 @@ function register() {
   })
 
   singInButton.addEventListener("click", () => {
+    register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, {name: nameRegisterInput.value,
+    email: emailRegisterInput.value, birthday: birthdayRegisterInput.value})
+
+  })
+
+}
+
+function register(email, password,name,userData) {
     const userCollection = firebase.firestore().collection("users-info");
 
     firebase
       .auth()
-      .createUserWithEmailAndPassword(
-        emailRegisterInput.value,
-        passwordRegisterInput.value
-      )
+      .createUserWithEmailAndPassword(email,password)
       .then((cred) =>
-        cred.user.updateProfile({ displayName: nameRegisterInput.value })
+        cred.user.updateProfile({ displayName: name })
       )
       .then(() => {
-        userCollection.add({
-          name: nameRegisterInput.value,
-          email: emailRegisterInput.value,
-          birthday: dateRegisterInput.value,
-          id_user: firebase.auth().currentUser.uid,
-        });
+        userCollection.add(userData);
       })
       .catch((error) => {
         alert(error.message);
       });
-  });
-}
+  }
+
+
 
 function googleLogin() {
   let provider = new firebase.auth.GoogleAuthProvider();
