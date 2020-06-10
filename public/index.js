@@ -1,5 +1,6 @@
 import { routes } from "./routes.js";
 import { signIn } from "./pages/posts/posts.js";
+import {firebaseActions} from "./data.js"
 const container = document.querySelector("#root");
 
 function init() {
@@ -120,17 +121,13 @@ function readPosts() {
   });
 }
 
-function editOrLikePost(postId,updateTextOrLike) {
-  const postCollection = firebase.firestore().collection("posts");
 
-  postCollection.doc(postId).update(updateTextOrLike).then(()=> false)
-}
 function likePostDOM(postId) {
     let postElement = document.getElementById(`post-${postId}`);
     let likeValueElement = postElement.getElementsByClassName("like-value")[0];
     let likes = Number(likeValueElement.textContent) + 1;
       likeValueElement.innerHTML = likes;
-      editOrLikePost(postId, {likes: likes})
+      firebaseActions.editOrLikePost(postId, {likes: likes})
     }
 
 function editPostDOM (postId) {
@@ -142,20 +139,13 @@ function editPostDOM (postId) {
     textEditElement.focus();
   } else {
       textEditElement.contentEditable = false;
-      editOrLikePost(postId, {text: textEditElement.textContent})
+      firebaseActions.editOrLikePost(postId, {text: textEditElement.textContent})
     }
 }
 
-function deletePost(postId) {
-  const postCollection = firebase.firestore().collection("posts");
-
-  postCollection.doc(postId).delete().then(() => {
-    
-  })
-}
 
 function deletePostDOM (postId) {
-  deletePost(postId)
+  firebaseActions.deletePost(postId)
   let post = document.getElementById(`post-${postId}`);
   post.remove();
 
