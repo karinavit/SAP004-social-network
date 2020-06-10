@@ -59,6 +59,8 @@ const elements = {
         </span>
       </div>
     `;
+
+    
     let postElement = document.createElement("li");
     postElement.classList.add("each-post");
     postElement.id = `post-${post.id}`;
@@ -72,6 +74,11 @@ const elements = {
     postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
       elements.deletePostDOM(post.id);
     });
+
+    if(post.data().id_user !== firebase.auth().currentUser.uid) {
+      postElement.querySelector(".delete").classList.add("hidden")
+      postElement.querySelector(".edit").classList.add("hidden")
+    }
     return postElement;
   }
   
@@ -134,5 +141,5 @@ export function registerDOM() {
 
 
 export function readPostsDOM  (post) {
-  document.querySelector("#postados").prepend(elements.createElementPost(post))
+    document.querySelector("#postados").prepend(elements.createElementPost(post))
 }
