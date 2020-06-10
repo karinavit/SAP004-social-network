@@ -58,6 +58,18 @@ export const elements = {
     });
     return postElement;
   },
+   getHoursPosted() {
+    const date = new Date();
+    const fullDate = {
+      day: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
+      month: date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth(),
+      year: date.getFullYear(),
+      hours: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
+      minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
+      seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
+    }
+    return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
+  },
  editPostDOM(postId) {
     let postElement = document.getElementById(`post-${postId}`);
     let textEditElement = postElement.getElementsByClassName("post-text-area")[0];
