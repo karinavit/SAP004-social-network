@@ -72,7 +72,7 @@ function post() {
       likes: 0,
       private: true,
       visibility: privateField.checked ? "private" : "public",
-      date: getHoursPosted()
+      date: elements.getHoursPosted()
     };
     const postCollection = firebase.firestore().collection("posts");
 
@@ -82,7 +82,7 @@ function post() {
           .then((newPost) => {
             postTexto.value = "";
             privateField.checked = false;
-            let postElement = createElementPost(newPost);
+            let postElement = elements.createElementPost(newPost);
             let postadosElement = document.querySelector("#postados")
             postadosElement.prepend(postElement);
           })
@@ -91,18 +91,6 @@ function post() {
 
 }
 
-function getHoursPosted() {
-  const date = new Date();
-  const fullDate = {
-    day: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
-    month: date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth(),
-    year: date.getFullYear(),
-    hours: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
-    minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
-    seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
-  }
-  return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
-}
 
 function readPosts() {
   const postCollection = firebase.firestore().collection("posts").orderBy("date", "desc");
@@ -111,11 +99,11 @@ function readPosts() {
   postCollection.get().then((posts) => {
     posts.forEach((post) => {
       if (post.data().visibility == "public") {
-        let postElement = createElementPost(post);
+      let postElement = elements.createElementPost(post);
         document.querySelector("#postados").appendChild(postElement);
       }
       else if (post.data().visibility == "private" && firebase.auth().currentUser.uid == post.data().id_user) {
-        let postElement = createElementPost(post);
+        let postElement = elements.createElementPost(post);
         document.querySelector("#postados").appendChild(postElement);
       }
     });
