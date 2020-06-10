@@ -24,7 +24,7 @@ export const signIn = (name) => {
       <form class="display-form">
         <input class="input-posts" type=text id="post-text">
         <div class="display-posts">
-          <input type="file" src="img/image-solid.svg" style="display:none" id="input-file">
+          <input type="file" src="img/image-solid.svg" class="hidden" id="input-file">
           <img class="posts-img" src="img/image-solid.svg" alt="photo-to-post" id="post-img">
           <input type="checkbox" id="private"><label>Privado</label>
           <button class="button-login width-button-login" id="postar" type="submit">
