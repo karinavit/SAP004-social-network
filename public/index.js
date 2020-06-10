@@ -1,6 +1,6 @@
 import { routes } from "./routes.js";
 import { signIn } from "./pages/posts/posts.js";
-import { elements } from "./main.js"
+import { createElementPost } from "./main.js"
 const container = document.querySelector("#root");
 
 function init() {
@@ -82,7 +82,7 @@ function post() {
           .then((newPost) => {
             postTexto.value = "";
             privateField.checked = false;
-            let postElement = elements.createElementPost(newPost);
+            let postElement = createElementPost(newPost);
             let postadosElement = document.querySelector("#postados")
             postadosElement.prepend(postElement);
           })
@@ -99,11 +99,11 @@ function readPosts() {
   postCollection.get().then((posts) => {
     posts.forEach((post) => {
       if (post.data().visibility == "public") {
-        let postElement = elements.createElementPost(post);
+        let postElement = createElementPost(post);
         document.querySelector("#postados").appendChild(postElement);
       }
       else if (post.data().visibility == "private" && firebase.auth().currentUser.uid == post.data().id_user) {
-        let postElement = elements.createElementPost(post);
+        let postElement = createElementPost(post);
         document.querySelector("#postados").appendChild(postElement);
       }
     });
