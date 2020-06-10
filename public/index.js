@@ -125,7 +125,7 @@ function editOrLikePost(postId,updateTextOrLike) {
 
   postCollection.doc(postId).update(updateTextOrLike).then(()=> false)
 }
-function likePostDOM(event, postId) {
+function likePostDOM(postId) {
     let postElement = document.getElementById(`post-${postId}`);
     let likeValueElement = postElement.getElementsByClassName("like-value")[0];
     let likes = Number(likeValueElement.textContent) + 1;
@@ -133,7 +133,7 @@ function likePostDOM(event, postId) {
       editOrLikePost(postId, {likes: likes})
     }
 
-function editPostDOM (event, postId) {
+function editPostDOM (postId) {
   let postElement = document.getElementById(`post-${postId}`);
   let textEditElement = postElement.getElementsByClassName("post-text-area")[0];
 
@@ -147,6 +147,8 @@ function editPostDOM (event, postId) {
 }
 
 function deletePost(postId) {
+  const postCollection = firebase.firestore().collection("posts");
+
   postCollection.doc(postId).delete().then(() => {
     
   })
@@ -186,13 +188,13 @@ function createElementPost(post) {
   postElement.classList.add("each-post");
   postElement.id = `post-${post.id}`;
   postElement.innerHTML = postTemplate;
-  postElement.getElementsByClassName("edit")[0].addEventListener("click", (event) => {
-    editPostDOM(event, post.id);
+  postElement.getElementsByClassName("edit")[0].addEventListener("click", () => {
+    editPostDOM(post.id);
   });
-  postElement.getElementsByClassName("like")[0].addEventListener("click", (event) => {
-    likePostDOM(event, post.id);
+  postElement.getElementsByClassName("like")[0].addEventListener("click", () => {
+    likePostDOM(post.id);
   });
-  postElement.getElementsByClassName("delete")[0].addEventListener("click", (event) => {
+  postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
     deletePostDOM( post.id);
   });
   return postElement;
