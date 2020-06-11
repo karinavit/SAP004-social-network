@@ -25,7 +25,7 @@ export const firebaseActions = {
     postCollection.doc(postId).delete()
     .then(() => { });
   },
-  register(email, password, name, userData) {
+  register(email, password, name, birthday) {
     const userCollection = firebase.firestore().collection("users-info");
     firebase
       .auth()
@@ -34,7 +34,12 @@ export const firebaseActions = {
         cred.user.updateProfile({ displayName: name })
       )
       .then(() => {
-        userCollection.add(userData);
+        userCollection.add({
+          birthday: birthday,
+          email: email,
+          id_user: firebase.auth().currentUser.uid,
+          name: name,
+        })
       })
       .catch((error) => {
         alert(error.message);
