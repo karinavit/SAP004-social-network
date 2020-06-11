@@ -20,17 +20,16 @@ export function nameData() {
 export const firebaseActions = {
   editOrLikePost(postId, updateTextOrLike) {
     const postCollection = firebase.firestore().collection("posts");
-
-    postCollection.doc(postId).update(updateTextOrLike).then(() => { })
+    postCollection.doc(postId).update(updateTextOrLike)
+    .then(() => { });
   },
   deletePost(postId) {
     const postCollection = firebase.firestore().collection("posts");
-
-    postCollection.doc(postId).delete().then(() => { })
+    postCollection.doc(postId).delete()
+    .then(() => { });
   },
   register(email, password, name, userData) {
     const userCollection = firebase.firestore().collection("users-info");
-
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -46,25 +45,23 @@ export const firebaseActions = {
   },
   postData(post) {
     const postCollection = firebase.firestore().collection("posts");
-
     postCollection.add(post)
       .then((postAdded) => {
         postAdded.get()
           .then((newPost) => {
-            readPostsDOM(newPost)
-          })
+            readPostsDOM(newPost);
+          });
       });
   },
-
 }
-
 
 export function readPosts() {
   const postCollection = firebase.firestore().collection("posts").orderBy("date", "asc");
-  postCollection.get().then((posts) => {
+  postCollection.get()
+  .then((posts) => {
     posts.forEach((post) => {
       if (firebase.auth().currentUser.uid == post.data().id_user || post.data().visibility == "public") {
-        readPostsDOM(post)
+        readPostsDOM(post);
       }
     });
   });

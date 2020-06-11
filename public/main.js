@@ -1,5 +1,4 @@
 import { routes } from "./index.js";
-import { signIn } from "./pages/posts/posts.js";
 import { firebaseActions, readPosts, googleLogin, loggoutData, loginData, nameData } from "./data.js";
 
 const elements = {
@@ -12,11 +11,11 @@ const elements = {
       textEditElement.focus();
     } else {
       textEditElement.contentEditable = false;
-      firebaseActions.editOrLikePost(postId, { text: textEditElement.textContent })
+      firebaseActions.editOrLikePost(postId, { text: textEditElement.textContent });
     }
   },
   deletePostDOM(postId) {
-    firebaseActions.deletePost(postId)
+    firebaseActions.deletePost(postId);
     let post = document.getElementById(`post-${postId}`);
     post.remove();
 
@@ -26,7 +25,7 @@ const elements = {
     let likeValueElement = postElement.getElementsByClassName("like-value")[0];
     let likes = Number(likeValueElement.textContent) + 1;
     likeValueElement.innerHTML = likes;
-    firebaseActions.editOrLikePost(postId, { likes: likes })
+    firebaseActions.editOrLikePost(postId, { likes: likes });
   },
   getHoursPosted() {
     const date = new Date();
@@ -36,9 +35,10 @@ const elements = {
       year: date.getFullYear(),
       hours: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
       minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
-      seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
+      seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds(),
     }
-    return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
+    return `${fullDate.day}/${fullDate.month}/${fullDate.year} as 
+    ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
   },
    createElementPost(post) {
     const postTemplate = `
@@ -77,8 +77,8 @@ const elements = {
     });
 
     if(post.data().id_user !== firebase.auth().currentUser.uid) {
-      postElement.querySelector(".delete").classList.add("hidden")
-      postElement.querySelector(".edit").classList.add("hidden")
+      postElement.querySelector(".delete").classList.add("hidden");
+      postElement.querySelector(".edit").classList.add("hidden");
     }
     return postElement;
   },
@@ -103,12 +103,12 @@ export function postDOM () {
       likes: 0,
       private: true,
       visibility: privateField.checked ? "private" : "public",
-      date: elements.getHoursPosted()
+      date: elements.getHoursPosted(),
     };
     postTexto.value = "";
     privateField.checked = false;
     
-    firebaseActions.postData(post)
+    firebaseActions.postData(post);
     
   });
 }
@@ -129,14 +129,14 @@ export function registerDOM() {
   singInButton.addEventListener("click", () => {
     const user = {
       name: nameRegisterInput.value,
-      email: emailRegisterInput.value, birthday: birthdayRegisterInput.value
+      email: emailRegisterInput.value, birthday: birthdayRegisterInput.value,
     }
     firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, user);
   });
 }
 
-export function readPostsDOM  (post) {
-    document.querySelector("#postados").prepend(elements.createElementPost(post))
+export function readPostsDOM(post) {
+    document.querySelector("#postados").prepend(elements.createElementPost(post));
 }
 
 export function pagePost() {
@@ -171,7 +171,7 @@ export function loginEvent(element) {
   const loginButton = document.querySelector("#submit-btn");
   loginButton.addEventListener("click", function click() {
     loginData(emailInput.value, passwordInput.value);
-  })
+  });
 }
 
 export function registerEvent(element) {
@@ -180,5 +180,5 @@ export function registerEvent(element) {
     element.innerHTML = "";
     element.appendChild(routes.register());
     registerDOM();
-  })
+  });
 }
