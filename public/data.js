@@ -97,4 +97,20 @@ export function googleLogin() {
 }
 
 
+export function comments(text, postId, date ) {
+  const commentsReference =
+  firebase.firestore().collection('posts').doc(postId)
+        .collection('comments');
 
+  commentsReference
+      .doc()
+      .set({
+        name: firebase.auth().currentUser.displayName,
+        date: date, 
+        text:text,
+      })
+      .then(() => {})
+      .catch( (error) => {
+          console.error('Error adding document: ', error);
+      });
+    }
