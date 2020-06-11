@@ -4,9 +4,9 @@ import { signIn } from "./pages/posts/posts.js";
 import { register } from "./pages/register/register.js";
 
 export const routes = {
-  home: formLogin(),
-  posts: signIn(name),
-  register: register(),
+  home: formLogin,
+  posts: signIn,
+  register: register,
 };
 
 const container = document.querySelector("#root");
