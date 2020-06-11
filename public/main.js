@@ -1,5 +1,5 @@
 import { routes } from "./index.js";
-import { firebaseActions, readPosts, googleLogin, loggoutData, loginData, nameData } from "./data.js";
+import { firebaseActions, readPosts, googleLogin } from "./data.js";
 
 const elements = {
   editPostDOM(postId) {
@@ -139,46 +139,44 @@ export function readPostsDOM(post) {
     document.querySelector("#postados").prepend(elements.createElementPost(post));
 }
 
-export function pagePost() {
-  document.getElementById("postados").innerHTML = "";
-  readPosts();
-  postDOM();
-}
-
-export function loggoutMenuEvent(element) {
-  element.innerHTML = "";
-  element.appendChild(routes.posts(nameData()));
-  const loggoutButton = document.querySelector("#loggout");
-  loggoutButton.addEventListener("click", () => {
-    loggoutData();
-  });
-  const menuBar = document.querySelector("#bar-menu");
-  menuBar.addEventListener("click", () => {
-    loggoutButton.classList.toggle("show-loggout");
-  });
-}
-
-export function loginEventGoogle() {
-  const googleAuth = document.querySelector("#google");
-  googleAuth.addEventListener("click", googleLogin);
-}
-
-export function loginEvent(element) {
-  element.innerHTML = "";
-  element.appendChild(routes.home());
-  const emailInput = document.querySelector("#email-input");
-  const passwordInput = document.querySelector("#password-input");
-  const loginButton = document.querySelector("#submit-btn");
-  loginButton.addEventListener("click", function click() {
-    loginData(emailInput.value, passwordInput.value);
-  });
-}
-
-export function registerEvent(element) {
-  const registerButton = document.querySelector("#register");
-  registerButton.addEventListener("click", () => {
+export const initFunc = {
+  pagePost() {
+    document.getElementById("postados").innerHTML = "";
+    readPosts();
+    postDOM();
+  },
+  loggoutMenuEvent(element) {
     element.innerHTML = "";
-    element.appendChild(routes.register());
-    registerDOM();
-  });
+    element.appendChild(routes.posts(firebaseActions.nameData()));
+    const loggoutButton = document.querySelector("#loggout");
+    loggoutButton.addEventListener("click", () => {
+      firebaseActions.loggoutData();
+    });
+    const menuBar = document.querySelector("#bar-menu");
+    menuBar.addEventListener("click", () => {
+      loggoutButton.classList.toggle("show-loggout");
+    });
+  },
+  loginEventGoogle() {
+    const googleAuth = document.querySelector("#google");
+    googleAuth.addEventListener("click", googleLogin);
+  },
+  loginEvent(element) {
+    element.innerHTML = "";
+    element.appendChild(routes.home());
+    const emailInput = document.querySelector("#email-input");
+    const passwordInput = document.querySelector("#password-input");
+    const loginButton = document.querySelector("#submit-btn");
+    loginButton.addEventListener("click", function click() {
+      firebaseActions.loginData(emailInput.value, passwordInput.value);
+    });
+  },
+  registerEvent(element) {
+    const registerButton = document.querySelector("#register");
+    registerButton.addEventListener("click", () => {
+      element.innerHTML = "";
+      element.appendChild(routes.register());
+      registerDOM();
+    });
+  },
 }
