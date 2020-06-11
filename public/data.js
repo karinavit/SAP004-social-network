@@ -1,5 +1,3 @@
-import {readPostsDOM} from "./main.js"
-
 export const firebaseActions = {
   loginData(email, password) {
     firebase
@@ -40,25 +38,25 @@ export const firebaseActions = {
         alert(error.message);
       });
   },
-  postData(post) {
+  postData(post, func) {
     const postCollection = firebase.firestore().collection("posts");
     postCollection.add(post)
       .then((postAdded) => {
         postAdded.get()
           .then((newPost) => {
-            readPostsDOM(newPost);
+            func(newPost);
           });
       });
   },
 }
 
-export function readPosts() {
+export function readPosts(func) {
   const postCollection = firebase.firestore().collection("posts").orderBy("date", "asc");
   postCollection.get()
   .then((posts) => {
     posts.forEach((post) => {
       if (firebase.auth().currentUser.uid == post.data().id_user || post.data().visibility == "public") {
-        readPostsDOM(post);
+        func(post);
       }
     });
   });

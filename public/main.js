@@ -108,8 +108,8 @@ export function postDOM () {
     postTexto.value = "";
     privateField.checked = false;
     
-    firebaseActions.postData(post);
-    
+    firebaseActions.postData(post,readPostsDOM);
+
   });
 }
 
@@ -135,14 +135,14 @@ export function registerDOM() {
   });
 }
 
-export function readPostsDOM(post) {
+function readPostsDOM(post) {
     document.querySelector("#postados").prepend(elements.createElementPost(post));
 }
 
 export const initFunc = {
   pagePost() {
     document.getElementById("postados").innerHTML = "";
-    readPosts();
+    readPosts(readPostsDOM);
     postDOM();
   },
   loggoutMenuEvent(element) {
