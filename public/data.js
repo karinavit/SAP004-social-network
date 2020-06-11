@@ -1,5 +1,21 @@
 import {readPostsDOM} from "./main.js"
 
+export function loggoutData() {
+  firebase.auth().signOut();
+}
+
+export function loginData(email, password) {
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .catch((error) => {
+      alert(error.message);
+    });
+}
+
+export function nameData() {
+  return firebase.auth().currentUser.displayName;
+}
 
 export const firebaseActions = {
   editOrLikePost(postId, updateTextOrLike) {
