@@ -1,5 +1,5 @@
 import { routes } from "./index.js";
-import { firebaseActions, readPosts, googleLogin } from "./data.js";
+import { firebaseActions, readPosts, googleLogin, comments } from "./data.js";
 
 const elements = {
   editPostDOM(postId) {
@@ -55,7 +55,7 @@ const elements = {
           <span class="like-value">${post.data().likes}</span> 
         </div>
         <p> Postado em: ${post.data().date}</p>
-        <p> ${post.data().visibility}</p>
+        <p class="comentar"> Comentar</p>
         <span class="delete">
           <img src="img/trash-alt-regular.svg" alt="delete-posts">
         </span>
@@ -75,6 +75,20 @@ const elements = {
     postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
       elements.deletePostDOM(post.id);
     });
+
+
+
+
+    postElement.getElementsByClassName("comentar")[0].addEventListener("click", () => {
+      comments("Oi isso é um teste", post.id, elements.getHoursPosted())
+
+
+})
+
+
+
+
+
 
     if(post.data().id_user !== firebase.auth().currentUser.uid) {
       postElement.querySelector(".delete").classList.add("hidden");
