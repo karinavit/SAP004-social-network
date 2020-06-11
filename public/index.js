@@ -19,7 +19,7 @@ function init() {
 
     } else {
       loginEvent(container);
-      registerEvent(container)
+      registerEvent(container);
       loginEventGoogle();
     }
   });
