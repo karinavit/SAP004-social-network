@@ -1,4 +1,6 @@
-import { firebaseActions } from "./data.js"
+import { routes } from "./index.js";
+import { signIn } from "./pages/posts/posts.js";
+import { firebaseActions, readPosts, googleLogin, loggoutData, loginData, nameData } from "./data.js";
 
 const elements = {
   editPostDOM(postId) {
@@ -60,7 +62,6 @@ const elements = {
       </div>
     `;
 
-    
     let postElement = document.createElement("li");
     postElement.classList.add("each-post");
     postElement.id = `post-${post.id}`;
@@ -80,14 +81,8 @@ const elements = {
       postElement.querySelector(".edit").classList.add("hidden")
     }
     return postElement;
-  }
-  
-  
-
-
+  },
 }
-
-
 
 export function postDOM () {
   const postar = document.querySelector("#postar");
@@ -115,7 +110,8 @@ export function postDOM () {
     
     firebaseActions.postData(post)
     
-  })}
+  });
+}
 
 export function registerDOM() {
   const emailRegisterInput = document.querySelector("#email-input-register");
@@ -128,18 +124,61 @@ export function registerDOM() {
   backButton.addEventListener("click", () => {
     container.innerHTML = '';
     container.appendChild(routes.home);
-  })
+  });
 
   singInButton.addEventListener("click", () => {
     const user = {
       name: nameRegisterInput.value,
       email: emailRegisterInput.value, birthday: birthdayRegisterInput.value
     }
-    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, user)
-  })
+    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, user);
+  });
 }
-
 
 export function readPostsDOM  (post) {
     document.querySelector("#postados").prepend(elements.createElementPost(post))
+}
+
+export function pagePost() {
+  document.getElementById("postados").innerHTML = "";
+  readPosts();
+  postDOM();
+}
+
+export function loggoutMenuEvent(element) {
+  element.innerHTML = "";
+  element.appendChild(signIn(nameData()));
+  const loggoutButton = document.querySelector("#loggout");
+  loggoutButton.addEventListener("click", () => {
+    loggoutData();
+  });
+  const menuBar = document.querySelector("#bar-menu");
+  menuBar.addEventListener("click", () => {
+    loggoutButton.classList.toggle("show-loggout");
+  });
+}
+
+export function loginEventGoogle() {
+  const googleAuth = document.querySelector("#google");
+  googleAuth.addEventListener("click", googleLogin);
+}
+
+export function loginEvent(element) {
+  element.innerHTML = "";
+  element.appendChild(routes.home);
+  const emailInput = document.querySelector("#email-input");
+  const passwordInput = document.querySelector("#password-input");
+  const loginButton = document.querySelector("#submit-btn");
+  loginButton.addEventListener("click", function click() {
+    loginData(emailInput.value, passwordInput.value);
+  })
+}
+
+export function registerEvent(element) {
+  const registerButton = document.querySelector("#register");
+  registerButton.addEventListener("click", () => {
+    element.innerHTML = "";
+    element.appendChild(routes.register);
+    registerDOM();
+  })
 }
