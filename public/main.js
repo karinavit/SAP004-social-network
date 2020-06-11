@@ -123,7 +123,7 @@ export function registerDOM() {
 
   backButton.addEventListener("click", () => {
     container.innerHTML = '';
-    container.appendChild(routes.home);
+    container.appendChild(routes.home());
   });
 
   singInButton.addEventListener("click", () => {
@@ -147,7 +147,7 @@ export function pagePost() {
 
 export function loggoutMenuEvent(element) {
   element.innerHTML = "";
-  element.appendChild(signIn(nameData()));
+  element.appendChild(routes.posts(nameData()));
   const loggoutButton = document.querySelector("#loggout");
   loggoutButton.addEventListener("click", () => {
     loggoutData();
@@ -165,7 +165,7 @@ export function loginEventGoogle() {
 
 export function loginEvent(element) {
   element.innerHTML = "";
-  element.appendChild(routes.home);
+  element.appendChild(routes.home());
   const emailInput = document.querySelector("#email-input");
   const passwordInput = document.querySelector("#password-input");
   const loginButton = document.querySelector("#submit-btn");
@@ -178,7 +178,7 @@ export function registerEvent(element) {
   const registerButton = document.querySelector("#register");
   registerButton.addEventListener("click", () => {
     element.innerHTML = "";
-    element.appendChild(routes.register);
+    element.appendChild(routes.register());
     registerDOM();
   })
 }
