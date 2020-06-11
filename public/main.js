@@ -59,7 +59,11 @@ const elements = {
         <span class="delete">
           <img src="img/trash-alt-regular.svg" alt="delete-posts">
         </span>
-      </div>
+        </div>
+      <ul class="comments hidden">
+      <input type="text" class="comment-area ">
+      <button type="submit" class="post-comment"> Comentário </button>
+        </ul>
     `;
 
     let postElement = document.createElement("li");
@@ -76,7 +80,10 @@ const elements = {
       elements.deletePostDOM(post.id);
     });
     postElement.getElementsByClassName("comentar")[0].addEventListener("click", () => {
-      comments("Oi isso é um teste", post.id, elements.getHoursPosted())
+         const comentario = postElement.getElementsByClassName("comments")[0]
+      comentario.classList.toggle("hidden")
+       
+      // comments("Oi isso é um teste", post.id, elements.getHoursPosted())
     })
 
     if (post.data().id_user !== firebase.auth().currentUser.uid) {
