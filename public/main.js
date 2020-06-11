@@ -40,7 +40,7 @@ const elements = {
     return `${fullDate.day}/${fullDate.month}/${fullDate.year} as 
     ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
   },
-   createElementPost(post) {
+  createElementPost(post) {
     const postTemplate = `
       <div class="name-edit-post">
         <p class="post-user-name">${post.data().name}</p>
@@ -75,22 +75,11 @@ const elements = {
     postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
       elements.deletePostDOM(post.id);
     });
-
-
-
-
     postElement.getElementsByClassName("comentar")[0].addEventListener("click", () => {
       comments("Oi isso é um teste", post.id, elements.getHoursPosted())
+    })
 
-
-})
-
-
-
-
-
-
-    if(post.data().id_user !== firebase.auth().currentUser.uid) {
+    if (post.data().id_user !== firebase.auth().currentUser.uid) {
       postElement.querySelector(".delete").classList.add("hidden");
       postElement.querySelector(".edit").classList.add("hidden");
     }
@@ -98,13 +87,13 @@ const elements = {
   },
 }
 
-export function postDOM () {
+export function postDOM() {
   const postar = document.querySelector("#postar");
   const postTexto = document.querySelector("#post-text");
   const img = document.querySelector("#post-img");
   const inputFile = document.querySelector("#input-file");
   const privateField = document.querySelector("#private");
-  
+
   img.addEventListener("click", () => {
     inputFile.click();
   })
@@ -121,9 +110,9 @@ export function postDOM () {
     };
     postTexto.value = "";
     privateField.checked = false;
-    
+
     firebaseActions.postData(post);
-    
+
   });
 }
 
@@ -141,12 +130,12 @@ export function registerDOM() {
   });
 
   singInButton.addEventListener("click", () => {
-    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, birthdayRegisterInput.value );
+    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, birthdayRegisterInput.value);
   });
 }
 
 export function readPostsDOM(post) {
-    document.querySelector("#postados").prepend(elements.createElementPost(post));
+  document.querySelector("#postados").prepend(elements.createElementPost(post));
 }
 
 export const initFunc = {
