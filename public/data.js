@@ -34,7 +34,9 @@ export const firebaseActions = {
         cred.user.updateProfile({ displayName: name })
       )
       .then(() => {
-        userCollection.add({
+
+        const uid = firebase.auth().currentUser.uid
+        userCollection.doc(uid).set({
           birthday: birthday,
           email: email,
           id_user: firebase.auth().currentUser.uid,
