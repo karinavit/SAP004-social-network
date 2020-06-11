@@ -1,4 +1,5 @@
-import { firebaseActions } from "./data.js"
+import { routes } from "./index.js";
+import { firebaseActions, readPosts, googleLogin } from "./data.js";
 
 const elements = {
   editPostDOM(postId) {
@@ -10,11 +11,11 @@ const elements = {
       textEditElement.focus();
     } else {
       textEditElement.contentEditable = false;
-      firebaseActions.editOrLikePost(postId, { text: textEditElement.textContent })
+      firebaseActions.editOrLikePost(postId, { text: textEditElement.textContent });
     }
   },
   deletePostDOM(postId) {
-    firebaseActions.deletePost(postId)
+    firebaseActions.deletePost(postId);
     let post = document.getElementById(`post-${postId}`);
     post.remove();
 
@@ -24,7 +25,7 @@ const elements = {
     let likeValueElement = postElement.getElementsByClassName("like-value")[0];
     let likes = Number(likeValueElement.textContent) + 1;
     likeValueElement.innerHTML = likes;
-    firebaseActions.editOrLikePost(postId, { likes: likes })
+    firebaseActions.editOrLikePost(postId, { likes: likes });
   },
   getHoursPosted() {
     const date = new Date();
@@ -34,9 +35,10 @@ const elements = {
       year: date.getFullYear(),
       hours: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
       minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
-      seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds()
+      seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds(),
     }
-    return `${fullDate.day}/${fullDate.month}/${fullDate.year} as ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
+    return `${fullDate.day}/${fullDate.month}/${fullDate.year} as 
+    ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
   },
    createElementPost(post) {
     const postTemplate = `
@@ -60,7 +62,6 @@ const elements = {
       </div>
     `;
 
-    
     let postElement = document.createElement("li");
     postElement.classList.add("each-post");
     postElement.id = `post-${post.id}`;
@@ -76,18 +77,12 @@ const elements = {
     });
 
     if(post.data().id_user !== firebase.auth().currentUser.uid) {
-      postElement.querySelector(".delete").classList.add("hidden")
-      postElement.querySelector(".edit").classList.add("hidden")
+      postElement.querySelector(".delete").classList.add("hidden");
+      postElement.querySelector(".edit").classList.add("hidden");
     }
     return postElement;
-  }
-  
-  
-
-
+  },
 }
-
-
 
 export function postDOM () {
   const postar = document.querySelector("#postar");
@@ -108,14 +103,15 @@ export function postDOM () {
       likes: 0,
       private: true,
       visibility: privateField.checked ? "private" : "public",
-      date: elements.getHoursPosted()
+      date: elements.getHoursPosted(),
     };
     postTexto.value = "";
     privateField.checked = false;
     
-    firebaseActions.postData(post)
+    firebaseActions.postData(post);
     
-  })}
+  });
+}
 
 export function registerDOM() {
   const emailRegisterInput = document.querySelector("#email-input-register");
@@ -127,19 +123,60 @@ export function registerDOM() {
 
   backButton.addEventListener("click", () => {
     container.innerHTML = '';
-    container.appendChild(routes.home);
-  })
+    container.appendChild(routes.home());
+  });
 
   singInButton.addEventListener("click", () => {
     const user = {
       name: nameRegisterInput.value,
-      email: emailRegisterInput.value, birthday: birthdayRegisterInput.value
+      email: emailRegisterInput.value, birthday: birthdayRegisterInput.value,
     }
-    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, user)
-  })
+    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, user);
+  });
 }
 
+export function readPostsDOM(post) {
+    document.querySelector("#postados").prepend(elements.createElementPost(post));
+}
 
-export function readPostsDOM  (post) {
-    document.querySelector("#postados").prepend(elements.createElementPost(post))
+export const initFunc = {
+  pagePost() {
+    document.getElementById("postados").innerHTML = "";
+    readPosts();
+    postDOM();
+  },
+  loggoutMenuEvent(element) {
+    element.innerHTML = "";
+    element.appendChild(routes.posts(firebaseActions.nameData()));
+    const loggoutButton = document.querySelector("#loggout");
+    loggoutButton.addEventListener("click", () => {
+      firebaseActions.loggoutData();
+    });
+    const menuBar = document.querySelector("#bar-menu");
+    menuBar.addEventListener("click", () => {
+      loggoutButton.classList.toggle("show-loggout");
+    });
+  },
+  loginEventGoogle() {
+    const googleAuth = document.querySelector("#google");
+    googleAuth.addEventListener("click", googleLogin);
+  },
+  loginEvent(element) {
+    element.innerHTML = "";
+    element.appendChild(routes.home());
+    const emailInput = document.querySelector("#email-input");
+    const passwordInput = document.querySelector("#password-input");
+    const loginButton = document.querySelector("#submit-btn");
+    loginButton.addEventListener("click", function click() {
+      firebaseActions.loginData(emailInput.value, passwordInput.value);
+    });
+  },
+  registerEvent(element) {
+    const registerButton = document.querySelector("#register");
+    registerButton.addEventListener("click", () => {
+      element.innerHTML = "";
+      element.appendChild(routes.register());
+      registerDOM();
+    });
+  },
 }
