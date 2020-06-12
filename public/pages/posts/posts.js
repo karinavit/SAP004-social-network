@@ -1,3 +1,5 @@
+import {elements} from "../../main.js"
+import {comments} from "../../data.js"
 export const signIn = (name) => {
   const container = document.createElement('div');
   container.classList.add("display-column");
@@ -37,3 +39,62 @@ export const signIn = (name) => {
   `;
   return container;
 };
+
+
+export function createElementPost(post) {
+  const postTemplate = `
+    <div class="name-edit-post">
+      <p class="post-user-name">${post.data().name}</p>
+      <span class="edit">
+        <img src="img/edit-regular.svg" alt="edit-posts">
+      </span>
+    </div>
+    <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
+    <div class="name-edit-post">
+      <div>
+        <span class="like">❤️</span>
+        <span class="like-value">${post.data().likes}</span> 
+      </div>
+      <p> Postado em: ${post.data().date}</p>
+      <p class="comentar"> Comentar</p>
+      <span class="delete">
+        <img src="img/trash-alt-regular.svg" alt="delete-posts">
+      </span>
+      </div>
+    <ul class="comments">
+    <div class="post-comment hidden">
+    <input type="text" class="comment-area ">
+    <button type="submit" class="post-comment"> Comentário </button>
+    </div>
+      </ul>
+  `;
+
+  let postElement = document.createElement("li");
+  postElement.classList.add("each-post");
+  postElement.id = `post-${post.id}`;
+  postElement.innerHTML = postTemplate;
+  postElement.getElementsByClassName("edit")[0].addEventListener("click", () => {
+    elements.editPostDOM(post.id);
+  });
+  postElement.getElementsByClassName("like")[0].addEventListener("click", () => {
+    elements.likePostDOM(post.id);
+  });
+  postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
+    elements.deletePostDOM(post.id);
+  });
+  postElement.getElementsByClassName("comentar")[0].addEventListener("click", () => {
+    const comentario = postElement.getElementsByClassName("post-comment")[0]
+    comentario.classList.toggle("hidden")
+  })
+  postElement.getElementsByClassName("post-comment")[0].addEventListener("click", () => {
+    const textPosted = postElement.getElementsByClassName("comment-area")[0]
+    comments(textPosted.value, post.id, elements.getHoursPosted())
+
+  })
+
+  if (post.data().id_user !== firebase.auth().currentUser.uid) {
+    postElement.querySelector(".delete").classList.add("hidden");
+    postElement.querySelector(".edit").classList.add("hidden");
+  }
+  return postElement;
+}

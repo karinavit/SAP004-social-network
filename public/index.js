@@ -14,7 +14,7 @@ const container = document.querySelector("#root");
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      initFunc.loggoutMenuEvent(container);
+      setTimeout(initFunc.loggoutMenuEvent(container), 1);
       initFunc.pagePost();
 
     } else {
