@@ -129,9 +129,10 @@ export function registerDOM() {
   singInButton.addEventListener("click", () => {
     const user = {
       name: nameRegisterInput.value,
-      email: emailRegisterInput.value, birthday: birthdayRegisterInput.value,
+      email: emailRegisterInput.value, 
+      birthday: birthdayRegisterInput.value,
     }
-    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, user);
+    firebaseActions.register(user.email, passwordRegisterInput.value, user.name, user);
   });
 }
 
