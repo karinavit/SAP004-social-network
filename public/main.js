@@ -108,12 +108,12 @@ export function postDOM () {
     postTexto.value = "";
     privateField.checked = false;
     
-    firebaseActions.postData(post);
-    
+    firebaseActions.postData(post,readPostsDOM);
+
   });
 }
 
-export function registerDOM() {
+export function registerDOM(element) {
   const emailRegisterInput = document.querySelector("#email-input-register");
   const nameRegisterInput = document.querySelector("#name-input-register");
   const birthdayRegisterInput = document.querySelector("#date-input-register");
@@ -122,27 +122,28 @@ export function registerDOM() {
   const backButton = document.querySelector("#back-button");
 
   backButton.addEventListener("click", () => {
-    container.innerHTML = '';
-    container.appendChild(routes.home());
+    element.innerHTML = '';
+    element.appendChild(routes.home());
   });
 
   singInButton.addEventListener("click", () => {
     const user = {
       name: nameRegisterInput.value,
-      email: emailRegisterInput.value, birthday: birthdayRegisterInput.value,
+      email: emailRegisterInput.value, 
+      birthday: birthdayRegisterInput.value,
     }
-    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, user);
+    firebaseActions.register(user.email, passwordRegisterInput.value, user.name, user);
   });
 }
 
-export function readPostsDOM(post) {
+function readPostsDOM(post) {
     document.querySelector("#postados").prepend(elements.createElementPost(post));
 }
 
 export const initFunc = {
   pagePost() {
     document.getElementById("postados").innerHTML = "";
-    readPosts();
+    readPosts(readPostsDOM);
     postDOM();
   },
   loggoutMenuEvent(element) {
@@ -176,7 +177,7 @@ export const initFunc = {
     registerButton.addEventListener("click", () => {
       element.innerHTML = "";
       element.appendChild(routes.register());
-      registerDOM();
+      registerDOM(element);
     });
   },
 }
