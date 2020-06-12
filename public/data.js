@@ -1,5 +1,3 @@
-import {readPostsDOM} from "./main.js"
-
 export const firebaseActions = {
   loginData(email, password) {
     firebase
@@ -40,43 +38,47 @@ export const firebaseActions = {
         alert(error.message);
       });
   },
-  postData(post) {
+  postData(post, func) {
     const postCollection = firebase.firestore().collection("posts");
     postCollection.add(post)
       .then((postAdded) => {
         postAdded.get()
           .then((newPost) => {
-            readPostsDOM(newPost);
+            func(newPost);
           });
       });
   },
 }
 
-export function readPosts() {
+export function readPosts(func) {
   const postCollection = firebase.firestore().collection("posts").orderBy("date", "asc");
   postCollection.get()
   .then((posts) => {
     posts.forEach((post) => {
       if (firebase.auth().currentUser.uid == post.data().id_user || post.data().visibility == "public") {
-        readPostsDOM(post);
+        func(post);
       }
     });
   });
 }
 
 export function googleLogin() {
-  let provider = new firebase.auth.GoogleAuthProvider();
+  // const userCollection = firebase.firestore().collection("users-info");
 
+  let provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({ prompt: 'select_account' });
   firebase
     .auth()
     .signInWithPopup(provider)
-    .then(function (result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      let token = result.credential.accessToken;
-      // The signed-in user info.
-      let user = result.user;
-      // ...
-    })
+    // .then(function (result) {
+    //   const user = result.user;
+    //   const userInfo = {
+    //     name: user.displayName,
+    //     id_user: user.uid,
+    //     email: user.email
+    //   }
+    //   userCollection.add(userInfo);      
+    // })
     .catch(function (error) {
       // Handle Errors here.
       let errorCode = error.code;
