@@ -63,17 +63,22 @@ export function readPosts(func) {
 }
 
 export function googleLogin() {
+  const userCollection = firebase.firestore().collection("users-info");
+
   let provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
   firebase
     .auth()
     .signInWithPopup(provider)
     .then(function (result) {
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      let token = result.credential.accessToken;
-      // The signed-in user info.
-      let user = result.user;
-      // ...
+      const user = result.user;
+      const userInfo = {
+        name: user.displayName,
+        id_user: user.uid,
+        email: user.email
+      }
+      console.log(userInfo)
+      userCollection.add(userInfo);      
     })
     .catch(function (error) {
       // Handle Errors here.
