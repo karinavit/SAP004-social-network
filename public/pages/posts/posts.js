@@ -64,7 +64,7 @@ export function createElementPost(post) {
     <ul class="comments">
     <div class="post-comment hidden">
     <input type="text" class="comment-area ">
-    <button type="submit" class="post-comment"> Comentário </button>
+    <button type="submit" class="post-button"> Comentário </button>
     </div>
       </ul>
   `;
@@ -86,7 +86,7 @@ export function createElementPost(post) {
     const comentario = postElement.getElementsByClassName("post-comment")[0]
     comentario.classList.toggle("hidden")
   })
-  postElement.getElementsByClassName("post-comment")[0].addEventListener("click", () => {
+  postElement.getElementsByClassName("post-button")[0].addEventListener("click", () => {
     const textPosted = postElement.getElementsByClassName("comment-area")[0]
     comments(textPosted.value, post.id, elements.getHoursPosted())
 
