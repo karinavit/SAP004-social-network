@@ -63,22 +63,22 @@ export function readPosts(func) {
 }
 
 export function googleLogin() {
-  const userCollection = firebase.firestore().collection("users-info");
+  // const userCollection = firebase.firestore().collection("users-info");
 
   let provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
   firebase
     .auth()
     .signInWithPopup(provider)
-    .then(function (result) {
-      const user = result.user;
-      const userInfo = {
-        name: user.displayName,
-        id_user: user.uid,
-        email: user.email
-      }
-      userCollection.add(userInfo);      
-    })
+    // .then(function (result) {
+    //   const user = result.user;
+    //   const userInfo = {
+    //     name: user.displayName,
+    //     id_user: user.uid,
+    //     email: user.email
+    //   }
+    //   userCollection.add(userInfo);      
+    // })
     .catch(function (error) {
       // Handle Errors here.
       let errorCode = error.code;
