@@ -77,7 +77,6 @@ export function googleLogin() {
         id_user: user.uid,
         email: user.email
       }
-      console.log(userInfo)
       userCollection.add(userInfo);      
     })
     .catch(function (error) {
