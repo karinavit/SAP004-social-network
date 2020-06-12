@@ -1,7 +1,8 @@
 import { routes } from "./index.js";
 import { firebaseActions, readPosts, googleLogin } from "./data.js";
+import{createElementPost} from "./pages/posts/posts.js"
 
-const elements = {
+export const elements = {
   editPostDOM(postId) {
     let postElement = document.getElementById(`post-${postId}`);
     let textEditElement = postElement.getElementsByClassName("post-text-area")[0];
@@ -27,70 +28,23 @@ const elements = {
     likeValueElement.innerHTML = likes;
     firebaseActions.editOrLikePost(postId, { likes: likes });
   },
-  getHoursPosted() {
-    const date = new Date();
-    const fullDate = {
-      day: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
-      month: date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth(),
-      year: date.getFullYear(),
-      hours: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
-      minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
-      seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds(),
-    }
-    return `${fullDate.day}/${fullDate.month}/${fullDate.year} as 
-    ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
+  editHoursPosted(dateInfo) {
+    return dateInfo < 10 ? "0" + dateInfo : dateInfo
   },
-   createElementPost(post) {
-    const postTemplate = `
-      <div class="name-edit-post">
-        <p class="post-user-name">${post.data().name}</p>
-        <span class="edit">
-          <img src="img/edit-regular.svg" alt="edit-posts">
-        </span>
-      </div>
-      <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
-      <div class="name-edit-post">
-        <div>
-          <span class="like">❤️</span>
-          <span class="like-value">${post.data().likes}</span> 
-        </div>
-        <p> Postado em: ${post.data().date}</p>
-        <p> ${post.data().visibility}</p>
-        <span class="delete">
-          <img src="img/trash-alt-regular.svg" alt="delete-posts">
-        </span>
-      </div>
-    `;
-
-    let postElement = document.createElement("li");
-    postElement.classList.add("each-post");
-    postElement.id = `post-${post.id}`;
-    postElement.innerHTML = postTemplate;
-    postElement.getElementsByClassName("edit")[0].addEventListener("click", () => {
-      elements.editPostDOM(post.id);
-    });
-    postElement.getElementsByClassName("like")[0].addEventListener("click", () => {
-      elements.likePostDOM(post.id);
-    });
-    postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
-      elements.deletePostDOM(post.id);
-    });
-
-    if(post.data().id_user !== firebase.auth().currentUser.uid) {
-      postElement.querySelector(".delete").classList.add("hidden");
-      postElement.querySelector(".edit").classList.add("hidden");
-    }
-    return postElement;
+  getHoursPosted() {
+    const date = new Date()
+    return `${elements.editHoursPosted(date.getDay())}/${elements.editHoursPosted(date.getMonth()+1)}/${elements.editHoursPosted(date.getFullYear())} as 
+    ${elements.editHoursPosted(date.getHours())}:${elements.editHoursPosted(date.getMinutes())}:${elements.editHoursPosted(date.getSeconds())}`;
   },
 }
 
-export function postDOM () {
+export function postDOM() {
   const postar = document.querySelector("#postar");
   const postTexto = document.querySelector("#post-text");
   const img = document.querySelector("#post-img");
   const inputFile = document.querySelector("#input-file");
   const privateField = document.querySelector("#private");
-  
+
   img.addEventListener("click", () => {
     inputFile.click();
   })
@@ -107,13 +61,13 @@ export function postDOM () {
     };
     postTexto.value = "";
     privateField.checked = false;
-    
-    firebaseActions.postData(post,readPostsDOM);
+
+    firebaseActions.postData(post, readPostsDOM);
 
   });
 }
 
-export function registerDOM(element) {
+export function registerDOM() {
   const emailRegisterInput = document.querySelector("#email-input-register");
   const nameRegisterInput = document.querySelector("#name-input-register");
   const birthdayRegisterInput = document.querySelector("#date-input-register");
@@ -122,22 +76,17 @@ export function registerDOM(element) {
   const backButton = document.querySelector("#back-button");
 
   backButton.addEventListener("click", () => {
-    element.innerHTML = '';
-    element.appendChild(routes.home());
+    container.innerHTML = '';
+    container.appendChild(routes.home());
   });
 
   singInButton.addEventListener("click", () => {
-    const user = {
-      name: nameRegisterInput.value,
-      email: emailRegisterInput.value, 
-      birthday: birthdayRegisterInput.value,
-    }
-    firebaseActions.register(user.email, passwordRegisterInput.value, user.name, user);
+    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, nameRegisterInput.value, birthdayRegisterInput.value);
   });
 }
 
-function readPostsDOM(post) {
-    document.querySelector("#postados").prepend(elements.createElementPost(post));
+export function readPostsDOM(post) {
+  document.querySelector("#postados").prepend(createElementPost(post));
 }
 
 export const initFunc = {
@@ -177,7 +126,7 @@ export const initFunc = {
     registerButton.addEventListener("click", () => {
       element.innerHTML = "";
       element.appendChild(routes.register());
-      registerDOM(element);
+      registerDOM();
     });
   },
 }

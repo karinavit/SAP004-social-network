@@ -23,7 +23,7 @@ export const firebaseActions = {
     postCollection.doc(postId).delete()
     .then(() => { });
   },
-  register(email, password, name, userData) {
+  register(email, password, name, birthday) {
     const userCollection = firebase.firestore().collection("users-info");
     firebase
       .auth()
@@ -32,13 +32,20 @@ export const firebaseActions = {
         cred.user.updateProfile({ displayName: name })
       )
       .then(() => {
-        userCollection.add(userData);
+
+        const uid = firebase.auth().currentUser.uid
+        userCollection.doc(uid).set({
+          birthday: birthday,
+          email: email,
+          id_user: firebase.auth().currentUser.uid,
+          name: name,
+        })
       })
       .catch((error) => {
         alert(error.message);
       });
   },
-  postData(post, func) {
+  postData(post,func) {
     const postCollection = firebase.firestore().collection("posts");
     postCollection.add(post)
       .then((postAdded) => {
@@ -64,7 +71,6 @@ export function readPosts(func) {
 
 export function googleLogin() {
   // const userCollection = firebase.firestore().collection("users-info");
-
   let provider = new firebase.auth.GoogleAuthProvider();
   provider.setCustomParameters({ prompt: 'select_account' });
   firebase
@@ -89,7 +95,25 @@ export function googleLogin() {
       let credential = error.credential;
       // ...
     });
+
+
 }
 
 
+export function comments(text, postId, date ) {
+  const commentsReference =
+  firebase.firestore().collection('posts').doc(postId)
+        .collection('comments');
 
+  commentsReference
+      .doc()
+      .set({
+        name: firebase.auth().currentUser.displayName,
+        date: date, 
+        text:text,
+      })
+      .then(() => {})
+      .catch( (error) => {
+          console.error('Error adding document: ', error);
+      });
+    }
