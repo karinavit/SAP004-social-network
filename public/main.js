@@ -1,7 +1,8 @@
 import { routes } from "./index.js";
-import { firebaseActions, readPosts, googleLogin, comments } from "./data.js";
+import { firebaseActions, readPosts, googleLogin } from "./data.js";
+import{createElementPost} from "./pages/posts/posts.js"
 
-const elements = {
+export const elements = {
   editPostDOM(postId) {
     let postElement = document.getElementById(`post-${postId}`);
     let textEditElement = postElement.getElementsByClassName("post-text-area")[0];
@@ -33,64 +34,7 @@ const elements = {
   getHoursPosted() {
     const date = new Date()
     return `${elements.editHoursPosted(date.getDay())}/${elements.editHoursPosted(date.getMonth()+1)}/${elements.editHoursPosted(date.getFullYear())} as 
-    ${elements.editHoursPosted(date.editHoursPosted())}:${elements.editHoursPosted(date.getMinutes())}:${elements.editHoursPosted(date.getSeconds())}`;
-  },
-  createElementPost(post) {
-    const postTemplate = `
-      <div class="name-edit-post">
-        <p class="post-user-name">${post.data().name}</p>
-        <span class="edit">
-          <img src="img/edit-regular.svg" alt="edit-posts">
-        </span>
-      </div>
-      <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
-      <div class="name-edit-post">
-        <div>
-          <span class="like">❤️</span>
-          <span class="like-value">${post.data().likes}</span> 
-        </div>
-        <p> Postado em: ${post.data().date}</p>
-        <p class="comentar"> Comentar</p>
-        <span class="delete">
-          <img src="img/trash-alt-regular.svg" alt="delete-posts">
-        </span>
-        </div>
-      <ul class="comments">
-      <div class="post-comment hidden">
-      <input type="text" class="comment-area ">
-      <button type="submit" class="post-comment"> Comentário </button>
-      </div>
-        </ul>
-    `;
-
-    let postElement = document.createElement("li");
-    postElement.classList.add("each-post");
-    postElement.id = `post-${post.id}`;
-    postElement.innerHTML = postTemplate;
-    postElement.getElementsByClassName("edit")[0].addEventListener("click", () => {
-      elements.editPostDOM(post.id);
-    });
-    postElement.getElementsByClassName("like")[0].addEventListener("click", () => {
-      elements.likePostDOM(post.id);
-    });
-    postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
-      elements.deletePostDOM(post.id);
-    });
-    postElement.getElementsByClassName("comentar")[0].addEventListener("click", () => {
-      const comentario = postElement.getElementsByClassName("post-comment")[0]
-      comentario.classList.toggle("hidden")
-      postElement.getElementsByClassName("post-comment")[0].addEventListener("click", () => {
-        const textPosted = postElement.getElementsByClassName("comment-area")[0]
-        comments(textPosted.value, post.id, elements.getHoursPosted())
-
-      })
-    })
-
-    if (post.data().id_user !== firebase.auth().currentUser.uid) {
-      postElement.querySelector(".delete").classList.add("hidden");
-      postElement.querySelector(".edit").classList.add("hidden");
-    }
-    return postElement;
+    ${elements.editHoursPosted(date.getHours())}:${elements.editHoursPosted(date.getMinutes())}:${elements.editHoursPosted(date.getSeconds())}`;
   },
 }
 
@@ -118,7 +62,7 @@ export function postDOM() {
     postTexto.value = "";
     privateField.checked = false;
 
-    firebaseActions.postData(post);
+    firebaseActions.postData(post, readPostsDOM);
 
   });
 }
@@ -142,13 +86,13 @@ export function registerDOM() {
 }
 
 export function readPostsDOM(post) {
-  document.querySelector("#postados").prepend(elements.createElementPost(post));
+  document.querySelector("#postados").prepend(createElementPost(post));
 }
 
 export const initFunc = {
   pagePost() {
     document.getElementById("postados").innerHTML = "";
-    readPosts();
+    readPosts(readPostsDOM);
     postDOM();
   },
   loggoutMenuEvent(element) {
