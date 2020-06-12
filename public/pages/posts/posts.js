@@ -62,10 +62,10 @@ export function createElementPost(post) {
       </span>
       </div>
     <ul class="comments">
-    <div class="post-comment hidden">
+    <li class="post-comment hidden">
     <input type="text" class="comment-area ">
     <button type="submit" class="post-button"> Comentário </button>
-    </div>
+    </li>
       </ul>
   `;
 
