@@ -122,6 +122,7 @@ export function registerDOM() {
   const backButton = document.querySelector("#back-button");
 
   backButton.addEventListener("click", () => {
+    const container = document.querySelector("#root")
     container.innerHTML = '';
     container.appendChild(routes.home());
   });
