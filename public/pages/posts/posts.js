@@ -13,29 +13,31 @@ export const signIn = (name) => {
     <a id="loggout" class="loggout" href="/#">
       <div>Sair</div>
     </a>
-    <div class="margin-top-user id-user">
-      <img class="img-user" src="img/startrek_spock.jpg" alt="spock">
-      <div class="name-user">
-        <h1>Bem vindo ${name}</h1>
-        <br>
-        <p>Number One - Classic</p>
+    <div class="display-mobile display-web-row">
+      <div class="margin-top-user profile-mobile display-web-user profile-web">
+        <img class="img-user img-user-web" src="img/startrek_spock.jpg" alt="spock">
+        <div class="name-user">
+          <h1>Bem vindo ${name}</h1>
+          <br>
+          <p>Number One - Classic</p>
+        </div>
+      </div>
+      <br>
+      <div class="id-user display-web-user posts-web">
+        <form class="display-form form-web-display">
+          <input class="input-posts" type=text id="post-text">
+          <div class="display-posts display-post-web">
+            <input type="file" src="img/image-solid.svg" class="hidden" id="input-file">
+            <img class="posts-img" src="img/image-solid.svg" alt="photo-to-post" id="post-img">
+            <input type="checkbox" id="private"><label>Privado</label>
+            <button class="button-login width-button-login" id="postar" type="submit">
+            Publicar
+            </button>
+          </div>
+        </form>
+        <ul class="width-list-post list-post-web" id="postados"></ul>
       </div>
     </div>
-    <br>
-    <div class="id-user">
-      <form class="display-form">
-        <input class="input-posts" type=text id="post-text">
-        <div class="display-posts">
-          <input type="file" src="img/image-solid.svg" class="hidden" id="input-file">
-          <img class="posts-img" src="img/image-solid.svg" alt="photo-to-post" id="post-img">
-          <input type="checkbox" id="private"><label>Privado</label>
-          <button class="button-login width-button-login" id="postar" type="submit">
-          Publicar
-          </button>
-        </div>
-      </form>
-    </div>
-    <ul class="width-list-post" id="postados"></ul>
   `;
   return container;
 };
@@ -51,14 +53,14 @@ export function createElementPost(post) {
     </div>
     <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
     <div class="name-edit-post">
-      <div>
-        <span class="like">❤️</span>
+      <span class="display-like-mobile">
+        <img class="like-img like" src="../../img/like-spock.svg" alt="like-button">
         <span class="like-value">${post.data().likes}</span> 
-      </div>
-      <p> Postado em: ${post.data().date}</p>
-      <p class="comentar"> Comentar</p>
-      <span class="delete">
-        <img src="img/trash-alt-regular.svg" alt="delete-posts">
+      </span>
+      <p>${post.data().date}</p>
+      <span >
+        <img class="comment-button" src="../../img/comentario.svg" alt="comment-button">
+        <img class="delete" src="img/trash-alt-regular.svg" alt="delete-posts">
       </span>
       </div>
     <ul class="comments">
@@ -85,7 +87,7 @@ export function createElementPost(post) {
   postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
     elements.deletePostDOM(post.id);
   });
-  postElement.getElementsByClassName("comentar")[0].addEventListener("click", () => {
+  postElement.getElementsByClassName("comment-button")[0].addEventListener("click", () => {
     const comentario = postElement.getElementsByClassName("post-comment")[0]
     comentario.classList.toggle("hidden")
   })
@@ -96,8 +98,8 @@ export function createElementPost(post) {
   })
 
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
-    postElement.querySelector(".delete").classList.add("hidden");
-    postElement.querySelector(".edit").classList.add("hidden");
+    postElement.querySelector(".delete").classList.add("visibility");
+    postElement.querySelector(".edit").classList.add("visibility");
   }
   return postElement;
 }
