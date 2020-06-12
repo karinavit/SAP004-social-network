@@ -27,18 +27,13 @@ const elements = {
     likeValueElement.innerHTML = likes;
     firebaseActions.editOrLikePost(postId, { likes: likes });
   },
+  editHoursPosted(dateInfo) {
+    return dateInfo < 10 ? "0" + dateInfo : dateInfo
+  },
   getHoursPosted() {
-    const date = new Date();
-    const fullDate = {
-      day: date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
-      month: date.getMonth() < 10 ? "0" + (date.getMonth()+ 1): date.getMonth()+1,
-      year: date.getFullYear(),
-      hours: date.getHours() < 10 ? "0" + date.getHours() : date.getHours(),
-      minutes: date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes(),
-      seconds: date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds(),
-    }
-    return `${fullDate.day}/${fullDate.month}/${fullDate.year} as 
-    ${fullDate.hours}:${fullDate.minutes}:${fullDate.seconds}`;
+    const date = new Date()
+    return `${elements.editHoursPosted(date.getDay())}/${elements.editHoursPosted(date.getMonth()+1)}/${elements.editHoursPosted(date.getFullYear())} as 
+    ${elements.editHoursPosted(date.editHoursPosted())}:${elements.editHoursPosted(date.getMinutes())}:${elements.editHoursPosted(date.getSeconds())}`;
   },
   createElementPost(post) {
     const postTemplate = `
