@@ -1,5 +1,5 @@
 import { routes } from "./index.js";
-import { firebaseActions, readPosts, googleLogin, facebookLogin } from "./data.js";
+import { firebaseActions, readPosts, googleAndFacebookLogin } from "./data.js";
 import{createElementPost} from "./pages/posts/posts.js"
 
 export const elements = {
@@ -17,7 +17,7 @@ export const elements = {
   },
   deletePostDOM(postId) {
     firebaseActions.deletePost(postId);
-    let post = document.getElementById(`post-${postId}`);
+    document.getElementById(`post-${postId}`);
     post.remove();
 
   },
@@ -110,12 +110,16 @@ export const initFunc = {
   loginEventFacebook() {
     const facebookAuth = document.querySelector("#facebook");
     facebookAuth.addEventListener("click", () => {
-      facebookLogin()
+      var provider = new firebase.auth.FacebookAuthProvider();
+      googleAndFacebookLogin(provider)
     })
   },
   loginEventGoogle() {
     const googleAuth = document.querySelector("#google");
-    googleAuth.addEventListener("click", googleLogin);
+    googleAuth.addEventListener("click", () => {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      googleAndFacebookLogin(provider)
+    });
   },
   loginEvent(element) {
     element.innerHTML = "";
