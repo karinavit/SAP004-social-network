@@ -62,6 +62,7 @@ export function readPosts(func) {
   postCollection.get()
   .then((posts) => {
     posts.forEach((post) => {
+      console.log(post.data())
       if (firebase.auth().currentUser.uid == post.data().id_user || post.data().visibility == "public") {
         func(post);
       }
@@ -69,6 +70,16 @@ export function readPosts(func) {
   });
 }
 
+export function readComments (postId) {
+  firebase.firestore().collection("posts").doc(postId)
+  .collection('comments').get().then(function(doc) {
+    doc.forEach(doc => {
+      console.log(doc.data())
+    })
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+}
 export function googleAndFacebookLogin(provider) {
   // const userCollection = firebase.firestore().collection("users-info");
   provider.setCustomParameters({ prompt: 'select_account' });
