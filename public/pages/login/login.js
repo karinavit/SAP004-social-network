@@ -16,6 +16,7 @@ export const formLogin = () => {
       <p class="letter-color logo-google" id="google">Entre com 
         <img class="img-g" src="img/google.png" alt="logo">
       </p>
+      <p id="facebook">Facebook</p>
       <p class="letter-color">Caso não possua conta ainda, 
         <a class="link-register" href="/#register" id="register">Registre-se</a>
       </p>
