@@ -27,7 +27,7 @@ export const signIn = (name) => {
         <form class="display-form form-web-display">
           <input class="input-posts" type=text id="post-text">
           <div class="display-posts display-post-web">
-            <input type="file" src="img/image-solid.svg" class="hidden" id="input-file">
+            <input type="file" src="img/image-solid.svg" class="display-none-img" id="input-file">
             <img class="posts-img" src="img/image-solid.svg" alt="photo-to-post" id="post-img">
             <span class="check-prive">
               <input type="checkbox" id="private">Privado
@@ -55,26 +55,27 @@ export function createElementPost(post) {
     </div>
     <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
     <div class="name-edit-post">
-      <span>
+      <span class="display-like">
         <img class="like-img like" src="../../img/like-spock.svg" alt="like-button">
         <span class="like-value">${post.data().likes}</span> 
       </span>
-      <p>${post.data().date}</p>
+      <p class="style-hour">${post.data().date}</p>
       <span >
         <img class="comment-button" src="../../img/comentario.svg" alt="comment-button">
         <img class="delete" src="img/trash-alt-regular.svg" alt="delete-posts">
       </span>
       </div>
     <ul class="comments">
-      <li class="post-comment hidden">
-        <input type="text" class="comment-input-area ">
-        <button type="submit" class="post-button">Comentário</button>
+      <li class="post-comment">
+        <input type="text" class="comment-input-area input-comment">
+        <button type="submit" class="post-button width-button-login button-login">Comentário</button>
       </li>
       <li class="comment-area" >
-        <p>Oi</p>
+        <p class="style-comment-area">Oi</p>
       </li>
     </ul>
   `;
+    //class comments linha 68 não está sendo usada
 
   let postElement = document.createElement("li");
   postElement.classList.add("each-post");
@@ -91,7 +92,7 @@ export function createElementPost(post) {
   });
   postElement.getElementsByClassName("comment-button")[0].addEventListener("click", () => {
     const comentario = postElement.getElementsByClassName("post-comment")[0]
-    comentario.classList.toggle("hidden")
+    comentario.classList.toggle("show")
   })
   postElement.getElementsByClassName("post-button")[0].addEventListener("click", () => {
     const textPosted = postElement.getElementsByClassName("comment-input-area")[0]

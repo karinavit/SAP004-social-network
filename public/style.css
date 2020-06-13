@@ -175,12 +175,39 @@ footer {
   outline: none;
 }
 
-.hidden {
+.display-none-img {
   display: none;
 }
 
 .visibility {
   visibility: hidden;
+}
+
+.post-comment {
+  display: none;
+}
+
+.show {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.style-comment-area {
+  width: calc(100% - 4px);
+  font-family: "futura book";
+  border: 2px solid #FFCC00;
+  background-color: rgb(253, 252, 200);
+}
+
+.input-comment {
+  border-radius: 10px;
+  border: 2px solid #FFCC00;
+  height: 100px;
+  margin: 5px 0px;
+  outline: none;
+  width: 95%;
 }
 
 .posts-img {
@@ -191,6 +218,15 @@ footer {
 .check-prive {
   font-family: "futura book";
   align-self: center;
+}
+
+.style-hour {
+  font-family: "futura book";
+}
+
+.display-like {
+  display: flex;
+  align-items: center;
 }
 
 .display-posts {
@@ -341,5 +377,8 @@ footer {
   }
   .display-post-web {
     width: 95%;
+  }
+  .style-comment-area {
+    width: calc(100% - 4px);
   }
 }
