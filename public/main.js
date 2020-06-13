@@ -67,7 +67,7 @@ export function postDOM() {
   });
 }
 
-export function registerDOM() {
+export function registerDOM(element) {
   const emailRegisterInput = document.querySelector("#email-input-register");
   const nameRegisterInput = document.querySelector("#name-input-register");
   const birthdayRegisterInput = document.querySelector("#date-input-register");
@@ -76,8 +76,8 @@ export function registerDOM() {
   const backButton = document.querySelector("#back-button");
 
   backButton.addEventListener("click", () => {
-    container.innerHTML = '';
-    container.appendChild(routes.home());
+    element.innerHTML = '';
+    element.appendChild(routes.home());
   });
 
   singInButton.addEventListener("click", () => {
@@ -126,7 +126,7 @@ export const initFunc = {
     registerButton.addEventListener("click", () => {
       element.innerHTML = "";
       element.appendChild(routes.register());
-      registerDOM();
+      registerDOM(element);
     });
   },
 }
