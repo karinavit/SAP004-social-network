@@ -19,7 +19,7 @@ html {
   color: #FFCC00;
 }
 
-a.link-register,.show-loggout {
+a.link-register, .show-loggout {
   text-decoration: none;
   color: #FFCC00;
   font-weight: bold;
@@ -41,10 +41,16 @@ main {
 }
 
 .img-g {
-  width: 15%;
+  width: 50px;
+  cursor: pointer;
 }
 
-.logo-google {
+.img-f {
+  width: 25px;
+  cursor: pointer;
+}
+
+.logo-google-facebook {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,6 +68,7 @@ main {
   width: 70%;
   height: 30px;
   margin: 5px 0px;
+  outline: none;
 }
 
 .button-login {
@@ -70,11 +77,12 @@ main {
   border: none;
   height: 30px;
   width: 100%;
-  font-weight: bold
+  font-weight: bold;
+  cursor: pointer;
 }
 
 .width-button-login {
-  width: 30%;
+  width: 120px;
   margin: 5px 0px;
 }
 
@@ -102,6 +110,7 @@ footer {
   height: 60px;
   background-color: white;
   position: fixed;
+  z-index: 10;  
 }
 
 .menu-posts {
@@ -123,12 +132,23 @@ footer {
   margin-top: 90px;
 }
 
-.id-user {
+.profile-mobile {
   display: flex;
   width: 90%;
   justify-content: space-around;
   margin-bottom: 20px;
   background-color: white;
+  border-radius: 2px;
+  padding: 5px;
+}
+
+.id-user {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  background-color: transparent;
   border-radius: 2px;
   padding: 5px;
 }
@@ -148,6 +168,8 @@ footer {
   flex-direction: column;
   width: 100%;
   align-items: center;
+  background-color: white;
+  border-radius: 2px;
 }
 
 .input-posts {
@@ -156,23 +178,72 @@ footer {
   border: 2px solid #FFCC00;
   height: 100px;
   margin: 5px 0px;
+  outline: none;
 }
 
-.hidden {
+.display-none-img {
   display: none;
 }
+
+.visibility {
+  visibility: hidden;
+}
+
+.post-comment {
+  display: none;
+}
+
+.show {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.style-comment-area {
+  width: calc(100% - 4px);
+  font-family: "futura book";
+  border: 2px solid #FFCC00;
+  background-color: rgb(253, 252, 200);
+  padding: 10px 0px;
+}
+
+.input-comment {
+  border-radius: 10px;
+  border: 2px solid #FFCC00;
+  height: 100px;
+  margin: 5px 0px;
+  outline: none;
+  width: 95%;
+}
+
 .posts-img {
   width: 30px;
+  cursor: pointer;
+}
+
+.check-prive {
+  font-family: "futura book";
+  align-self: center;
+}
+
+.style-hour {
+  font-family: "futura book";
+}
+
+.display-like {
+  display: flex;
+  align-items: center;
 }
 
 .display-posts {
   display: flex;
-  width: 100%;
+  width: 95%;
   justify-content: space-between;
 }
 
 .width-list-post {
-  width: 92%;
+  width: 100%;
 }
 
 .each-post {
@@ -199,15 +270,22 @@ footer {
 
 .edit {
   width: 25px;
+  cursor: pointer;
 }
 
 .delete {
   width: 20px;
+  cursor: pointer;
 }
 
 .post-text-area {
   margin: 5px;
   height: 50px;
+}
+
+.comment-button {
+  width: 30px;
+  cursor: pointer;
 }
 
 .loggout {
@@ -217,6 +295,7 @@ footer {
   background-color: white;
   width: 100%;
   height: 50px;
+  z-index: 10;
 }
 
 .show-loggout {
@@ -225,4 +304,88 @@ footer {
   justify-content: center;
   font-size: 30px;
   font-family: "futura book";
+}
+
+.display-mobile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.like-img {
+  width: 30px;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 800px) {
+  .display-web {
+    flex-direction: row;
+    justify-content: space-around;
+    height: calc(100vh - 30px);
+  }
+  .img-web {
+    width: 40%;
+  }
+  .login-style-web {
+    width: 40%;
+  }
+  .title-web {
+    margin-bottom: 50px;
+    font-size: 70px;
+  }
+  .login-btn-web:hover {
+    transform: scale(1.2);
+    transition: 3s;
+  }
+  .margin-web {
+    margin-top: 30px;
+  }
+  .register-style-web {
+    width: 40%;
+    height: 100%;
+    justify-content: center;
+  }
+  .margin-web-register {
+    margin-top: 50px;
+  }
+  .margin-footer-web {
+    margin: 0px;
+  }
+  .display-web-user {
+    flex-direction: column;
+  }
+  .display-web-row {
+    align-items: flex-start;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1200px;
+    justify-content: space-around;
+  }
+  .profile-web {
+    width: 30%;
+    height: 40vh;
+    align-items: center;
+    margin-top: 140px;
+  }
+  .posts-web {
+    margin-top: 140px;
+    width: 60%;
+    background-color: transparent;
+  }
+  .img-user-web {
+    width: 65%;
+  }
+  .form-web-display {
+    background-color: white;
+    border-radius: 2px;
+  }
+  .list-post-web {
+    width: 100%;
+  }
+  .display-post-web {
+    width: 95%;
+  }
+  .style-comment-area {
+    width: calc(100% - 4px);
+  }
 }
