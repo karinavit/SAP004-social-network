@@ -1,5 +1,5 @@
 import { routes } from "./index.js";
-import { firebaseActions, readPosts, googleLogin } from "./data.js";
+import { firebaseActions, readPosts, googleLogin, facebookLogin } from "./data.js";
 import{createElementPost} from "./pages/posts/posts.js"
 
 export const elements = {
@@ -106,6 +106,12 @@ export const initFunc = {
     menuBar.addEventListener("click", () => {
       loggoutButton.classList.toggle("show-loggout");
     });
+  },
+  loginEventFacebook() {
+    const facebookAuth = document.querySelector("#facebook");
+    facebookAuth.addEventListener("click", () => {
+      facebookLogin()
+    })
   },
   loginEventGoogle() {
     const googleAuth = document.querySelector("#google");
