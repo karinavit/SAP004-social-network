@@ -1,25 +1,29 @@
 export const formLogin = () => {
   const container = document.createElement("div");
   container.classList.add("display-column");
+  container.classList.add("display-web");
 
   container.innerHTML = `
-      <img class="img" src="img/logo.png" alt="logo">
-      <h1 class="style-title">Social Trekkers</h1>
+    <img class="img img-web" src="img/logo.png" alt="logo">
+    <div class="display-column login-style-web">
+      <h1 class="style-title title-web">Social Trekkers</h1>
       <input class="style-input" id='email-input' type='email' placeholder="Digite seu e-mail...">
       <input class="style-input" id='password-input' type='password' placeholder="Digite sua senha...">
       <a class="width-button-login" href="/#posts">
-      <button class="button-login" id='submit-btn' >Logar</button>
+      <button class="button-login login-btn-web" id='submit-btn' >Logar</button>
       </a>
-      <p class="letter-color"> Esqueceu a senha,
+      <p class="letter-color margin-web"> Esqueceu a senha,
         <a class="link-register" href="">Clique aqui</a>
       </p>
-      <p class="letter-color logo-google" id="google">Entre com 
-        <img class="img-g" src="img/google.png" alt="logo">
+      <p class="letter-color logo-google-facebook" id="google">Entre com 
+        <img class="img-g" src="../../img/google.png" alt="logo-google">
+        <img class="img-f" src="../../img/facebook.png" alt="logo-facebook">
       </p>
       <p id="facebook">Facebook</p>
       <p class="letter-color">Caso não possua conta ainda, 
         <a class="link-register" href="/#register" id="register">Registre-se</a>
-      </p>
+      </p>      
+    </div>
   `;
 
   return container;
