@@ -42,13 +42,15 @@ main {
 
 .img-g {
   width: 50px;
+  cursor: pointer;
 }
 
 .img-f {
   width: 25px;
+  cursor: pointer;
 }
 
-.logo-google {
+.logo-google-facebook {
   display: flex;
   align-items: center;
   justify-content: center;
