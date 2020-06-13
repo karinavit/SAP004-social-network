@@ -41,7 +41,11 @@ main {
 }
 
 .img-g {
-  width: 15%;
+  width: 50px;
+}
+
+.img-f {
+  width: 25px;
 }
 
 .logo-google {

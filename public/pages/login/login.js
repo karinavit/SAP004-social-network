@@ -16,7 +16,8 @@ export const formLogin = () => {
         <a class="link-register" href="">Clique aqui</a>
       </p>
       <p class="letter-color logo-google" id="google">Entre com 
-        <img class="img-g" src="img/google.png" alt="logo">
+        <img class="img-g" src="../../img/google.png" alt="logo-google">
+        <img class="img-f" src="../../img/facebook.png" alt="logo-facebook">
       </p>
       <p class="letter-color">Caso não possua conta ainda, 
         <a class="link-register" href="/#register" id="register">Registre-se</a>
