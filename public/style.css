@@ -62,6 +62,7 @@ main {
   width: 70%;
   height: 30px;
   margin: 5px 0px;
+  outline: none;
 }
 
 .button-login {
@@ -71,10 +72,11 @@ main {
   height: 30px;
   width: 100%;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .width-button-login {
-  width: 30%;
+  width: 120px;
   margin: 5px 0px;
 }
 
@@ -170,6 +172,7 @@ footer {
   border: 2px solid #FFCC00;
   height: 100px;
   margin: 5px 0px;
+  outline: none;
 }
 
 .hidden {
@@ -182,6 +185,12 @@ footer {
 
 .posts-img {
   width: 30px;
+  cursor: pointer;
+}
+
+.check-prive {
+  font-family: "futura book";
+  align-self: center;
 }
 
 .display-posts {
@@ -260,10 +269,6 @@ footer {
   align-items: center;
 }
 
-.display-like-mobile {
-  width: 20%;
-}
-
 .like-img {
   width: 30px;
   cursor: pointer;
@@ -280,8 +285,6 @@ footer {
   }
   .login-style-web {
     width: 40%;
-    height: 70%;
-    align-self: flex-end;
   }
   .title-web {
     margin-bottom: 50px;
@@ -309,6 +312,7 @@ footer {
     flex-direction: column;
   }
   .display-web-row {
+    align-items: flex-start;
     flex-direction: row;
     width: 100%;
     max-width: 1200px;
@@ -318,10 +322,7 @@ footer {
     width: 30%;
     height: 40vh;
     align-items: center;
-    margin: 0px;
-    position: absolute;
-    left: 20px;
-    top: 144px;
+    margin-top: 140px;
   }
   .posts-web {
     margin-top: 140px;

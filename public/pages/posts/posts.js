@@ -29,7 +29,9 @@ export const signIn = (name) => {
           <div class="display-posts display-post-web">
             <input type="file" src="img/image-solid.svg" class="hidden" id="input-file">
             <img class="posts-img" src="img/image-solid.svg" alt="photo-to-post" id="post-img">
-            <input type="checkbox" id="private"><label>Privado</label>
+            <span class="check-prive">
+              <input type="checkbox" id="private">Privado
+            </span>
             <button class="button-login width-button-login" id="postar" type="submit">
             Publicar
             </button>
@@ -53,7 +55,7 @@ export function createElementPost(post) {
     </div>
     <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
     <div class="name-edit-post">
-      <span class="display-like-mobile">
+      <span>
         <img class="like-img like" src="../../img/like-spock.svg" alt="like-button">
         <span class="like-value">${post.data().likes}</span> 
       </span>
@@ -64,14 +66,14 @@ export function createElementPost(post) {
       </span>
       </div>
     <ul class="comments">
-    <li class="post-comment hidden">
-    <input type="text" class="comment-input-area ">
-    <button type="submit" class="post-button"> Comentário </button>
-    </li>
-    <li class="comment-area" >
-    <p> Oi </p>
-    </li>
-      </ul>
+      <li class="post-comment hidden">
+        <input type="text" class="comment-input-area ">
+        <button type="submit" class="post-button">Comentário</button>
+      </li>
+      <li class="comment-area" >
+        <p>Oi</p>
+      </li>
+    </ul>
   `;
 
   let postElement = document.createElement("li");
