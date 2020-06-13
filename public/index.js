@@ -21,6 +21,7 @@ function init() {
       initFunc.loginEvent(container);
       initFunc.registerEvent(container);
       initFunc.loginEventGoogle();
+      initFunc.loginEventFacebook();
     }
   });
 }
