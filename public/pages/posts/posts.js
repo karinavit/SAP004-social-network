@@ -95,7 +95,7 @@ export function createElementPost(post) {
     commentsDOM(post.id, postElement)
     
   })
-  readComments(post.id, postElement)
+  readComments(post.id, printComments, postElement,clearArea)
 
   
 
@@ -104,4 +104,8 @@ export function createElementPost(post) {
     postElement.querySelector(".edit").classList.add("visibility");
   }
   return postElement;
+}
+
+function clearArea (element) {
+element.getElementsByClassName("comment-area")[0].innerHTML = ""
 }
