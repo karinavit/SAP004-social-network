@@ -1,5 +1,5 @@
-import {elements} from "../../main.js"
-import {comments} from "../../data.js"
+import {elements, commentsDOM, printComments, readPostsDOM} from "../../main.js"
+import {readComments} from "../../data.js"
 export const signIn = (name) => {
   const container = document.createElement('div');
   container.classList.add("display-column");
@@ -71,7 +71,6 @@ export function createElementPost(post) {
         <button type="submit" class="post-button width-button-login button-login">Comentário</button>
       </li>
       <li class="comment-area" >
-        <p class="style-comment-area">Oi</p>
       </li>
     </ul>
   `;
@@ -93,12 +92,12 @@ export function createElementPost(post) {
   postElement.getElementsByClassName("comment-button")[0].addEventListener("click", () => {
     const comentario = postElement.getElementsByClassName("post-comment")[0]
     comentario.classList.toggle("show")
+    commentsDOM(post.id, postElement)
+    
   })
-  postElement.getElementsByClassName("post-button")[0].addEventListener("click", () => {
-    const textPosted = postElement.getElementsByClassName("comment-input-area")[0]
-    comments(textPosted.value, post.id, elements.getHoursPosted())
+  readComments(post.id, postElement)
 
-  })
+  
 
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
     postElement.querySelector(".delete").classList.add("visibility");
