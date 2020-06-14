@@ -71,20 +71,18 @@ export function readPosts(func) {
 
 export function readComments (postId, element) {
   firebase.firestore().collection("posts").doc(postId)
-  .collection('comments').get().then(function(doc) {
+  .collection('comments').orderBy("date", "asc").onSnapshot((doc) => {
+    element.getElementsByClassName("comment-area")[0].innerHTML = ""
     doc.forEach(doc => {
-      console.log(doc.data())
       const div = document.createElement("div")
       div.innerHTML=`
       <p>${doc.data().name} </p>
-      <p>${doc.data().text}</p>`
-
-      console.log(div)
+      <p>${doc.data().text}</p>
+      <p>${doc.data().date}</p>`
+      div.classList.add("style-comment-area")
     element.getElementsByClassName("comment-area")[0].prepend(div)
     })
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
+})
 }
 
 
