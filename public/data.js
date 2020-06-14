@@ -62,7 +62,6 @@ export function readPosts(func) {
   postCollection.get()
   .then((posts) => {
     posts.forEach((post) => {
-      console.log(post.data())
       if (firebase.auth().currentUser.uid == post.data().id_user || post.data().visibility == "public") {
         func(post);
       }
@@ -70,16 +69,27 @@ export function readPosts(func) {
   });
 }
 
-export function readComments (postId) {
+export function readComments (postId, element) {
   firebase.firestore().collection("posts").doc(postId)
   .collection('comments').get().then(function(doc) {
     doc.forEach(doc => {
       console.log(doc.data())
+      const div = document.createElement("div")
+      div.innerHTML=`
+      <p>${doc.data().name} </p>
+      <p>${doc.data().text}</p>`
+
+      console.log(div)
+    element.getElementsByClassName("comment-area")[0].prepend(div)
     })
 }).catch(function(error) {
     console.log("Error getting document:", error);
 });
 }
+
+
+
+
 export function googleAndFacebookLogin(provider) {
   // const userCollection = firebase.firestore().collection("users-info");
   provider.setCustomParameters({ prompt: 'select_account' });
@@ -110,7 +120,7 @@ export function googleAndFacebookLogin(provider) {
 }
 
 
-export function comments(text, postId, date ) {
+export function comments(text, postId, date, parentId ) {
   const commentsReference =
   firebase.firestore().collection('posts').doc(postId)
         .collection('comments');
@@ -121,6 +131,7 @@ export function comments(text, postId, date ) {
         name: firebase.auth().currentUser.displayName,
         date: date, 
         text:text,
+        parent_id: postId
       })
       .then(() => {})
       .catch( (error) => {
