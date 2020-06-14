@@ -1,6 +1,6 @@
 import { routes } from "./index.js";
 import { firebaseActions, readPosts, googleAndFacebookLogin, readComments, comments} from "./data.js";
-import{createElementPost} from "./pages/posts/posts.js"
+import { createElementPost } from "./pages/posts/posts.js"
 
 export const elements = {
   editPostDOM(postId) {
@@ -110,7 +110,7 @@ export const initFunc = {
   loginEventFacebook() {
     const facebookAuth = document.querySelector("#facebook");
     facebookAuth.addEventListener("click", () => {
-      var provider = new firebase.auth.FacebookAuthProvider();
+      let provider = new firebase.auth.FacebookAuthProvider();
       googleAndFacebookLogin(provider)
     })
   },

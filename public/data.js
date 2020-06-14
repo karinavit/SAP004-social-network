@@ -79,38 +79,25 @@ export function readComments (postId,func, element, clear) {
 })
 }
 
-
-
-
 export function googleAndFacebookLogin(provider) {
-  // const userCollection = firebase.firestore().collection("users-info");
+  const userCollection = firebase.firestore().collection("users-info");
   provider.setCustomParameters({ prompt: 'select_account' });
   firebase
     .auth()
     .signInWithPopup(provider)
-    // .then(function (result) {
-    //   const user = result.user;
-    //   const userInfo = {
-    //     name: user.displayName,
-    //     id_user: user.uid,
-    //     email: user.email
-    //   }
-    //   userCollection.add(userInfo);      
-    // })
+    .then((result) => {
+      const user = result.user;
+      userCollection.doc(user.uid).set({
+        email: user.email,
+        id_user: user.uid,
+        name: user.displayName,
+      });
+    })
     .catch(function (error) {
-      // Handle Errors here.
-      let errorCode = error.code;
       let errorMessage = error.message;
-      // The email of the user's account used.
-      let email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      let credential = error.credential;
-      // ...
+      alert(errorMessage);
     });
-
-
 }
-
 
 export function comments(text, postId, date, parentId ) {
   const commentsReference =
