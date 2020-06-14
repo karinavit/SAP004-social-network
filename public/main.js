@@ -17,7 +17,7 @@ export const elements = {
   },
   deletePostDOM(postId) {
     firebaseActions.deletePost(postId);
-    document.getElementById(`post-${postId}`);
+    const post = document.getElementById(`post-${postId}`);
     post.remove();
 
   },
@@ -33,7 +33,7 @@ export const elements = {
   },
   getHoursPosted() {
     const date = new Date()
-    return `${elements.editHoursPosted(date.getDay())}/${elements.editHoursPosted(date.getMonth()+1)}/${elements.editHoursPosted(date.getFullYear())} 
+    return `${elements.editHoursPosted(date.getDate())}/${elements.editHoursPosted(date.getMonth()+1)}/${elements.editHoursPosted(date.getFullYear())} 
     ${elements.editHoursPosted(date.getHours())}:${elements.editHoursPosted(date.getMinutes())}:${elements.editHoursPosted(date.getSeconds())}`;
   },
 }
