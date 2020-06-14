@@ -1,5 +1,5 @@
 import { routes } from "./index.js";
-import { firebaseActions, readPosts, googleAndFacebookLogin } from "./data.js";
+import { firebaseActions, readPosts, googleAndFacebookLogin, readComments, comments} from "./data.js";
 import{createElementPost} from "./pages/posts/posts.js"
 
 export const elements = {
@@ -139,4 +139,23 @@ export const initFunc = {
       registerDOM(element);
     });
   },
+}
+
+export function commentsDOM(postId, element) {
+  element.getElementsByClassName("post-button")[0].addEventListener("click", () => {
+    const textPosted = element.getElementsByClassName("comment-input-area")[0]
+    comments(textPosted.value, postId, elements.getHoursPosted() )
+  })
+}
+
+export function printComments(post) {
+ document.getElementsByClassName("comment-area")[0].appendChild(container(post))
+}
+
+const container = (post) => {
+  let containerdo = document.createElement("div")
+  containerdo = `
+  <p>${post.data().name}</p>
+  `
+  return containerdo
 }
