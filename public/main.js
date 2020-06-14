@@ -148,14 +148,13 @@ export function commentsDOM(postId, element) {
   })
 }
 
-export function printComments(post) {
- document.getElementsByClassName("comment-area")[0].appendChild(container(post))
+export function printComments(doc, element) {
+  const div = document.createElement("div")
+  div.innerHTML=`
+  <p>${doc.data().name} </p>
+  <p>${doc.data().text}</p>
+  <p>${doc.data().date}</p>`
+  div.classList.add("style-comment-area")
+element.getElementsByClassName("comment-area")[0].prepend(div)
 }
 
-const container = (post) => {
-  let containerdo = document.createElement("div")
-  containerdo = `
-  <p>${post.data().name}</p>
-  `
-  return containerdo
-}
