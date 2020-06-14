@@ -1,5 +1,5 @@
 import { routes } from "./index.js";
-import { firebaseActions, readPosts, googleLogin, facebookLogin } from "./data.js";
+import { firebaseActions, readPosts, googleAndFacebookLogin, readComments, comments} from "./data.js";
 import{createElementPost} from "./pages/posts/posts.js"
 
 export const elements = {
@@ -17,7 +17,7 @@ export const elements = {
   },
   deletePostDOM(postId) {
     firebaseActions.deletePost(postId);
-    let post = document.getElementById(`post-${postId}`);
+    const post = document.getElementById(`post-${postId}`);
     post.remove();
 
   },
@@ -33,7 +33,7 @@ export const elements = {
   },
   getHoursPosted() {
     const date = new Date()
-    return `${elements.editHoursPosted(date.getDay())}/${elements.editHoursPosted(date.getMonth()+1)}/${elements.editHoursPosted(date.getFullYear())} 
+    return `${elements.editHoursPosted(date.getDate())}/${elements.editHoursPosted(date.getMonth()+1)}/${elements.editHoursPosted(date.getFullYear())} 
     ${elements.editHoursPosted(date.getHours())}:${elements.editHoursPosted(date.getMinutes())}:${elements.editHoursPosted(date.getSeconds())}`;
   },
 }
@@ -110,12 +110,16 @@ export const initFunc = {
   loginEventFacebook() {
     const facebookAuth = document.querySelector("#facebook");
     facebookAuth.addEventListener("click", () => {
-      facebookLogin()
+      var provider = new firebase.auth.FacebookAuthProvider();
+      googleAndFacebookLogin(provider)
     })
   },
   loginEventGoogle() {
     const googleAuth = document.querySelector("#google");
-    googleAuth.addEventListener("click", googleLogin);
+    googleAuth.addEventListener("click", () => {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      googleAndFacebookLogin(provider)
+    });
   },
   loginEvent(element) {
     element.innerHTML = "";
@@ -136,3 +140,21 @@ export const initFunc = {
     });
   },
 }
+
+export function commentsDOM(postId, element) {
+  element.getElementsByClassName("post-button")[0].addEventListener("click", () => {
+    const textPosted = element.getElementsByClassName("comment-input-area")[0]
+    comments(textPosted.value, postId, elements.getHoursPosted() )
+  })
+}
+
+export function printComments(doc, element) {
+  const div = document.createElement("div")
+  div.innerHTML=`
+  <p>${doc.data().name} </p>
+  <p>${doc.data().text}</p>
+  <p>${doc.data().date}</p>`
+  div.classList.add("style-comment-area")
+element.getElementsByClassName("comment-area")[0].prepend(div)
+}
+
