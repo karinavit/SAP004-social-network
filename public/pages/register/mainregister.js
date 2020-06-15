@@ -13,8 +13,7 @@ export function registerDOM() {
   });
 
   singInRegisterButton.addEventListener('click', () => {
-    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value, 
+    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value,
       nameRegisterInput.value, birthdayRegisterInput.value);
   });
 }
-

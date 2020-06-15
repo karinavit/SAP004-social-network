@@ -1,4 +1,4 @@
-import { registerDOM } from './mainregister.js'
+import { registerDOM } from './mainregister.js';
 
 export const register = (root) => {
   const container = document.createElement('div');
@@ -23,7 +23,8 @@ export const register = (root) => {
       </div>
     </div>
   `;
-  root.innerHTML = '';
-  root.appendChild(container);
+  const element = root;
+  element.innerHTML = '';
+  element.appendChild(container);
   registerDOM();
 };

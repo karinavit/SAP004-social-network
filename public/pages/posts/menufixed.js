@@ -15,4 +15,4 @@ export const menuFixed = (pageRoot) => {
   `;
   pageRoot.prepend(container);
   menuPost.loggoutMenuEvent();
-}  
+};

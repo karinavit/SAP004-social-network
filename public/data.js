@@ -53,10 +53,11 @@ const firebaseActions = {
           });
       });
   },
-  readCommentsData(postId, func, element, clear) {
+  readComments(postId, func, element, clear) {
     firebase
       .firestore()
-      .collection('posts').doc(postId)
+      .collection('posts')
+      .doc(postId)
       .collection('comments')
       .orderBy('date', 'asc')
       .onSnapshot((doc) => {
@@ -105,10 +106,10 @@ const firebaseActions = {
     commentsReference
       .doc()
       .set({
-        nameUser: firebase.auth().currentUser.displayName,
-        datePosted: date,
-        textPosted: text,
-        parentId: postId,
+        name: firebase.auth().currentUser.displayName,
+        date,
+        text,
+        parent_id: postId,
       })
       .then(() => { })
       .catch((error) => {
