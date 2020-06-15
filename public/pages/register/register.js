@@ -1,4 +1,6 @@
-export const register = () => {
+import { registerDOM } from "./mainregister.js"
+
+export const register = (root) => {
   const container = document.createElement("div");
   container.classList.add("display-column");
   container.classList.add("display-web");
@@ -16,14 +18,12 @@ export const register = () => {
       <label class="letter-color">Digite uma senha:</label>
       <input class="style-input" id="password-input-register" type="password">
       <div class="register-display-buttons margin-web-register">
-        <a class="width-button-login" href="/#">
-          <button class="button-login login-btn-web" id="back-button">Voltar</button>
-        </a>
-        <a class="width-button-login" href="/#posts" >
-          <button class="button-login login-btn-web" id="sign-in-button">Registrar-se</button>
-        </a>
+        <button class="button-login width-button-login login-btn-web" id="back-button">Voltar</button>
+        <button class="button-login width-button-login login-btn-web" id="sign-in-register-button">Registrar-se</button>
       </div>
     </div>
   `;
-  return container;
+  root.innerHTML = "";
+  root.appendChild(container);
+  registerDOM();
 };
