@@ -23,8 +23,9 @@ export const formLogin = (root) => {
       </p>      
     </div>
   `;
-  root.innerHTML = '';
-  root.appendChild(container);
+  const element = root;
+  element.innerHTML = '';
+  element.appendChild(container);
   initFunc.loginEvent();
   initFunc.registerEvent();
   initFunc.loginEventGoogle();
