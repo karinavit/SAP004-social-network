@@ -1,4 +1,4 @@
-const firebaseActions = {
+export const firebaseActions = {
   loginData(email, password) {
     firebase
       .auth()
@@ -117,4 +117,28 @@ const firebaseActions = {
       });
   },
 };
-export default firebaseActions;
+
+export function oneLikePerUser (postId, likes, func) {
+  let likeValue = likes
+  const postCollection = firebase.firestore().collection('posts').doc(postId)
+  postCollection.get()
+    .then(posts => {
+      if(posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
+        likeValue -=1
+        func(likeValue,postId)
+        firebaseActions.editOrLikePost(postId, {
+          likes: likeValue, wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
+        })
+      }
+      else {
+        likeValue +=1
+        func(likeValue,postId)
+        firebaseActions.editOrLikePost(postId, {
+          likes: likeValue, wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
+        })
+        return likes;
+      }
+
+      });
+
+}
