@@ -3,8 +3,7 @@ export const firebaseActions = {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        error.message;
+      .catch(() => {
       });
   },
   loggoutData() {
@@ -39,8 +38,7 @@ export const firebaseActions = {
         };
         userCollection.doc(uid).set(infoUser);
       })
-      .catch((error) => {
-        error.message;
+      .catch(() => {
       });
   },
   postData(post, func) {
@@ -92,9 +90,7 @@ export const firebaseActions = {
           nameUser: user.displayName,
         });
       })
-      .catch((error) => {
-        const errorMessage = error.message;
-        errorMessage;
+      .catch(() => {
       });
   },
   comments(text, postId, date) {
@@ -112,33 +108,30 @@ export const firebaseActions = {
         parentId: postId,
       })
       .then(() => { })
-      .catch((error) => {
-         error;
+      .catch(() => {
       });
   },
 };
 
-export function oneLikePerUser (postId, likes, func) {
-  let likeValue = likes
-  const postCollection = firebase.firestore().collection('posts').doc(postId)
+export function oneLikePerUser(postId, likes, func) {
+  let likeValue = likes;
+  const postCollection = firebase.firestore().collection('posts').doc(postId);
   postCollection.get()
-    .then(posts => {
-      if(posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
-        likeValue -=1
-        func(likeValue,postId)
+    .then((posts) => {
+      if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
+        likeValue -= 1;
+        func(likeValue, postId);
         firebaseActions.editOrLikePost(postId, {
-          likes: likeValue, wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
-        })
-      }
-      else {
-        likeValue +=1
-        func(likeValue,postId)
+          wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
+          likes: likeValue,
+        });
+      } else {
+        likeValue += 1;
+        func(likeValue, postId);
         firebaseActions.editOrLikePost(postId, {
-          likes: likeValue, wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
-        })
-        return likes;
+          likes: likeValue,
+          wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
+        });
       }
-
-      });
-
+    });
 }

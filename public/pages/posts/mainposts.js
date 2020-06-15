@@ -1,6 +1,12 @@
 import { firebaseActions, oneLikePerUser } from '../../data.js';
 import { menuFixed } from './menufixed.js';
 
+function updateLikeDOM(like, postId) {
+  const postElement = document.getElementById(`post-${postId}`);
+  const likeValueElement = postElement.getElementsByClassName('like-value')[0];
+  likeValueElement.innerHTML = like;
+}
+
 const postsFunc = {
   loggoutMenuEvent() {
     const loggoutButton = document.querySelector('#loggout');
@@ -32,18 +38,10 @@ const postsFunc = {
   likePostDOM(postId) {
     const postElement = document.getElementById(`post-${postId}`);
     const likeValueElement = postElement.getElementsByClassName('like-value')[0];
-    let likes = Number(likeValueElement.textContent);
-    oneLikePerUser(postId, likes, updateLikeDOM)
-
+    const likes = Number(likeValueElement.textContent);
+    oneLikePerUser(postId, likes, updateLikeDOM);
   },
 };
-function updateLikeDOM(like, postId) {
-  const postElement = document.getElementById(`post-${postId}`)
-  const likeValueElement = postElement.getElementsByClassName('like-value')[0];
-  likeValueElement.innerHTML = like;
-}
-
-
 
 function editHoursPosted(dateInfo) {
   return dateInfo < 10 ? `0${dateInfo}` : dateInfo;
