@@ -1,7 +1,7 @@
-import { initFunc } from "./main.js";
 import { formLogin } from "./pages/login/login.js";
 import { signIn } from "./pages/posts/posts.js";
 import { register } from "./pages/register/register.js";
+import firebaseActions from "./data.js";
 
 export const routes = {
   home: formLogin,
@@ -9,23 +9,44 @@ export const routes = {
   register: register,
 };
 
-const container = document.querySelector("#root");
+const root = document.querySelector("#root");
+
+const changePages = () => {
+  window.addEventListener("hashchange", teste)
+}
+
+function teste () {
+  root.innerHTML = "";
+    switch (window.location.hash) {
+      case "":
+        routes.home(root);
+        break;
+      case "#register":
+        routes.register(root);
+        break;
+      case "#posts":
+        setTimeout(() => {
+          routes.posts(root, firebaseActions.takeNameData());
+        }, 1000);
+        break;
+      default:
+        routes.home(root);
+    }
+}
 
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      setTimeout(initFunc.loggoutMenuEvent(container), 1);
-      initFunc.pagePost();
-
+      window.location = "#posts";
     } else {
-      initFunc.loginEvent(container);
-      initFunc.registerEvent(container);
-      initFunc.loginEventGoogle();
-      initFunc.loginEventFacebook();
+      window.location = "#";
+      // window.location = "#register"
     }
   });
 }
 
 window.addEventListener("load", () => {
   init();
+  changePages();
+  teste();
 });
