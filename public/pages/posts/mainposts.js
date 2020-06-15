@@ -33,29 +33,42 @@ const postsFunc = {
     const postElement = document.getElementById(`post-${postId}`);
     const likeValueElement = postElement.getElementsByClassName('like-value')[0];
     let likes = Number(likeValueElement.textContent) ;
-    // likeValueElement.innerHTML = likes;
-    ;
-    const postCollection = firebase.firestore().collection('posts').doc(postId)
+    
+    
+     oneLikePerUser(postId, likes, updateLikeDOM )
+    
+  },
+};
+function updateLikeDOM (like, postId) {
+  const postElement = document.getElementById(`post-${postId}`)
+  const likeValueElement = postElement.getElementsByClassName('like-value')[0];
+  likeValueElement.innerHTML = like;
+}
+
+function oneLikePerUser (postId, likes, func) {
+  let likeValue = likes
+  const postCollection = firebase.firestore().collection('posts').doc(postId)
   postCollection.get()
-    .then((posts) => {
+    .then(posts => {
       if(String(posts.data().wholiked) === String(firebase.auth().currentUser.uid)) {
-        likes -=1
-        likeValueElement.innerHTML = likes;
+        likeValue -=1
+        func(likeValue,postId)
         firebaseActions.editOrLikePost(postId, {
-          likes, wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
+          likes: likeValue, wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
         })
       }
       else {
-        likes += 1
-        likeValueElement.innerHTML = likes;
+        likeValue +=1
+        func(likeValue,postId)
         firebaseActions.editOrLikePost(postId, {
-          likes, wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
+          likes: likeValue, wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
         })
+        return likes;
       }
 
       });
-  },
-};
+
+}
 
 function editHoursPosted(dateInfo) {
   return dateInfo < 10 ? `0${dateInfo}` : dateInfo;
