@@ -32,11 +32,28 @@ const postsFunc = {
   likePostDOM(postId) {
     const postElement = document.getElementById(`post-${postId}`);
     const likeValueElement = postElement.getElementsByClassName('like-value')[0];
-    const likes = Number(likeValueElement.textContent) + 1;
-    likeValueElement.innerHTML = likes;
-    firebaseActions.editOrLikePost(postId, {
-      likes, wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
-    });
+    let likes = Number(likeValueElement.textContent) ;
+    // likeValueElement.innerHTML = likes;
+    ;
+    const postCollection = firebase.firestore().collection('posts').doc(postId)
+  postCollection.get()
+    .then((posts) => {
+      if(String(posts.data().wholiked) === String(firebase.auth().currentUser.uid)) {
+        likes -=1
+        likeValueElement.innerHTML = likes;
+        firebaseActions.editOrLikePost(postId, {
+          likes, wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
+        })
+      }
+      else {
+        likes += 1
+        likeValueElement.innerHTML = likes;
+        firebaseActions.editOrLikePost(postId, {
+          likes, wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
+        })
+      }
+
+      });
   },
 };
 
