@@ -4,7 +4,7 @@ export const firebaseActions = {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch((error) => {
-        alert(error.message);
+        error.message;
       });
   },
   loggoutData() {
@@ -40,7 +40,7 @@ export const firebaseActions = {
         userCollection.doc(uid).set(infoUser);
       })
       .catch((error) => {
-        alert(error.message);
+        error.message;
       });
   },
   postData(post, func) {
@@ -94,7 +94,7 @@ export const firebaseActions = {
       })
       .catch((error) => {
         const errorMessage = error.message;
-        alert(errorMessage);
+        errorMessage;
       });
   },
   comments(text, postId, date) {
@@ -113,7 +113,7 @@ export const firebaseActions = {
       })
       .then(() => { })
       .catch((error) => {
-        alert('Error adding document: ', error);
+         error;
       });
   },
 };
