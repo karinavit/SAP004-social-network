@@ -1,5 +1,11 @@
-import firebaseActions from '../../data.js';
+import { firebaseActions, oneLikePerUser } from '../../data.js';
 import { menuFixed } from './menufixed.js';
+
+function updateLikeDOM(like, postId) {
+  const postElement = document.getElementById(`post-${postId}`);
+  const likeValueElement = postElement.getElementsByClassName('like-value')[0];
+  likeValueElement.innerHTML = like;
+}
 
 const postsFunc = {
   loggoutMenuEvent() {
@@ -32,9 +38,8 @@ const postsFunc = {
   likePostDOM(postId) {
     const postElement = document.getElementById(`post-${postId}`);
     const likeValueElement = postElement.getElementsByClassName('like-value')[0];
-    const likes = Number(likeValueElement.textContent) + 1;
-    likeValueElement.innerHTML = likes;
-    firebaseActions.editOrLikePost(postId, { likes });
+    const likes = Number(likeValueElement.textContent);
+    oneLikePerUser(postId, likes, updateLikeDOM);
   },
 };
 
@@ -155,6 +160,7 @@ function postDOM() {
       private: true,
       visibility: privateField.checked ? 'private' : 'public',
       date: getHoursPosted(),
+      wholiked: [],
     };
     postTexto.value = '';
     privateField.checked = false;

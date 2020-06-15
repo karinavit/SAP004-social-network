@@ -1,10 +1,9 @@
-const firebaseActions = {
+export const firebaseActions = {
   loginData(email, password) {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        alert(error.message);
+      .catch(() => {
       });
   },
   loggoutData() {
@@ -39,8 +38,7 @@ const firebaseActions = {
         };
         userCollection.doc(uid).set(infoUser);
       })
-      .catch((error) => {
-        alert(error.message);
+      .catch(() => {
       });
   },
   postData(post, func) {
@@ -92,9 +90,7 @@ const firebaseActions = {
           nameUser: user.displayName,
         });
       })
-      .catch((error) => {
-        const errorMessage = error.message;
-        alert(errorMessage);
+      .catch(() => {
       });
   },
   comments(text, postId, date) {
@@ -112,9 +108,30 @@ const firebaseActions = {
         parentId: postId,
       })
       .then(() => { })
-      .catch((error) => {
-        alert('Error adding document: ', error);
+      .catch(() => {
       });
   },
 };
-export default firebaseActions;
+
+export function oneLikePerUser(postId, likes, func) {
+  let likeValue = likes;
+  const postCollection = firebase.firestore().collection('posts').doc(postId);
+  postCollection.get()
+    .then((posts) => {
+      if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
+        likeValue -= 1;
+        func(likeValue, postId);
+        firebaseActions.editOrLikePost(postId, {
+          wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
+          likes: likeValue,
+        });
+      } else {
+        likeValue += 1;
+        func(likeValue, postId);
+        firebaseActions.editOrLikePost(postId, {
+          likes: likeValue,
+          wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
+        });
+      }
+    });
+}
