@@ -3,26 +3,23 @@ import { signIn } from './pages/posts/posts.js';
 import { register } from './pages/register/register.js';
 import firebaseActions from './data.js';
 
-export const routes = {
+const routes = {
   home: formLogin,
   posts: signIn,
-  register: register,
+  registerPage: register,
 };
 
 const root = document.querySelector('#root');
 
 const changePages = () => {
-  window.addEventListener('hashchange', teste)
-}
-
-function teste () {
-  root.innerHTML = '';
+  window.addEventListener('hashchange', () => {
+    root.innerHTML = '';
     switch (window.location.hash) {
       case '':
         routes.home(root);
         break;
       case '#register':
-        routes.register(root);
+        routes.registerPage(root);
         break;
       case '#posts':
         setTimeout(() => {
@@ -32,7 +29,8 @@ function teste () {
       default:
         routes.home(root);
     }
-}
+  });
+};
 
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
@@ -47,5 +45,4 @@ function init() {
 window.addEventListener('load', () => {
   init();
   changePages();
-  teste();
 });

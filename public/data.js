@@ -28,17 +28,16 @@ const firebaseActions = {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((cred) =>
-        cred.user.updateProfile({ displayName: name })
-      )
+      .then(cred => cred.user.updateProfile({ displayName: name }))
       .then(() => {
-        const uid = firebase.auth().currentUser.uid
-        userCollection.doc(uid).set({
-          birthday: birthday,
-          email: email,
-          id_user: firebase.auth().currentUser.uid,
-          name: name,
-        })
+        const uid = firebase.auth().currentUser.uid;
+        const infoUser = {
+          birthdayUser: birthday,
+          emailUser: email,
+          idUser: firebase.auth().currentUser.uid,
+          nameUser: name,
+        };
+        userCollection.doc(uid).set(infoUser);
       })
       .catch((error) => {
         alert(error.message);
@@ -58,19 +57,21 @@ const firebaseActions = {
     firebase
       .firestore()
       .collection('posts').doc(postId)
-      .collection('comments').orderBy('date', 'asc').onSnapshot((doc) => {
-        clear(element)
-        doc.forEach(doc => {
-          func(doc, element)
-        })
-      })
+      .collection('comments')
+      .orderBy('date', 'asc')
+      .onSnapshot((doc) => {
+        clear(element);
+        doc.forEach((document) => {
+          func(document, element);
+        });
+      });
   },
   readPosts(func) {
     const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
     postCollection.get()
       .then((posts) => {
         posts.forEach((post) => {
-          if (firebase.auth().currentUser.uid == post.data().id_user || post.data().visibility == 'public') {
+          if (firebase.auth().currentUser.uid === post.data().id_user || post.data().visibility === 'public') {
             func(post);
           }
         });
@@ -85,34 +86,34 @@ const firebaseActions = {
       .then((result) => {
         const user = result.user;
         userCollection.doc(user.uid).set({
-          email: user.email,
-          id_user: user.uid,
-          name: user.displayName,
+          emailUser: user.email,
+          idUser: user.uid,
+          nameUser: user.displayName,
         });
       })
-      .catch(function (error) {
-        let errorMessage = error.message;
+      .catch((error) => {
+        const errorMessage = error.message;
         alert(errorMessage);
       });
   },
   comments(text, postId, date, parentId) {
-    const commentsReference =
-      firebase.firestore().collection('posts').doc(postId)
-        .collection('comments');
-  
+    const commentsReference = firebase
+      .firestore()
+      .collection('posts')
+      .doc(postId)
+      .collection('comments');
     commentsReference
       .doc()
       .set({
-        name: firebase.auth().currentUser.displayName,
-        date: date,
-        text: text,
-        parent_id: postId
+        nameUser: firebase.auth().currentUser.displayName,
+        datePosted: date,
+        textPosted: text,
+        parentId: postId,
       })
       .then(() => { })
       .catch((error) => {
-        console.error('Error adding document: ', error);
+        alert('Error adding document: ', error);
       });
-  },  
-}
-
+  },
+};
 export default firebaseActions;
