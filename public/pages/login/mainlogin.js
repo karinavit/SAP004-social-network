@@ -1,4 +1,4 @@
-import firebaseActions from '../../data.js';
+import {firebaseActions} from '../../data.js';
 
 export const initFunc = {
   loginEventFacebook() {
