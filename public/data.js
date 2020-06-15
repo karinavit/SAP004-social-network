@@ -97,7 +97,7 @@ const firebaseActions = {
         alert(errorMessage);
       });
   },
-  comments(text, postId, date, parentId) {
+  comments(text, postId, date) {
     const commentsReference = firebase
       .firestore()
       .collection('posts')
@@ -109,7 +109,7 @@ const firebaseActions = {
         name: firebase.auth().currentUser.displayName,
         date,
         text,
-        parent_id: postId,
+        parentId: postId,
       })
       .then(() => { })
       .catch((error) => {
