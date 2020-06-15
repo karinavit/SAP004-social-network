@@ -1,18 +1,11 @@
 import firebaseActions from "../../data.js";
 import { postsFunc, commentsDOM } from "./mainposts.js";
+import { menuFixed } from "./menufixed.js";
 
 export const signIn = (root, name) => {
   const container = document.createElement('div');
   container.classList.add("display-column");
   container.innerHTML = `
-    <div class="nav-posts">
-      <img id="bar-menu" class="bar-menu" src="img/bars-solid.svg" alt="bar">
-      <h1 class="logo-name-posts-nav">Social Trekkers</h1>
-      <img class="menu-posts" src="img/logo.png" alt="logo">
-    </div>
-    <a id="loggout" class="loggout" href="#">
-      <div>Sair</div>
-    </a>
     <div class="display-mobile display-web-row">
       <div class="margin-top-user profile-mobile display-web-user profile-web">
         <img class="img-user img-user-web" src="img/startrek_spock.jpg" alt="spock">
@@ -43,8 +36,8 @@ export const signIn = (root, name) => {
   `;
   root.innerHTML = "";
   root.appendChild(container);
+  menuFixed(container);
   postsFunc.pagePost();
-  setTimeout(postsFunc.loggoutMenuEvent(), 1);
 };
 
 export function createElementPost(post) {
