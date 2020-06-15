@@ -34,7 +34,9 @@ const postsFunc = {
     const likeValueElement = postElement.getElementsByClassName('like-value')[0];
     const likes = Number(likeValueElement.textContent) + 1;
     likeValueElement.innerHTML = likes;
-    firebaseActions.editOrLikePost(postId, { likes });
+    firebaseActions.editOrLikePost(postId, {
+      likes, wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
+    });
   },
 };
 
@@ -155,6 +157,7 @@ function postDOM() {
       private: true,
       visibility: privateField.checked ? 'private' : 'public',
       date: getHoursPosted(),
+      wholiked: [],
     };
     postTexto.value = '';
     privateField.checked = false;
