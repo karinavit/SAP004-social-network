@@ -6,7 +6,7 @@ export const register = (root) => {
   container.classList.add("display-web");
 
   container.innerHTML = `
-    <img class="img img-web" src="img/logo.png" alt="logo">
+    <img class="img img-web" src="../../img/logo.png" alt="logo">
     <div class="display-column register-style-web">
       <h1 class="style-title title-web">Social Trekkers</h1>
       <label class="letter-color">Digite seu nome completo:</label>

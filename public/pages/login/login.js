@@ -6,7 +6,7 @@ export const formLogin = (root) => {
   container.classList.add("display-web");
 
   container.innerHTML = `
-    <img class="img img-web" src="img/logo.png" alt="logo">
+    <img class="img img-web" src="../../img/logo.png" alt="logo">
     <div class="display-column login-style-web">
       <h1 class="style-title title-web">Social Trekkers</h1>
       <input class="style-input" id='email-input' type='email' placeholder="Digite seu e-mail...">
