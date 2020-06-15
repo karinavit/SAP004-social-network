@@ -1,16 +1,16 @@
-import {elements, commentsDOM, printComments, readPostsDOM} from "../../main.js"
-import {readComments} from "../../data.js"
-export const signIn = (name) => {
+import firebaseActions from "../../data.js";
+import { postsFunc, commentsDOM } from "./mainposts.js";
+
+export const signIn = (root, name) => {
   const container = document.createElement('div');
   container.classList.add("display-column");
-
   container.innerHTML = `
     <div class="nav-posts">
       <img id="bar-menu" class="bar-menu" src="img/bars-solid.svg" alt="bar">
       <h1 class="logo-name-posts-nav">Social Trekkers</h1>
       <img class="menu-posts" src="img/logo.png" alt="logo">
     </div>
-    <a id="loggout" class="loggout" href="/#">
+    <a id="loggout" class="loggout" href="#">
       <div>Sair</div>
     </a>
     <div class="display-mobile display-web-row">
@@ -41,9 +41,11 @@ export const signIn = (name) => {
       </div>
     </div>
   `;
-  return container;
+  root.innerHTML = "";
+  root.appendChild(container);
+  postsFunc.pagePost();
+  setTimeout(postsFunc.loggoutMenuEvent(), 1);
 };
-
 
 export function createElementPost(post) {
   const postTemplate = `
@@ -65,7 +67,7 @@ export function createElementPost(post) {
         <img class="delete" src="img/trash-alt-regular.svg" alt="delete-posts">
       </span>
       </div>
-    <ul class="comments">
+    <ul>
       <li class="post-comment">
         <input type="text" class="comment-input-area input-comment">
         <button type="submit" class="post-button width-button-login button-login">Comentário</button>
@@ -74,30 +76,26 @@ export function createElementPost(post) {
       </li>
     </ul>
   `;
-    //class comments linha 68 não está sendo usada
 
   let postElement = document.createElement("li");
   postElement.classList.add("each-post");
   postElement.id = `post-${post.id}`;
   postElement.innerHTML = postTemplate;
   postElement.getElementsByClassName("edit")[0].addEventListener("click", () => {
-    elements.editPostDOM(post.id);
+    postsFunc.editPostDOM(post.id);
   });
   postElement.getElementsByClassName("like")[0].addEventListener("click", () => {
-    elements.likePostDOM(post.id);
+    postsFunc.likePostDOM(post.id);
   });
   postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
-    elements.deletePostDOM(post.id);
+    postsFunc.deletePostDOM(post.id);
   });
   postElement.getElementsByClassName("comment-button")[0].addEventListener("click", () => {
-    const comentario = postElement.getElementsByClassName("post-comment")[0]
-    comentario.classList.toggle("show")
-    commentsDOM(post.id, postElement)
-    
+    const comentario = postElement.getElementsByClassName("post-comment")[0];
+    comentario.classList.toggle("show");
+    commentsDOM(post.id, postElement);
   })
-  readComments(post.id, printComments, postElement,clearArea)
-
-  
+  firebaseActions.readCommentsData(post.id, printComments, postElement, postsFunc.clearArea)
 
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
     postElement.querySelector(".delete").classList.add("visibility");
@@ -106,6 +104,13 @@ export function createElementPost(post) {
   return postElement;
 }
 
-function clearArea (element) {
-element.getElementsByClassName("comment-area")[0].innerHTML = ""
+function printComments(doc, element) {
+  const div = document.createElement("div");
+  div.innerHTML = `
+    <p>${doc.data().name} </p>
+    <p>${doc.data().text}</p>
+    <p>${doc.data().date}</p>
+  `;
+  div.classList.add("style-comment-area");
+  element.getElementsByClassName("comment-area")[0].prepend(div);
 }
