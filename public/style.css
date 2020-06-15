@@ -119,6 +119,7 @@ footer {
 
 .bar-menu {
   width: 40px;
+  cursor: pointer;
 }
 
 .logo-name-posts-nav {

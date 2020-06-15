@@ -1,4 +1,4 @@
-export const firebaseActions = {
+const firebaseActions = {
   loginData(email, password) {
     firebase
       .auth()
@@ -10,43 +10,41 @@ export const firebaseActions = {
   loggoutData() {
     firebase.auth().signOut();
   },
-  nameData() {
+  takeNameData() {
     return firebase.auth().currentUser.displayName;
   },
   editOrLikePost(postId, updateTextOrLike) {
-    const postCollection = firebase.firestore().collection("posts");
+    const postCollection = firebase.firestore().collection('posts');
     postCollection.doc(postId).update(updateTextOrLike)
-    .then(() => { });
+      .then(() => { });
   },
   deletePost(postId) {
-    const postCollection = firebase.firestore().collection("posts");
+    const postCollection = firebase.firestore().collection('posts');
     postCollection.doc(postId).delete()
-    .then(() => { });
+      .then(() => { });
   },
   register(email, password, name, birthday) {
-    const userCollection = firebase.firestore().collection("users-info");
+    const userCollection = firebase.firestore().collection('users-info');
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then((cred) =>
-        cred.user.updateProfile({ displayName: name })
-      )
+      .then(cred => cred.user.updateProfile({ displayName: name }))
       .then(() => {
-
-        const uid = firebase.auth().currentUser.uid
-        userCollection.doc(uid).set({
-          birthday: birthday,
-          email: email,
-          id_user: firebase.auth().currentUser.uid,
-          name: name,
-        })
+        const uid = firebase.auth().currentUser.uid;
+        const infoUser = {
+          birthdayUser: birthday,
+          emailUser: email,
+          idUser: firebase.auth().currentUser.uid,
+          nameUser: name,
+        };
+        userCollection.doc(uid).set(infoUser);
       })
       .catch((error) => {
         alert(error.message);
       });
   },
-  postData(post,func) {
-    const postCollection = firebase.firestore().collection("posts");
+  postData(post, func) {
+    const postCollection = firebase.firestore().collection('posts');
     postCollection.add(post)
       .then((postAdded) => {
         postAdded.get()
@@ -55,78 +53,68 @@ export const firebaseActions = {
           });
       });
   },
-}
-
-export function readPosts(func) {
-  const postCollection = firebase.firestore().collection("posts").orderBy("date", "asc");
-  postCollection.get()
-  .then((posts) => {
-    posts.forEach((post) => {
-      if (firebase.auth().currentUser.uid == post.data().id_user || post.data().visibility == "public") {
-        func(post);
-      }
-    });
-  });
-}
-
-export function readComments (postId,func, element, clear) {
-  firebase.firestore().collection("posts").doc(postId)
-  .collection('comments').orderBy("date", "asc").onSnapshot((doc) => {
-    clear(element)
-    doc.forEach(doc => {
-      func(doc, element)
-    })
-})
-}
-
-
-
-
-export function googleAndFacebookLogin(provider) {
-  // const userCollection = firebase.firestore().collection("users-info");
-  provider.setCustomParameters({ prompt: 'select_account' });
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    // .then(function (result) {
-    //   const user = result.user;
-    //   const userInfo = {
-    //     name: user.displayName,
-    //     id_user: user.uid,
-    //     email: user.email
-    //   }
-    //   userCollection.add(userInfo);      
-    // })
-    .catch(function (error) {
-      // Handle Errors here.
-      let errorCode = error.code;
-      let errorMessage = error.message;
-      // The email of the user's account used.
-      let email = error.email;
-      // The firebase.auth.AuthCredential type that was used.
-      let credential = error.credential;
-      // ...
-    });
-
-
-}
-
-
-export function comments(text, postId, date, parentId ) {
-  const commentsReference =
-  firebase.firestore().collection('posts').doc(postId)
-        .collection('comments');
-
-  commentsReference
+  readComments(postId, func, element, clear) {
+    firebase
+      .firestore()
+      .collection('posts')
+      .doc(postId)
+      .collection('comments')
+      .orderBy('date', 'asc')
+      .onSnapshot((doc) => {
+        clear(element);
+        doc.forEach((document) => {
+          func(document, element);
+        });
+      });
+  },
+  readPosts(func) {
+    const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
+    postCollection.get()
+      .then((posts) => {
+        posts.forEach((post) => {
+          if (firebase.auth().currentUser.uid === post.data().id_user || post.data().visibility === 'public') {
+            func(post);
+          }
+        });
+      });
+  },
+  googleAndFacebookLogin(provider) {
+    const userCollection = firebase.firestore().collection('users-info');
+    provider.setCustomParameters({ prompt: 'select_account' });
+    firebase
+      .auth()
+      .signInWithPopup(provider)
+      .then((result) => {
+        const user = result.user;
+        userCollection.doc(user.uid).set({
+          emailUser: user.email,
+          idUser: user.uid,
+          nameUser: user.displayName,
+        });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        alert(errorMessage);
+      });
+  },
+  comments(text, postId, date) {
+    const commentsReference = firebase
+      .firestore()
+      .collection('posts')
+      .doc(postId)
+      .collection('comments');
+    commentsReference
       .doc()
       .set({
         name: firebase.auth().currentUser.displayName,
-        date: date, 
-        text:text,
-        parent_id: postId
+        date,
+        text,
+        parentId: postId,
       })
-      .then(() => {})
-      .catch( (error) => {
-          console.error('Error adding document: ', error);
+      .then(() => { })
+      .catch((error) => {
+        alert('Error adding document: ', error);
       });
-    }
+  },
+};
+export default firebaseActions;
