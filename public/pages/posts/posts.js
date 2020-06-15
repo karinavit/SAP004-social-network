@@ -1,10 +1,10 @@
-import firebaseActions from "../../data.js";
-import { postsFunc, commentsDOM } from "./mainposts.js";
-import { menuFixed } from "./menufixed.js";
+import firebaseActions from '../../data.js';
+import { postsFunc, commentsDOM } from './mainposts.js';
+import { menuFixed } from './menufixed.js';
 
 export const signIn = (root, name) => {
   const container = document.createElement('div');
-  container.classList.add("display-column");
+  container.classList.add('display-column');
   container.innerHTML = `
     <div class="display-mobile display-web-row">
       <div class="margin-top-user profile-mobile display-web-user profile-web">
@@ -34,7 +34,7 @@ export const signIn = (root, name) => {
       </div>
     </div>
   `;
-  root.innerHTML = "";
+  root.innerHTML = '';
   root.appendChild(container);
   menuFixed(container);
   postsFunc.pagePost();
@@ -70,40 +70,40 @@ export function createElementPost(post) {
     </ul>
   `;
 
-  let postElement = document.createElement("li");
-  postElement.classList.add("each-post");
+  let postElement = document.createElement('li');
+  postElement.classList.add('each-post');
   postElement.id = `post-${post.id}`;
   postElement.innerHTML = postTemplate;
-  postElement.getElementsByClassName("edit")[0].addEventListener("click", () => {
+  postElement.getElementsByClassName('edit')[0].addEventListener('click', () => {
     postsFunc.editPostDOM(post.id);
   });
-  postElement.getElementsByClassName("like")[0].addEventListener("click", () => {
+  postElement.getElementsByClassName('like')[0].addEventListener('click', () => {
     postsFunc.likePostDOM(post.id);
   });
-  postElement.getElementsByClassName("delete")[0].addEventListener("click", () => {
+  postElement.getElementsByClassName('delete')[0].addEventListener('click', () => {
     postsFunc.deletePostDOM(post.id);
   });
-  postElement.getElementsByClassName("comment-button")[0].addEventListener("click", () => {
-    const comentario = postElement.getElementsByClassName("post-comment")[0];
-    comentario.classList.toggle("show");
+  postElement.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
+    const comentario = postElement.getElementsByClassName('post-comment')[0];
+    comentario.classList.toggle('show');
     commentsDOM(post.id, postElement);
   })
   firebaseActions.readCommentsData(post.id, printComments, postElement, postsFunc.clearArea)
 
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
-    postElement.querySelector(".delete").classList.add("visibility");
-    postElement.querySelector(".edit").classList.add("visibility");
+    postElement.querySelector('.delete').classList.add('visibility');
+    postElement.querySelector('.edit').classList.add('visibility');
   }
   return postElement;
 }
 
 function printComments(doc, element) {
-  const div = document.createElement("div");
+  const div = document.createElement('div');
   div.innerHTML = `
     <p>${doc.data().name} </p>
     <p>${doc.data().text}</p>
     <p>${doc.data().date}</p>
   `;
-  div.classList.add("style-comment-area");
-  element.getElementsByClassName("comment-area")[0].prepend(div);
+  div.classList.add('style-comment-area');
+  element.getElementsByClassName('comment-area')[0].prepend(div);
 }

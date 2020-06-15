@@ -14,17 +14,17 @@ const firebaseActions = {
     return firebase.auth().currentUser.displayName;
   },
   editOrLikePost(postId, updateTextOrLike) {
-    const postCollection = firebase.firestore().collection("posts");
+    const postCollection = firebase.firestore().collection('posts');
     postCollection.doc(postId).update(updateTextOrLike)
       .then(() => { });
   },
   deletePost(postId) {
-    const postCollection = firebase.firestore().collection("posts");
+    const postCollection = firebase.firestore().collection('posts');
     postCollection.doc(postId).delete()
       .then(() => { });
   },
   register(email, password, name, birthday) {
-    const userCollection = firebase.firestore().collection("users-info");
+    const userCollection = firebase.firestore().collection('users-info');
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -45,7 +45,7 @@ const firebaseActions = {
       });
   },
   postData(post, func) {
-    const postCollection = firebase.firestore().collection("posts");
+    const postCollection = firebase.firestore().collection('posts');
     postCollection.add(post)
       .then((postAdded) => {
         postAdded.get()
@@ -57,8 +57,8 @@ const firebaseActions = {
   readCommentsData(postId, func, element, clear) {
     firebase
       .firestore()
-      .collection("posts").doc(postId)
-      .collection('comments').orderBy("date", "asc").onSnapshot((doc) => {
+      .collection('posts').doc(postId)
+      .collection('comments').orderBy('date', 'asc').onSnapshot((doc) => {
         clear(element)
         doc.forEach(doc => {
           func(doc, element)
@@ -66,18 +66,18 @@ const firebaseActions = {
       })
   },
   readPosts(func) {
-    const postCollection = firebase.firestore().collection("posts").orderBy("date", "asc");
+    const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
     postCollection.get()
       .then((posts) => {
         posts.forEach((post) => {
-          if (firebase.auth().currentUser.uid == post.data().id_user || post.data().visibility == "public") {
+          if (firebase.auth().currentUser.uid == post.data().id_user || post.data().visibility == 'public') {
             func(post);
           }
         });
       });
   },
   googleAndFacebookLogin(provider) {
-    const userCollection = firebase.firestore().collection("users-info");
+    const userCollection = firebase.firestore().collection('users-info');
     provider.setCustomParameters({ prompt: 'select_account' });
     firebase
       .auth()

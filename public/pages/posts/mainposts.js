@@ -1,27 +1,27 @@
-import firebaseActions from "../../data.js";
-import { createElementPost } from "./posts.js";
+import firebaseActions from '../../data.js';
+import { createElementPost } from './posts.js';
 
 export const postsFunc = {
   pagePost() {
-    document.getElementById("postados").innerHTML = "";
+    document.getElementById('postados').innerHTML = '';
     firebaseActions.readPosts(readPostsDOM);
     postDOM();
   },
   loggoutMenuEvent() {
-    const loggoutButton = document.querySelector("#loggout");
-    loggoutButton.addEventListener("click", () => {
+    const loggoutButton = document.querySelector('#loggout');
+    loggoutButton.addEventListener('click', () => {
       firebaseActions.loggoutData();
     });
-    const menuBar = document.querySelector("#bar-menu");
-    menuBar.addEventListener("click", () => {
-      loggoutButton.classList.toggle("show-loggout");
+    const menuBar = document.querySelector('#bar-menu');
+    menuBar.addEventListener('click', () => {
+      loggoutButton.classList.toggle('show-loggout');
     });
   },
   editPostDOM(postId) {
     let postElement = document.getElementById(`post-${postId}`);
-    let textEditElement = postElement.getElementsByClassName("post-text-area")[0];
+    let textEditElement = postElement.getElementsByClassName('post-text-area')[0];
 
-    if (textEditElement.contentEditable != "true") {
+    if (textEditElement.contentEditable != 'true') {
       textEditElement.contentEditable = true;
       textEditElement.focus();
     } else {
@@ -36,7 +36,7 @@ export const postsFunc = {
   },
   likePostDOM(postId) {
     let postElement = document.getElementById(`post-${postId}`);
-    let likeValueElement = postElement.getElementsByClassName("like-value")[0];
+    let likeValueElement = postElement.getElementsByClassName('like-value')[0];
     let likes = Number(likeValueElement.textContent) + 1;
     likeValueElement.innerHTML = likes;
     firebaseActions.editOrLikePost(postId, { likes: likes });
@@ -49,37 +49,37 @@ export const postsFunc = {
     :${editHoursPosted(date.getSeconds())}`;
   },
   clearArea(element) {
-    element.getElementsByClassName("comment-area")[0].innerHTML = "";
+    element.getElementsByClassName('comment-area')[0].innerHTML = '';
   },
 }
 
 export function commentsDOM(postId, element) {
-  element.getElementsByClassName("post-button")[0].addEventListener("click", () => {
-    const textPosted = element.getElementsByClassName("comment-input-area")[0];
+  element.getElementsByClassName('post-button')[0].addEventListener('click', () => {
+    const textPosted = element.getElementsByClassName('comment-input-area')[0];
     firebaseActions.comments(textPosted.value, postId, postsFunc.getHoursPosted());
   })
 }
 
 function editHoursPosted(dateInfo) {
-  return dateInfo < 10 ? "0" + dateInfo : dateInfo;
+  return dateInfo < 10 ? '0' + dateInfo : dateInfo;
 }
 
 function readPostsDOM(post) {
-  document.querySelector("#postados").prepend(createElementPost(post));
+  document.querySelector('#postados').prepend(createElementPost(post));
 }
 
 function postDOM() {
-  const postar = document.querySelector("#postar");
-  const postTexto = document.querySelector("#post-text");
-  const img = document.querySelector("#post-img");
-  const inputFile = document.querySelector("#input-file");
-  const privateField = document.querySelector("#private");
+  const postar = document.querySelector('#postar');
+  const postTexto = document.querySelector('#post-text');
+  const img = document.querySelector('#post-img');
+  const inputFile = document.querySelector('#input-file');
+  const privateField = document.querySelector('#private');
 
-  img.addEventListener("click", () => {
+  img.addEventListener('click', () => {
     inputFile.click();
   });
 
-  postar.addEventListener("click", (event) => {
+  postar.addEventListener('click', (event) => {
     event.preventDefault();
     const post = {
       text: postTexto.value,
@@ -87,10 +87,10 @@ function postDOM() {
       name: firebase.auth().currentUser.displayName,
       likes: 0,
       private: true,
-      visibility: privateField.checked ? "private" : "public",
+      visibility: privateField.checked ? 'private' : 'public',
       date: postsFunc.getHoursPosted(),
     };
-    postTexto.value = "";
+    postTexto.value = '';
     privateField.checked = false;
     firebaseActions.postData(post, readPostsDOM);
   });

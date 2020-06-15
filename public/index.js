@@ -1,7 +1,7 @@
-import { formLogin } from "./pages/login/login.js";
-import { signIn } from "./pages/posts/posts.js";
-import { register } from "./pages/register/register.js";
-import firebaseActions from "./data.js";
+import { formLogin } from './pages/login/login.js';
+import { signIn } from './pages/posts/posts.js';
+import { register } from './pages/register/register.js';
+import firebaseActions from './data.js';
 
 export const routes = {
   home: formLogin,
@@ -9,22 +9,22 @@ export const routes = {
   register: register,
 };
 
-const root = document.querySelector("#root");
+const root = document.querySelector('#root');
 
 const changePages = () => {
-  window.addEventListener("hashchange", teste)
+  window.addEventListener('hashchange', teste)
 }
 
 function teste () {
-  root.innerHTML = "";
+  root.innerHTML = '';
     switch (window.location.hash) {
-      case "":
+      case '':
         routes.home(root);
         break;
-      case "#register":
+      case '#register':
         routes.register(root);
         break;
-      case "#posts":
+      case '#posts':
         setTimeout(() => {
           routes.posts(root, firebaseActions.takeNameData());
         }, 1000);
@@ -37,15 +37,14 @@ function teste () {
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      window.location = "#posts";
+      window.location = '#posts';
     } else {
-      window.location = "#";
-      // window.location = "#register"
+      window.location = '#';
     }
   });
 }
 
-window.addEventListener("load", () => {
+window.addEventListener('load', () => {
   init();
   changePages();
   teste();

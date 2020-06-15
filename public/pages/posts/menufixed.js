@@ -1,8 +1,8 @@
-import { menuPost } from "./mainmenufixed.js";
+import { menuPost } from './mainmenufixed.js';
 
 export const menuFixed = (pageRoot) => {
   const container = document.createElement('div');
-  container.classList.add("display-column");
+  container.classList.add('display-column');
   container.innerHTML = `
     <div class="nav-posts">
       <img id="bar-menu" class="bar-menu" src="../../img/bars-solid.svg" alt="bar">

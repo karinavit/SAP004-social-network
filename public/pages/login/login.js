@@ -1,9 +1,9 @@
-import { initFunc } from "./mainlogin.js";
+import { initFunc } from './mainlogin.js';
 
 export const formLogin = (root) => {
-  const container = document.createElement("div");
-  container.classList.add("display-column");
-  container.classList.add("display-web");
+  const container = document.createElement('div');
+  container.classList.add('display-column');
+  container.classList.add('display-web');
 
   container.innerHTML = `
     <img class="img img-web" src="../../img/logo.png" alt="logo">
@@ -23,7 +23,7 @@ export const formLogin = (root) => {
       </p>      
     </div>
   `;
-  root.innerHTML = "";
+  root.innerHTML = '';
   root.appendChild(container);
   initFunc.loginEvent();
   initFunc.registerEvent();
