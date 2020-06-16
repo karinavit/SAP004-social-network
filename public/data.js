@@ -17,16 +17,17 @@ export const firebaseActions = {
     postCollection.doc(postId).update(updateTextOrLike)
       .then(() => { });
   },
-   editOrLikeComments (docId,valueToUpdate, postId) {
+  editOrLikeComments(docId, valueToUpdate, postId) {
     const postCollection = firebase.firestore().collection('posts').doc(postId).collection("comments")
     postCollection.doc(docId).update(valueToUpdate)
-      .then(() => { });    },
+      .then(() => { });
+  },
   deletePost(postId) {
     const postCollection = firebase.firestore().collection('posts');
     postCollection.doc(postId).delete()
       .then(() => { });
   },
-   deleteComments (postId, docId) {
+  deleteComments(postId, docId) {
     const postCollection = firebase.firestore().collection('posts').doc(postId).collection("comments")
     postCollection.doc(docId).delete()
       .then(() => { });
@@ -73,6 +74,17 @@ export const firebaseActions = {
           func(document, element, postId);
         });
       });
+  },
+  readPostsProfile(func, element) {
+    const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
+    postCollection.get()
+      .then((posts) => {
+        posts.forEach((post) => {
+          if (firebase.auth().currentUser.uid === post.data().id_user) {
+            func(post, element)
+          }
+        })
+      })
   },
   readPosts(func) {
     const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
@@ -147,7 +159,7 @@ export function oneLikePerUser(postId, likes, func) {
     });
 }
 
-export function oneLikePerUserComments (postId, docId, func, commentsLike, element) {
+export function oneLikePerUserComments(postId, docId, func, commentsLike, element) {
   const postCollection = firebase.firestore().collection('posts').doc(postId).collection("comments").doc(docId);
   postCollection.get()
     .then((posts) => {
@@ -164,7 +176,7 @@ export function oneLikePerUserComments (postId, docId, func, commentsLike, eleme
         firebaseActions.editOrLikeComments(docId, {
           likes: commentsLike,
           wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
-        },postId);
+        }, postId);
       }
     });
 }
