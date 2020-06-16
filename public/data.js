@@ -114,7 +114,7 @@ export const firebaseActions = {
       .catch(() => {
       });
   },
-  comments(text, postId, date) {
+  comments(text, postId, date, postOwner) {
     const commentsReference = firebase
       .firestore()
       .collection('posts')
@@ -127,6 +127,7 @@ export const firebaseActions = {
         id_user: firebase.auth().currentUser.uid,
         date,
         text,
+        postOwner,
         parentId: postId,
         likes: 0,
         wholiked: [],
