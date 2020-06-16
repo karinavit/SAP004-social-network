@@ -124,6 +124,7 @@ export const firebaseActions = {
       .doc()
       .set({
         name: firebase.auth().currentUser.displayName,
+        id_user: firebase.auth().currentUser.uid,
         date,
         text,
         parentId: postId,
