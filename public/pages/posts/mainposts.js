@@ -7,7 +7,7 @@ function updateLikeDOM(like, postId) {
   likeValueElement.innerHTML = like;
 }
 
-const postsFunc = {
+export const postsFunc = {
   loggoutMenuEvent() {
     const loggoutButton = document.querySelector('#loggout');
     loggoutButton.addEventListener('click', () => {
@@ -18,8 +18,8 @@ const postsFunc = {
       loggoutButton.classList.toggle('show-loggout');
     });
   },
-  editPostDOM(postId) {
-    const postElement = document.getElementById(`post-${postId}`);
+  editPostDOM(postId, element) {
+    const postElement = element.getElementById(`post-${postId}`);
     const textEditElement = postElement.getElementsByClassName('post-text-area')[0];
 
     if (textEditElement.contentEditable !== 'true') {
@@ -30,16 +30,16 @@ const postsFunc = {
       firebaseActions.editOrLikePost(postId, { text: textEditElement.textContent });
     }
   },
-  deletePostDOM(postId) {
+  deletePostDOM(postId, element) {
     firebaseActions.deletePost(postId);
-    const post = document.getElementById(`post-${postId}`);
+    const post = element.getElementById(`post-${postId}`);
     post.remove();
   },
-  likePostDOM(postId) {
+  likePostDOM(postId, element) {
     const postElement = document.getElementById(`post-${postId}`);
     const likeValueElement = postElement.getElementsByClassName('like-value')[0];
     const likes = Number(likeValueElement.textContent);
-    oneLikePerUser(postId, likes, updateLikeDOM);
+    oneLikePerUser(postId, likes, updateLikeDOM, element);
   },
 };
 
@@ -55,19 +55,19 @@ function getHoursPosted() {
   :${editHoursPosted(date.getSeconds())}`;
 }
 
-function commentsDOM(postId, element) {
+export function commentsDOM(postId, element) {
   element.getElementsByClassName('post-button')[0].addEventListener('click', () => {
     const textPosted = element.getElementsByClassName('comment-input-area')[0];
     firebaseActions.comments(textPosted.value, postId, getHoursPosted());
   });
 }
 
-function clearArea(element) {
+export function clearArea(element) {
   const elementArea = element;
   elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
 }
 
-function printComments(doc, element, postId) {
+export function printComments(doc, element, postId) {
   const div = document.createElement('div');
   div.id = doc.id
   div.innerHTML = `
@@ -102,7 +102,7 @@ function printComments(doc, element, postId) {
 
 
 
-function updateCommentsLikes (like, element) {
+export function updateCommentsLikes (like, element) {
   const likeValueElement = element.getElementsByClassName('like-value-comment')[0];
   likeValueElement.innerHTML = like;
 }
@@ -110,7 +110,7 @@ function updateCommentsLikes (like, element) {
 
 
 
-function editComments (docId, commentEdited, postId) {
+export function editComments (docId, commentEdited, postId) {
   if (commentEdited.contentEditable !== 'true') {
     commentEdited.contentEditable = true;
     commentEdited.focus();
@@ -159,13 +159,13 @@ function createElementPost(post) {
   postElement.id = `post-${post.id}`;
   postElement.innerHTML = postTemplate;
   postElement.getElementsByClassName('edit')[0].addEventListener('click', () => {
-    postsFunc.editPostDOM(post.id);
+    postsFunc.editPostDOM(post.id, postElement);
   });
   postElement.getElementsByClassName('like')[0].addEventListener('click', () => {
-    postsFunc.likePostDOM(post.id);
+    postsFunc.likePostDOM(post.id, postElement);
   });
   postElement.getElementsByClassName('delete')[0].addEventListener('click', () => {
-    postsFunc.deletePostDOM(post.id);
+    postsFunc.deletePostDOM(post.id, postElement);
   });
   postElement.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
     const comentario = postElement.getElementsByClassName('post-comment')[0];
