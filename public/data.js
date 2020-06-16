@@ -1,8 +1,8 @@
+import { login } from './firebaseservice.js';
+
 export const firebaseActions = {
   loginData(email, password) {
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
+    return login(email, password)
       .catch(() => {
       });
   },
