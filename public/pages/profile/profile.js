@@ -1,8 +1,9 @@
 import { menuFixed } from '../posts/menufixed.js';
 import { backPosts } from './mainprofile.js';
 import {firebaseActions} from "../../data.js"
-import {postsFunc, commentsDOM, printComments, clearArea} from "../posts/mainposts.js"
-export const profilePage = (root) => {
+import {postsFunc, commentsDOM, clearArea} from "../posts/mainposts.js"
+import {printComments} from "../posts/postsAndComments.js"
+export const profilePage = (root, name) => {
   const container = document.createElement('div');
   container.classList.add('display-column');
   container.innerHTML = `
