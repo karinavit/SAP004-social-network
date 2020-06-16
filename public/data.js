@@ -116,6 +116,7 @@ export const firebaseActions = {
         text,
         parentId: postId,
         likes: 0,
+        wholiked: [],
       })
       .then(() => { })
       .catch(() => {
@@ -142,6 +143,28 @@ export function oneLikePerUser(postId, likes, func) {
           likes: likeValue,
           wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
         });
+      }
+    });
+}
+
+export function oneLikePerUserComments (postId, docId, func, commentsLike, element) {
+  const postCollection = firebase.firestore().collection('posts').doc(postId).collection("comments").doc(docId);
+  postCollection.get()
+    .then((posts) => {
+      if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
+        commentsLike -= 1;
+        func(commentsLike, element);
+        firebaseActions.editOrLikeComments(docId, {
+          wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
+          likes: commentsLike,
+        }, postId);
+      } else {
+        commentsLike += 1;
+        func(commentsLike, element);
+        firebaseActions.editOrLikeComments(docId, {
+          likes: commentsLike,
+          wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
+        },postId);
       }
     });
 }
