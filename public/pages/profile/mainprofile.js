@@ -4,3 +4,4 @@ export function backPosts() {
     window.location = '#posts';
   });
 }
+
