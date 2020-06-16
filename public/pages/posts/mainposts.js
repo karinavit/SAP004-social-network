@@ -56,10 +56,10 @@ function getHoursPosted() {
   :${editHoursPosted(date.getSeconds())}`;
 }
 
-export function commentsDOM(postId, element) {
+export function commentsDOM(postId, ownerPost, element) {
   element.getElementsByClassName('post-button')[0].addEventListener('click', () => {
     const textPosted = element.getElementsByClassName('comment-input-area')[0];
-    firebaseActions.comments(textPosted.value, postId, getHoursPosted());
+    firebaseActions.comments(textPosted.value, postId, getHoursPosted(), ownerPost);
   });
 }
 
