@@ -1,4 +1,4 @@
-import { firebaseActions, oneLikePerUser } from '../../data.js';
+import { firebaseActions, oneLikePerUser, oneLikePerUserComments } from '../../data.js';
 import { menuFixed } from './menufixed.js';
 
 function updateLikeDOM(like, postId) {
@@ -77,7 +77,7 @@ function printComments(doc, element, postId) {
     <img class="delete-comment delete" src="../../img/trash-alt-regular.svg" alt="delete-posts">
     <span class="display-like">
         <img class="like-img like-comment" src="../../img/like-spock.svg" alt="like-button">
-        <span class="like-value">${doc.data().likes}</span> 
+        <span class="like-value-comment">${doc.data().likes}</span> 
       </span>
       <span class="edit-comment edit name-edit-post">
         <img src="../../img/edit-regular.svg" alt="edit-posts">
@@ -87,9 +87,6 @@ function printComments(doc, element, postId) {
   div.classList.add('style-comment-area');
   element.getElementsByClassName('comment-area')[0].prepend(div);
 
-  element.getElementsByClassName('like-comment')[0].addEventListener("click", () => {
-    const commentsLike = Number(element.getElementsByClassName("like-value")[0].textContent)
-  });
   element.getElementsByClassName("delete-comment")[0].addEventListener("click", () => {
     firebaseActions.deleteComments(postId,doc.id)
   })
@@ -97,7 +94,21 @@ function printComments(doc, element, postId) {
     const commentEdited = element.getElementsByClassName('comment-posted')[0]
     editComments(doc.id,commentEdited, postId)
   })
+  element.getElementsByClassName('like-comment')[0].addEventListener("click", () => {
+    const  commentsLike = Number(element.getElementsByClassName("like-value-comment")[0].textContent)
+  oneLikePerUserComments(postId, doc.id, updateCommentsLikes, commentsLike, element )
+  });
 } 
+
+
+
+function updateCommentsLikes (like, element) {
+  const likeValueElement = element.getElementsByClassName('like-value-comment')[0];
+  likeValueElement.innerHTML = like;
+}
+
+
+
 
 function editComments (docId, commentEdited, postId) {
   if (commentEdited.contentEditable !== 'true') {
