@@ -12,6 +12,9 @@ export const menuFixed = (pageRoot) => {
     <a id="loggout" class="loggout" href="#">
       <div>Sair</div>
     </a>
+    <a id="profile" class="profile" href="#profile">
+      <div>Perfil</div>
+    </a>
   `;
   pageRoot.prepend(container);
   menuPost.loggoutMenuEvent();
