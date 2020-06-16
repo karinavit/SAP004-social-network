@@ -67,16 +67,34 @@ function clearArea(element) {
   elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
 }
 
-function printComments(doc, element) {
+function printComments(doc, element, postId) {
   const div = document.createElement('div');
+  div.id = doc.id
   div.innerHTML = `
     <p>${doc.data().name}</p>
     <p>${doc.data().text}</p>
     <p>${doc.data().date}</p>
+    <img class="delete-comment delete" src="../../img/trash-alt-regular.svg" alt="delete-posts">
+    <span class="display-like">
+        <img class="like-img like-comment" src="../../img/like-spock.svg" alt="like-button">
+        <span class="like-value">${doc.data().likes}</span> 
+      </span>
+
   `;
   div.classList.add('style-comment-area');
   element.getElementsByClassName('comment-area')[0].prepend(div);
+
+  element.getElementsByClassName('like-comment')[0].addEventListener("click", () => {
+    const commentsLike = Number(element.getElementsByClassName("like-value")[0].textContent)
+  });
+
+  element.getElementsByClassName("delete-comment")[0].addEventListener("click", () => {
+    firebaseActions.deleteComments(postId,doc.id)
+  })
+
 }
+
+
 
 function createElementPost(post) {
   const postTemplate = `
