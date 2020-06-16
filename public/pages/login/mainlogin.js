@@ -16,11 +16,10 @@ export const initFunc = {
     });
   },
   loginEvent() {
-    const emailInput = document.querySelector('#email-input');
-    const passwordInput = document.querySelector('#password-input');
-    const loginButton = document.querySelector('#submit-btn');
-    loginButton.addEventListener('click', () => {
-      firebaseActions.loginData(emailInput.value, passwordInput.value);
+    const form = document.querySelector('#form-id');
+    form.loginButton.addEventListener('click', (event) => {
+      event.preventDefault()
+      firebaseActions.loginData(form.emailInput.value, form.passwordInput.value);
     });
   },
   registerEvent() {

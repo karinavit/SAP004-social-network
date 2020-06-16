@@ -17,9 +17,18 @@ export const firebaseActions = {
     postCollection.doc(postId).update(updateTextOrLike)
       .then(() => { });
   },
+   editOrLikeComments (docId,valueToUpdate, postId) {
+    const postCollection = firebase.firestore().collection('posts').doc(postId).collection("comments")
+    postCollection.doc(docId).update(valueToUpdate)
+      .then(() => { });    },
   deletePost(postId) {
     const postCollection = firebase.firestore().collection('posts');
     postCollection.doc(postId).delete()
+      .then(() => { });
+  },
+   deleteComments (postId, docId) {
+    const postCollection = firebase.firestore().collection('posts').doc(postId).collection("comments")
+    postCollection.doc(docId).delete()
       .then(() => { });
   },
   register(email, password, name, birthday) {
@@ -61,7 +70,7 @@ export const firebaseActions = {
       .onSnapshot((doc) => {
         clear(element);
         doc.forEach((document) => {
-          func(document, element);
+          func(document, element, postId);
         });
       });
   },
@@ -106,6 +115,7 @@ export const firebaseActions = {
         date,
         text,
         parentId: postId,
+        likes: 0,
       })
       .then(() => { })
       .catch(() => {

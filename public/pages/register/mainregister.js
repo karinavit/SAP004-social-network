@@ -1,19 +1,15 @@
 import { firebaseActions } from '../../data.js';
 
 export function registerDOM() {
-  const emailRegisterInput = document.querySelector('#email-input-register');
-  const nameRegisterInput = document.querySelector('#name-input-register');
-  const birthdayRegisterInput = document.querySelector('#date-input-register');
-  const passwordRegisterInput = document.querySelector('#password-input-register');
-  const singInRegisterButton = document.querySelector('#sign-in-register-button');
-  const backButton = document.querySelector('#back-button');
+  const form = document.querySelector("#form-register")
 
-  backButton.addEventListener('click', () => {
+  form.backButton.addEventListener('click', () => {
     window.location = '#';
   });
 
-  singInRegisterButton.addEventListener('click', () => {
-    firebaseActions.register(emailRegisterInput.value, passwordRegisterInput.value,
-      nameRegisterInput.value, birthdayRegisterInput.value);
+  form.signRegister.addEventListener('click', (event) => {
+    event.preventDefault()
+    firebaseActions.register(form.emailRegister.value, form.passwordRegister.value,
+      form.nameRegister.value, form.dateRegister.value);
   });
 }
