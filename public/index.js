@@ -1,6 +1,7 @@
 import { formLogin } from './pages/login/login.js';
 import { signIn } from './pages/posts/posts.js';
 import { register } from './pages/register/register.js';
+import { profilePage } from './pages/profile/profile.js'
 import { firebaseActions } from './data.js';
 
 const root = document.querySelector('#root');
@@ -18,6 +19,9 @@ function hashs() {
       setTimeout(() => {
         signIn(root, firebaseActions.takeNameData());
       }, 1000);
+      break;
+    case '#profile':
+      profilePage(root);
       break;
     default:
       formLogin(root);
