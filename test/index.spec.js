@@ -1,9 +1,14 @@
-// importamos as funções que iremos testar
-import { greeting } from "../public/pages/home/data.js";
+import { login } from "../public/firebaseservice.js";
+import { firebaseActions } from "../public/data.js";
 
-describe("Greeting", () => {
-  it('Deveria retornar "Oi Maria! Que bom ver você aqui!" quando passado "Maria" como parâmetros', () => {
-    const message = "Oi Maria! Que bom ver você aqui!";
-    expect(greeting("Maria")).toEqual(message);
+jest.mock("../public/firebaseservice.js");
+
+const email = "testefire@teste.com";
+const password = "123456";
+
+describe("loginData", () => {
+  it('loginData', async () => {
+    login.mockResolvedValueOnce();
+    await expect(firebaseActions.loginData(email, password)).resolves.toEqual(undefined);
   });
 });
