@@ -17,6 +17,10 @@ export const firebaseActions = {
     postCollection.doc(postId).update(updateTextOrLike)
       .then(() => { });
   },
+   editOrLikeComments (docId,valueToUpdate, postId) {
+    const postCollection = firebase.firestore().collection('posts').doc(postId).collection("comments")
+    postCollection.doc(docId).update(valueToUpdate)
+      .then(() => { });    },
   deletePost(postId) {
     const postCollection = firebase.firestore().collection('posts');
     postCollection.doc(postId).delete()
