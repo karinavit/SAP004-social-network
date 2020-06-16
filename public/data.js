@@ -136,21 +136,21 @@ export const firebaseActions = {
   },
 };
 
-export function oneLikePerUser(postId, likes, func) {
+export function oneLikePerUser(postId, likes, func, element) {
   let likeValue = likes;
   const postCollection = firebase.firestore().collection('posts').doc(postId);
   postCollection.get()
     .then((posts) => {
       if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
         likeValue -= 1;
-        func(likeValue, postId);
+        func(likeValue, postId, element);
         firebaseActions.editOrLikePost(postId, {
           wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
           likes: likeValue,
         });
       } else {
         likeValue += 1;
-        func(likeValue, postId);
+        func(likeValue, postId, element);
         firebaseActions.editOrLikePost(postId, {
           likes: likeValue,
           wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
