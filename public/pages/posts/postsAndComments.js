@@ -48,7 +48,7 @@ export function createElementPost(post) {
     postElement.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
         const comentario = postElement.getElementsByClassName('post-comment')[0];
         comentario.classList.toggle('show');
-        commentsDOM(post.id, postElement);
+        commentsDOM(post.id, post.data().id_user, postElement);
     });
     firebaseActions.readComments(post.id, printComments, postElement, clearArea);
 
@@ -92,4 +92,13 @@ export function printComments(doc, element, postId) {
         const commentsLike = Number(element.getElementsByClassName("like-value-comment")[0].textContent)
         oneLikePerUserComments(postId, doc.id, updateCommentsLikes, commentsLike, element)
     });
+
+    if (doc.data().id_user !== firebase.auth().currentUser.uid ) {
+        element.querySelector('.delete-comment').classList.add('visibility');
+        element.querySelector('.edit-comment').classList.add('visibility');
+    }
+    else if (doc.data().postOwner == firebase.auth().currentUser.uid) {
+        element.querySelector('.delete-comment').classList.add('visibility');
+
+    }
 }
