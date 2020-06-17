@@ -38,7 +38,10 @@ function createElementPost(post) {
     <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
     <div class="name-edit-post">
       <span class="display-like">
-        <img class="like-img like" src="../../img/like-spock.svg" alt="like-button">
+      <div class="like">
+        <img class="like-img liked svg-class hidden" src="../../img/like-spock.svg" alt="like-button">
+        <img class="like-img   like-back svg-class" src="../../img/notliked.svg" alt="like-button">
+  </div>
         <span class="like-value">${post.data().likes}</span>
       </span>
       <p class="style-hour">${post.data().date}</p>
@@ -64,6 +67,9 @@ function createElementPost(post) {
   });
   postElement.getElementsByClassName('like')[0].addEventListener('click', () => {
     postsFunc.likePostDOM(post.id, postElement);
+    postElement.getElementsByClassName('liked')[0].classList.toggle("hidden");
+    postElement.getElementsByClassName('like-back')[0].classList.toggle("hidden");
+    
   });
   postElement.getElementsByClassName('delete')[0].addEventListener('click', () => {
     postsFunc.deletePostDOM(post.id);
@@ -81,6 +87,7 @@ function createElementPost(post) {
   }
   return postElement;
 }
+
 
 function readPostsDOM(post) {
   document.querySelector('#postados').prepend(createElementPost(post));
