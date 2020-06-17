@@ -1,4 +1,4 @@
-import { initPostsAndMenu } from './mainposts.js';
+import { initPostsAndMenu } from './createPost.js';
 
 export const signIn = (root, name) => {
   const container = document.createElement('div');
