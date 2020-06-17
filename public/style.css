@@ -1,10 +1,10 @@
 @font-face {
-  font-family: "futura book";
+  font-family: "futura book", sans-serif;
   src: url('img/futura\ book\ font.ttf');
 }
 
 @font-face {
-  font-family: "startrek classic";
+  font-family: "startrek classic", sans-serif;
   src: url('img/FEC_____.TTF');
 }
 
@@ -14,7 +14,7 @@ html {
 }
 
 .style-title {
-  font-family: "startrek classic";
+  font-family: "startrek classic", sans-serif;
   font-size: 40px;
   color: #FFCC00;
 }
@@ -88,7 +88,7 @@ main {
 
 .letter-color {
   color: #FFCC00;
-  font-family: "futura book";
+  font-family: "futura book", sans-serif;
   margin: 5px 0px;
 }
 
@@ -124,7 +124,7 @@ footer {
 
 .logo-name-posts-nav {
   width: 65%;
-  font-family: "startrek classic";
+  font-family: "startrek classic", sans-serif;
   font-size: 35px;
   color: #FFCC00;
 }
@@ -161,7 +161,7 @@ footer {
 
 .name-user {
   width: 60%;
-  font-family: "futura book";
+  font-family: "futura book", sans-serif;
 }
 
 .display-form {
@@ -203,7 +203,7 @@ footer {
 
 .style-comment-area {
   width: calc(100% - 4px);
-  font-family: "futura book";
+  font-family: "futura book", sans-serif;
   border: 2px solid #FFCC00;
   background-color: rgb(253, 252, 200);
   padding: 10px 0px;
@@ -224,12 +224,12 @@ footer {
 }
 
 .check-prive {
-  font-family: "futura book";
+  font-family: "futura book", sans-serif;
   align-self: center;
 }
 
 .style-hour {
-  font-family: "futura book";
+  font-family: "futura book", sans-serif;
 }
 
 .display-like {
@@ -253,7 +253,7 @@ footer {
   background-color: white;
   margin: 20px 0px;
   border-radius: 2px;
-  font-family: "futura book";
+  font-family: "futura book", sans-serif;
 }
 
 .name-edit-post {
@@ -314,7 +314,7 @@ footer {
   align-items: center;
   justify-content: center;
   font-size: 30px;
-  font-family: "futura book";
+  font-family: "futura book", sans-serif;
 }
 
 .display-mobile {
