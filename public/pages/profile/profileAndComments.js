@@ -14,7 +14,7 @@ export function createElementProfilePost(post) {
     <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
     <div class="name-edit-post">
       <span class="display-like">
-        <img class="like-img like" src="../../img/like-spock.svg" alt="like-button">
+        <img class="like-img like svg-class" src="../../img/like-spock.svg" alt="like-button">
         <span class="like-value">${post.data().likes}</span> 
       </span>
       <p class="style-hour">${post.data().date}</p>
