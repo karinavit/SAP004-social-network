@@ -162,23 +162,24 @@ export function oneLikePerUser(postId, likes, func, element) {
 }
 
 export function oneLikePerUserComments(postId, docId, func, commentsLike, element) {
+  let likeComment = commentsLike;
   const postCollection = firebase.firestore().collection('posts')
     .doc(postId).collection('comments')
     .doc(docId);
   postCollection.get()
     .then((posts) => {
       if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
-        commentsLike -= 1;
-        func(commentsLike, element);
+        likeComment -= 1;
+        func(likeComment, element);
         firebaseActions.editOrLikeComments(docId, {
           wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
-          likes: commentsLike,
+          likes: likeComment,
         }, postId);
       } else {
-        commentsLike += 1;
-        func(commentsLike, element);
+        likeComment += 1;
+        func(likeComment, element);
         firebaseActions.editOrLikeComments(docId, {
-          likes: commentsLike,
+          likes: likeComment,
           wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
         }, postId);
       }
