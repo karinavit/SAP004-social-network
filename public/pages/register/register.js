@@ -3,7 +3,7 @@ import { registerDOM } from './mainregister.js';
 
 export const register = (root) => {
   const container = document.createElement('form');
-  container.id = "form-register"
+  container.id = 'form-register';
   container.classList.add('display-column');
   container.classList.add('display-web');
 

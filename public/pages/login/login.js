@@ -2,7 +2,7 @@ import { initFunc } from './mainlogin.js';
 
 export const formLogin = (root) => {
   const container = document.createElement('form');
-  container.id = 'form-id'
+  container.id = 'form-id';
   container.classList.add('display-column');
   container.classList.add('display-web');
 

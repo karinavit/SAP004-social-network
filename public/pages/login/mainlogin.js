@@ -18,7 +18,7 @@ export const initFunc = {
   loginEvent() {
     const form = document.querySelector('#form-id');
     form.loginButton.addEventListener('click', (event) => {
-      event.preventDefault()
+      event.preventDefault();
       firebaseActions.loginData(form.emailInput.value, form.passwordInput.value);
     });
   },
