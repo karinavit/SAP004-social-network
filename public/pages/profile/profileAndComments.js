@@ -14,14 +14,17 @@ export function createElementProfilePost(post) {
     <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
     <div class="name-edit-post">
       <span class="display-like">
-        <img class="like-img like svg-class" src="../../img/like-spock.svg" alt="like-button">
-        <span class="like-value">${post.data().likes}</span> 
-      </span>
-      <p class="style-hour">${post.data().date}</p>
-      <span >
-        <img class="comment-button" src="../../img/comentario.svg" alt="comment-button">
-        <img class="delete" src="../../img/trash-alt-regular.svg" alt="delete-posts">
-      </span>
+        <div class='like'>
+          <img class='like-img liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
+          <img class='like-img   like-back svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
+        </div>
+          <span class="like-value">${post.data().likes}</span> 
+        </span>
+        <p class="style-hour">${post.data().date}</p>
+        <span >
+          <img class="comment-button" src="../../img/comentario.svg" alt="comment-button">
+          <img class="delete" src="../../img/trash-alt-regular.svg" alt="delete-posts">
+        </span>
       </div>
     <ul>
       <li class="post-comment">
@@ -41,6 +44,8 @@ export function createElementProfilePost(post) {
   });
   postTemplate.getElementsByClassName('like')[0].addEventListener('click', () => {
     postsFunc.likePostDOM(post.id, postTemplate);
+    postTemplate.getElementsByClassName('liked')[0].classList.toggle('hidden');
+    postTemplate.getElementsByClassName('like-back')[0].classList.toggle('hidden');
   });
   postTemplate.getElementsByClassName('delete')[0].addEventListener('click', () => {
     postsFunc.deletePostDOM(post.id, postTemplate);
