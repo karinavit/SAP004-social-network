@@ -1,5 +1,5 @@
 import { firebaseActions } from '../../../data.js';
-import { getHoursPosted } from '../postPage/mainposts.js';
+import { getHoursPosted } from '../postPage/createPost.js';
 
 export function commentsDOM(postId, ownerPost) {
   document.getElementsByClassName('post-button')[0].addEventListener('click', () => {

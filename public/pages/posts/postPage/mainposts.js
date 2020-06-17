@@ -1,6 +1,4 @@
 import { firebaseActions, oneLikePerUser } from '../../../data.js';
-import { menuFixed } from '../menu/menufixed.js';
-import { createElementPost } from './createPost.js';
 
 function updateLikeDOM(like, postId) {
   const postElement = document.getElementById(`post-${postId}`);
@@ -43,59 +41,3 @@ export const postsFunc = {
     oneLikePerUser(postId, likes, updateLikeDOM, element);
   },
 };
-
-function editHoursPosted(dateInfo) {
-  return dateInfo < 10 ? `0${dateInfo}` : dateInfo;
-}
-
-export function getHoursPosted() {
-  const date = new Date();
-  return `${editHoursPosted(date.getDate())}/${editHoursPosted(date.getMonth() + 1)}
-  /${editHoursPosted(date.getFullYear())} 
-  ${editHoursPosted(date.getHours())}:${editHoursPosted(date.getMinutes())}
-  :${editHoursPosted(date.getSeconds())}`;
-}
-
-function readPostsDOM(post) {
-  document.querySelector('#postados').prepend(createElementPost(post));
-}
-
-function postDOM() {
-  const postar = document.querySelector('#postar');
-  const postTexto = document.querySelector('#post-text');
-  const img = document.querySelector('#post-img');
-  const inputFile = document.querySelector('#input-file');
-  const privateField = document.querySelector('#private');
-
-  img.addEventListener('click', () => {
-    inputFile.click();
-  });
-
-  postar.addEventListener('click', (event) => {
-    event.preventDefault();
-    const post = {
-      text: postTexto.value,
-      id_user: firebase.auth().currentUser.uid,
-      name: firebase.auth().currentUser.displayName,
-      likes: 0,
-      private: true,
-      visibility: privateField.checked ? 'private' : 'public',
-      date: getHoursPosted(),
-      wholiked: [],
-    };
-    postTexto.value = '';
-    privateField.checked = false;
-    firebaseActions.postData(post, readPostsDOM);
-  });
-}
-
-function pagePost() {
-  document.getElementById('postados').innerHTML = '';
-  firebaseActions.readPosts(readPostsDOM);
-  postDOM();
-}
-
-export function initPostsAndMenu(container) {
-  menuFixed(container);
-  pagePost();
-}

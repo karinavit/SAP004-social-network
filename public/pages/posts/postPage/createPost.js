@@ -2,8 +2,9 @@ import { firebaseActions } from '../../../data.js';
 import { postsFunc } from './mainposts.js';
 import { commentsDOM, clearArea } from '../comments/mainComments.js';
 import { printComments } from '../comments/commentsTemplate.js';
+import { menuFixed } from '../menu/menufixed.js';
 
-export function createElementPost(post) {
+function createElementPost(post) {
   const postTemplate = `
     <div class="name-edit-post">
       <p class="post-user-name">${post.data().name}</p>
@@ -56,4 +57,60 @@ export function createElementPost(post) {
     postElement.querySelector('.edit').classList.add('visibility');
   }
   return postElement;
+}
+
+function readPostsDOM(post) {
+  document.querySelector('#postados').prepend(createElementPost(post));
+}
+
+function editHoursPosted(dateInfo) {
+  return dateInfo < 10 ? `0${dateInfo}` : dateInfo;
+}
+
+export function getHoursPosted() {
+  const date = new Date();
+  return `${editHoursPosted(date.getDate())}/${editHoursPosted(date.getMonth() + 1)}
+  /${editHoursPosted(date.getFullYear())} 
+  ${editHoursPosted(date.getHours())}:${editHoursPosted(date.getMinutes())}
+  :${editHoursPosted(date.getSeconds())}`;
+}
+
+function postDOM() {
+  const postar = document.querySelector('#postar');
+  const postTexto = document.querySelector('#post-text');
+  const img = document.querySelector('#post-img');
+  const inputFile = document.querySelector('#input-file');
+  const privateField = document.querySelector('#private');
+
+  img.addEventListener('click', () => {
+    inputFile.click();
+  });
+
+  postar.addEventListener('click', (event) => {
+    event.preventDefault();
+    const post = {
+      text: postTexto.value,
+      id_user: firebase.auth().currentUser.uid,
+      name: firebase.auth().currentUser.displayName,
+      likes: 0,
+      private: true,
+      visibility: privateField.checked ? 'private' : 'public',
+      date: getHoursPosted(),
+      wholiked: [],
+    };
+    postTexto.value = '';
+    privateField.checked = false;
+    firebaseActions.postData(post, readPostsDOM);
+  });
+}
+
+function pagePost() {
+  document.getElementById('postados').innerHTML = '';
+  firebaseActions.readPosts(readPostsDOM);
+  postDOM();
+}
+
+export function initPostsAndMenu(container) {
+  menuFixed(container);
+  pagePost();
 }
