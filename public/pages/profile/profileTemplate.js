@@ -25,5 +25,5 @@ export const profilePage = (root, name) => {
   element.appendChild(container);
   menuFixed(container);
   backPosts();
-  firebaseActions.readPostsProfile(readPostsProfileDOM, element)
+  firebaseActions.readPostsProfile(readPostsProfileDOM, element);
 };

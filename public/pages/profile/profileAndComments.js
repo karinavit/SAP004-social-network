@@ -1,5 +1,6 @@
 import { postsFunc, commentsDOM, clearArea } from '../posts/mainposts.js';
 import { printComments } from '../posts/postsAndComments.js';
+import { firebaseActions } from '../../data.js';
 
 export function createElementProfilePost(post) {
   const postElement = `
@@ -49,5 +50,5 @@ export function createElementProfilePost(post) {
     commentsDOM(post.id, postTemplate);
   });
   firebaseActions.readComments(post.id, printComments, postTemplate, clearArea);
-  return postTemplate
+  return postTemplate;
 }

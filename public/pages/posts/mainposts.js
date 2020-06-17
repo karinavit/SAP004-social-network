@@ -1,6 +1,6 @@
 import { firebaseActions, oneLikePerUser } from '../../data.js';
 import { menuFixed } from './menufixed.js';
-import {createElementPost} from "./postsAndComments.js"
+import { createElementPost } from './postsAndComments.js';
 
 function updateLikeDOM(like, postId) {
   const postElement = document.getElementById(`post-${postId}`);
@@ -68,30 +68,20 @@ export function clearArea(element) {
   elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
 }
 
-
-
-
-export function updateCommentsLikes (like, element) {
+export function updateCommentsLikes(like, element) {
   const likeValueElement = element.getElementsByClassName('like-value-comment')[0];
   likeValueElement.innerHTML = like;
 }
 
-
-
-
-export function editComments (docId, commentEdited, postId) {
+export function editComments(docId, commentEdited, postId) {
   if (commentEdited.contentEditable !== 'true') {
     commentEdited.contentEditable = true;
     commentEdited.focus();
   } else {
     commentEdited.contentEditable = false;
-    firebaseActions.editOrLikeComments(docId,{text:commentEdited.textContent}, postId)
+    firebaseActions.editOrLikeComments(docId, { text: commentEdited.textContent }, postId);
+  }
 }
-}
-
-
-
-
 
 function readPostsDOM(post) {
   document.querySelector('#postados').prepend(createElementPost(post));

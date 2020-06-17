@@ -3,10 +3,14 @@ import { firebaseActions } from './data.js';
 
 const root = document.querySelector('#root');
 
+function verifyHash(hash) {
+  return hash === '' ? 'home' : hash.replace('#', '');
+}
+
 function hashs() {
   root.innerHTML = '';
   const hashPage = verifyHash(window.location.hash);
-  if (hashPage === "home" || hashPage === "register") {
+  if (hashPage === 'home' || hashPage === 'register') {
     routes[hashPage](root);
   } else {
     setTimeout(() => {
@@ -15,29 +19,25 @@ function hashs() {
   }
 }
 
-function verifyHash(hash) {
-  return hash === '' ? "home" : hash.replace("#", '');
-}
-
-const changePages = () => {
-  window.addEventListener('hashchange', () => {
-    verifyUser()
-  });
-};
-
 function verifyUser() {
   const user = firebase.auth().currentUser;
   if (user) {
-    if (window.location.hash !== "#profile") {
-    window.location = "#posts";
-    } 
+    if (window.location.hash !== '#profile') {
+      window.location = '#posts';
+    }
   } else {
-    if (window.location.hash !== "#register") {
-    window.location = "#";
+    if (window.location.hash !== '#register') {
+      window.location = '#';
     }
   }
   hashs();
 }
+
+const changePages = () => {
+  window.addEventListener('hashchange', () => {
+    verifyUser();
+  });
+};
 
 function init() {
   firebase.auth().onAuthStateChanged((user) => {

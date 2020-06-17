@@ -1,4 +1,4 @@
-import { createElementProfilePost } from './profileAndComments.js'
+import { createElementProfilePost } from './profileAndComments.js';
 
 export function backPosts() {
   const buttonBack = document.querySelector('#button-back-posts');
@@ -10,4 +10,3 @@ export function backPosts() {
 export function readPostsProfileDOM(post, element) {
   element.querySelector('#profile-posts').prepend(createElementProfilePost(post));
 }
-
