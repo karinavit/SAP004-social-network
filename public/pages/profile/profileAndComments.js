@@ -1,5 +1,5 @@
 import { postsFunc } from '../posts/postPage/mainposts.js';
-import { commentsDOM, clearArea } from '../posts/comments/mainComments.js';
+import { commentsDOM, clearArea } from '../posts/postPage/createPost.js';
 import { printComments } from '../posts/comments/commentsTemplate.js';
 import { firebaseActions } from '../../data.js';
 

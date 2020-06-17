@@ -25,10 +25,8 @@ function verifyUser() {
     if (window.location.hash !== '#profile') {
       window.location = '#posts';
     }
-  } else {
-    if (window.location.hash !== '#register') {
-      window.location = '#';
-    }
+  } else if (window.location.hash !== '#register') {
+    window.location = '#';
   }
   hashs();
 }
@@ -42,15 +40,15 @@ const changePages = () => {
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      window.location = '#posts';
+      verifyUser();
     } else {
-      window.location = '#';
+      verifyUser();
     }
   });
 }
 
 window.addEventListener('load', () => {
-  init();
   hashs();
+  init();
   changePages();
 });

@@ -18,7 +18,7 @@ export const firebaseActions = {
       .then(() => { });
   },
   editOrLikeComments(docId, valueToUpdate, postId) {
-    const postCollection = firebase.firestore().collection('posts').doc(postId).collection("comments")
+    const postCollection = firebase.firestore().collection('posts').doc(postId).collection('comments');
     postCollection.doc(docId).update(valueToUpdate)
       .then(() => { });
   },
@@ -28,7 +28,7 @@ export const firebaseActions = {
       .then(() => { });
   },
   deleteComments(postId, docId) {
-    const postCollection = firebase.firestore().collection('posts').doc(postId).collection("comments")
+    const postCollection = firebase.firestore().collection('posts').doc(postId).collection('comments');
     postCollection.doc(docId).delete()
       .then(() => { });
   },
@@ -81,10 +81,10 @@ export const firebaseActions = {
       .then((posts) => {
         posts.forEach((post) => {
           if (firebase.auth().currentUser.uid === post.data().id_user) {
-            func(post, element)
+            func(post, element);
           }
-        })
-      })
+        });
+      });
   },
   readPosts(func) {
     const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
@@ -162,7 +162,9 @@ export function oneLikePerUser(postId, likes, func, element) {
 }
 
 export function oneLikePerUserComments(postId, docId, func, commentsLike, element) {
-  const postCollection = firebase.firestore().collection('posts').doc(postId).collection("comments").doc(docId);
+  const postCollection = firebase.firestore().collection('posts')
+    .doc(postId).collection('comments')
+    .doc(docId);
   postCollection.get()
     .then((posts) => {
       if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {

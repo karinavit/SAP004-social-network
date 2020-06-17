@@ -1,8 +1,31 @@
 import { firebaseActions } from '../../../data.js';
 import { postsFunc } from './mainposts.js';
-import { commentsDOM, clearArea } from '../comments/mainComments.js';
 import { printComments } from '../comments/commentsTemplate.js';
 import { menuFixed } from '../menu/menufixed.js';
+
+function editHoursPosted(dateInfo) {
+  return dateInfo < 10 ? `0${dateInfo}` : dateInfo;
+}
+
+export function getHoursPosted() {
+  const date = new Date();
+  return `${editHoursPosted(date.getDate())}/${editHoursPosted(date.getMonth() + 1)}
+  /${editHoursPosted(date.getFullYear())} 
+  ${editHoursPosted(date.getHours())}:${editHoursPosted(date.getMinutes())}
+  :${editHoursPosted(date.getSeconds())}`;
+}
+
+export function clearArea(element) {
+  const elementArea = element;
+  elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
+}
+
+export function commentsDOM(postId, ownerPost) {
+  document.getElementsByClassName('post-button')[0].addEventListener('click', () => {
+    const textPosted = document.getElementsByClassName('comment-input-area')[0];
+    firebaseActions.comments(textPosted.value, postId, getHoursPosted(), ownerPost);
+  });
+}
 
 function createElementPost(post) {
   const postTemplate = `
@@ -61,18 +84,6 @@ function createElementPost(post) {
 
 function readPostsDOM(post) {
   document.querySelector('#postados').prepend(createElementPost(post));
-}
-
-function editHoursPosted(dateInfo) {
-  return dateInfo < 10 ? `0${dateInfo}` : dateInfo;
-}
-
-export function getHoursPosted() {
-  const date = new Date();
-  return `${editHoursPosted(date.getDate())}/${editHoursPosted(date.getMonth() + 1)}
-  /${editHoursPosted(date.getFullYear())} 
-  ${editHoursPosted(date.getHours())}:${editHoursPosted(date.getMinutes())}
-  :${editHoursPosted(date.getSeconds())}`;
 }
 
 function postDOM() {
