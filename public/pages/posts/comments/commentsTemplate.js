@@ -10,7 +10,10 @@ export function printComments(doc, element, postId) {
     <p>${doc.data().date}</p>
     <img class="delete-comment delete" src="../../img/trash-alt-regular.svg" alt="delete-posts">
     <span class="display-like">
-      <img class="like-img like-comment" src="../../img/like-spock.svg" alt="like-button">
+    <div class='like-comment'>
+    <img class='like-img liked-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
+    <img class='like-img   like-back-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
+</div>
       <span class="like-value-comment">${doc.data().likes}</span>
     </span>
     <span class="edit-comment edit name-edit-post">
@@ -30,6 +33,8 @@ export function printComments(doc, element, postId) {
   element.getElementsByClassName('like-comment')[0].addEventListener('click', () => {
     const commentsLike = Number(element.getElementsByClassName('like-value-comment')[0].textContent);
     oneLikePerUserComments(postId, doc.id, updateCommentsLikes, commentsLike, element);
+    element.getElementsByClassName('liked-comment')[0].classList.toggle('hidden');
+    element.getElementsByClassName('like-back-comment')[0].classList.toggle('hidden');
   });
 
   if (doc.data().id_user !== firebase.auth().currentUser.uid) {

@@ -186,6 +186,9 @@ footer {
   display: none;
 }
 
+.hidden {
+  display: none;
+}
 .visibility {
   visibility: hidden;
 }
@@ -328,6 +331,7 @@ footer {
   cursor: pointer;
 }
 
+
 @media only screen and (min-width: 800px) {
   .display-web {
     flex-direction: row;
@@ -398,5 +402,8 @@ footer {
   }
   .style-comment-area {
     width: calc(100% - 4px);
+  }
+  .svg-class:active {
+    transform: scale(1.2);
   }
 }
