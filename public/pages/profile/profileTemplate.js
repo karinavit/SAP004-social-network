@@ -1,4 +1,4 @@
-import { menuFixed } from '../posts/menufixed.js';
+import { menuFixed } from '../posts/menu/menufixed.js';
 import { backPosts, readPostsProfileDOM } from './mainprofile.js';
 import { firebaseActions } from '../../data.js';
 

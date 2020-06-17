@@ -1,5 +1,6 @@
-import { postsFunc, commentsDOM, clearArea } from '../posts/mainposts.js';
-import { printComments } from '../posts/postsAndComments.js';
+import { postsFunc } from '../posts/postPage/mainposts.js';
+import { commentsDOM, clearArea } from '../posts/comments/mainComments.js';
+import { printComments } from '../posts/comments/commentsTemplate.js';
 import { firebaseActions } from '../../data.js';
 
 export function createElementProfilePost(post) {
@@ -47,7 +48,7 @@ export function createElementProfilePost(post) {
   postTemplate.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
     const comentario = postTemplate.getElementsByClassName('post-comment')[0];
     comentario.classList.toggle('show');
-    commentsDOM(post.id, postTemplate);
+    commentsDOM(post.id, post.data().id_user);
   });
   firebaseActions.readComments(post.id, printComments, postTemplate, clearArea);
   return postTemplate;
