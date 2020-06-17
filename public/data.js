@@ -191,15 +191,15 @@ function readUserInfo() {
   const postCollection = firebase.firestore().collection('users-info').doc(firebase.auth().currentUser.uid);
   postCollection.get()
     .then((posts) => {
-      console.log(posts.data())
-      });
+      console.log(posts.data());
+    });
 }
 
-function updateNameUser (newName) {
-  firebase.auth().currentUser.updateProfile({displayName: newName})
+function updateNameUser(newName) {
+  firebase.auth().currentUser.updateProfile({ displayName: newName });
 }
 
-function updateUsersInfoStore (uid, newInfoUser) {
+function updateUsersInfoStore(uid, newInfoUser) {
   const userCollection = firebase.firestore().collection('users-info');
-  userCollection.doc(uid).set(newinfoUser);
+  userCollection.doc(uid).set(newInfoUser);
 }
