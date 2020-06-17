@@ -30,9 +30,25 @@ function hashs() {
 
 const changePages = () => {
   window.addEventListener('hashchange', () => {
-    hashs();
+    verifyUser()
   });
 };
+
+function verifyUser() {
+  const user = firebase.auth().currentUser;
+  const location = window.location.hash;
+  console.log(user);
+  if (user) {
+    if (location !== "#profile") {
+    window.location = "#posts";
+    }     
+  } else {
+    if (location !== "#register") {
+    window.location = "#";
+    } 
+  }
+  hashs();
+}
 
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
@@ -46,6 +62,6 @@ function init() {
 
 window.addEventListener('load', () => {
   init();
-  hashs();
+  hashs()
   changePages();
 });
