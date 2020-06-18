@@ -5,20 +5,22 @@ export function printComments(doc, element, postId) {
   const div = document.createElement('div');
   div.id = doc.id;
   div.innerHTML = `
-    <p>${doc.data().name}</p>
+    <p class="comment-name">${doc.data().name}</p>
     <p class="comment-posted">${doc.data().text}</p>
-    <p>${doc.data().date}</p>
-    <img class="delete-comment delete" src="../../img/trash-alt-regular.svg" alt="delete-posts">
-    <span class="display-like">
-    <div class='like-comment'>
-    <img class='like-img liked-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
-    <img class='like-img   like-back-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
-</div>
-      <span class="like-value-comment">${doc.data().likes}</span>
-    </span>
-    <span class="edit-comment edit name-edit-post">
-      <img src="../../img/edit-regular.svg" alt="edit-posts">
-    </span>
+    <div class="display-comments">
+      <span>
+        <div class='like-comment display-like'>
+          <img class='like-img liked-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
+          <img class='like-img like-back-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
+          <span class="like-value-comment">${doc.data().likes}</span>
+        </div>
+      </span>
+      <p>${doc.data().date}</p>
+      <span class="comment-edit-delete">
+        <img class="edit-comment edit" src="../../img/edit-regular.svg" alt="edit-posts">
+        <img class="delete-comment delete" src="../../img/trash-alt-regular.svg" alt="delete-posts">
+      </span>
+    </div>
   `;
   div.classList.add('style-comment-area');
   element.getElementsByClassName('comment-area')[0].prepend(div);
@@ -41,6 +43,6 @@ export function printComments(doc, element, postId) {
     element.querySelector('.delete-comment').classList.add('visibility');
     element.querySelector('.edit-comment').classList.add('visibility');
   } else if (doc.data().postOwner === firebase.auth().currentUser.uid) {
-    element.querySelector('.delete-comment').classList.add('visibility');
+    element.querySelector('.delete-comment').classList.add('show-delete-comment');
   }
 }

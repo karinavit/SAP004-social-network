@@ -6,7 +6,6 @@ export const profilePage = (root, name) => {
   const container = document.createElement('div');
   container.classList.add('display-column');
   container.innerHTML = `
-    <button id="button-back-posts" style="margin-top: 150px">Voltar posts</button>
     <div class="display-mobile display-web-row">
       <div class="margin-top-user profile-mobile display-web-user profile-web">
         <img class="img-user img-user-web" src="../../img/startrek_spock.jpg" alt="spock">
@@ -17,8 +16,9 @@ export const profilePage = (root, name) => {
         </div>
       </div>
       <br>
-      <ul class="width-list-post list-post-web" id="profile-posts"></ul>
+      <ul class="width-post-profile posts-web" id="profile-posts"></ul>
     </div>
+    <button id="button-back-posts" class="button-login width-button-login">Voltar posts</button>
   `;
   const element = root;
   element.innerHTML = '';
