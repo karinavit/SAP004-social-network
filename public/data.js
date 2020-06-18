@@ -55,8 +55,7 @@ export const firebaseActions = {
     const postCollection = firebase.firestore().collection('posts');
     postCollection.add(post)
       .then((postAdded) => {
-        postAdded.get()
-          .then((newPost) => {
+        postAdded.onSnapshot((newPost) => {
             func(newPost);
           });
       });
