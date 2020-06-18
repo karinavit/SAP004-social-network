@@ -20,10 +20,16 @@ export function clearArea(element) {
   elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
 }
 
-export function commentsDOM(postId, ownerPost) {
+export function commentsDOM(postId, postOwner) {
   document.getElementsByClassName('post-button')[0].addEventListener('click', () => {
     const textPosted = document.getElementsByClassName('comment-input-area')[0];
-    firebaseActions.comments(textPosted.value, postId, getHoursPosted(), ownerPost);
+    const documentComments = {
+    text: textPosted.value, 
+    postId, 
+    date: getHoursPosted(), 
+    postOwner
+    }
+    firebaseActions.comments(documentComments);
   });
 }
 
