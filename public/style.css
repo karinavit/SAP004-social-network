@@ -1,3 +1,5 @@
+/* Até a linha 371, é da versão mobile.  e dentro do @media será tudo que vamos adaptar para a nossa versão web. */
+
 @font-face {
   font-family: "futura book";
   src: url('img/futura\ book\ font.ttf');
@@ -369,7 +371,7 @@ footer {
   width: 30px;
   cursor: pointer;
 }
-
+/* Até a linha 371, é da versão mobile.  e dentro do @media será tudo que vamos adaptar para a nossa versão web. */
 
 @media only screen and (min-width: 800px) {
   .display-web {

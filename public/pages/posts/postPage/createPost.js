@@ -5,16 +5,18 @@ import { menuFixed } from '../menu/menufixed.js';
 
 function editHoursPosted(dateInfo) {
   return dateInfo < 10 ? `0${dateInfo}` : dateInfo;
-}
+} // essa correção é para colocar um 0 em números menores que 10.
 
+//essa função constroi a string com a data e hora da postagem.
 export function getHoursPosted() {
   const date = new Date();
   return `${editHoursPosted(date.getDate())}/${editHoursPosted(date.getMonth() + 1)}
   /${editHoursPosted(date.getFullYear())} 
   ${editHoursPosted(date.getHours())}:${editHoursPosted(date.getMinutes())}
   :${editHoursPosted(date.getSeconds())}`;
-}
+} 
 
+//essa função limpa a área de comentaerios.
 export function clearArea(element) {
   const elementArea = element;
   elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
@@ -35,7 +37,7 @@ export function commentsDOM(postId, postOwner) {
     };
     firebaseActions.comments(post);
   });
-}
+} //essa função envia os dados do DOM para o firebase
 
 function createElementPost(post) {
   const postTemplate = `
@@ -72,6 +74,7 @@ function createElementPost(post) {
   postElement.classList.add('each-post');
   postElement.id = `post-${post.id}`;
   postElement.innerHTML = postTemplate;
+
   postElement.getElementsByClassName('edit')[0].addEventListener('click', () => {
     postsFunc.editPostDOM(post.id);
   });
@@ -97,7 +100,7 @@ function createElementPost(post) {
   firebaseActions.readComments(readCommentsObj);
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
     postElement.querySelector('.delete').classList.add('visibility');
-    postElement.querySelector('.edit').classList.add('visibility');
+    postElement.querySelector('.edit').classList.add('visibility'); //visibility não deixa visivel este campo para o usuário.
   }
   return postElement;
 }

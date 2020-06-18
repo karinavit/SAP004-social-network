@@ -6,6 +6,7 @@ function updateLikeDOM(like, postId) {
   likeValueElement.innerHTML = like;
 }
 
+
 export const postsFunc = {
   loggoutMenuEvent() {
     const loggoutButton = document.querySelector('#loggout');
@@ -21,19 +22,21 @@ export const postsFunc = {
     const element = document.getElementById(`post-${postId}`);
     const textEditElement = element.getElementsByClassName('post-text-area')[0];
 
-    if (textEditElement.contentEditable !== 'true') {
-      textEditElement.contentEditable = true;
+    if (textEditElement.contentEditable !== 'true') { // se for diferente de verdadeiro, transforma em verdadeiro e aí dá foco para editar.
+      textEditElement.contentEditable = true; 
       textEditElement.focus();
     } else {
       textEditElement.contentEditable = false;
       firebaseActions.editOrLikePost(postId, { text: textEditElement.textContent });
     }
   },
+
   deletePostDOM(postId) {
     firebaseActions.deletePost(postId);
     const post = document.getElementById(`post-${postId}`);
     post.remove();
   },
+  
   likePostDOM(postId, element) {
     const postElement = document.getElementById(`post-${postId}`);
     const likeValueElement = postElement.getElementsByClassName('like-value')[0];
