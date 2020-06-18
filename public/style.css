@@ -1,10 +1,10 @@
 @font-face {
-  font-family: "futura book", sans-serif;
+  font-family: "futura book";
   src: url('img/futura\ book\ font.ttf');
 }
 
 @font-face {
-  font-family: "startrek classic", sans-serif;
+  font-family: "startrek classic";
   src: url('img/FEC_____.TTF');
 }
 
@@ -189,12 +189,42 @@ footer {
 .hidden {
   display: none;
 }
+
 .visibility {
   visibility: hidden;
 }
 
 .post-comment {
   display: none;
+}
+
+.comment-name {
+  font-family: "startrek classic", sans-serif;
+  font-size: 22px;
+}
+
+.comment-posted {
+  font-family: "futura book", sans-serif;
+  font-size: 20px;
+}
+
+.comment-edit-delete {
+  display: flex;
+  margin-right: 2px;
+}
+
+.edit-comment {
+  margin-right: 4px;
+}
+
+.show-delete-comment {
+  visibility: visible;
+}
+
+.display-comments {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .show {
@@ -250,6 +280,10 @@ footer {
   width: 100%;
 }
 
+.width-post-profile {
+  width: 90%;
+}
+
 .each-post {
   display: flex;
   flex-direction: column;
@@ -268,8 +302,9 @@ footer {
 }
 
 .post-user-name {
+  font-family: "startrek classic", sans-serif;
   width: 60%;
-  font-size: 18px;
+  font-size: 24px;
 }
 
 .edit {
@@ -283,6 +318,8 @@ footer {
 }
 
 .post-text-area {
+  font-family: "futura book", sans-serif;
+  font-size: 20px;
   margin: 5px;
   height: 50px;
 }
@@ -317,7 +354,9 @@ footer {
   align-items: center;
   justify-content: center;
   font-size: 30px;
-  font-family: "futura book", sans-serif;
+  font-family: "startrek classic", sans-serif;
+  border: 2px solid #FFCC00;
+  font-weight: normal;
 }
 
 .display-mobile {
@@ -383,7 +422,7 @@ footer {
     margin-top: 140px;
   }
   .posts-web {
-    margin-top: 140px;
+    margin-top: 134px;
     width: 60%;
     background-color: transparent;
   }
