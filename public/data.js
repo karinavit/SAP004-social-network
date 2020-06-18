@@ -55,23 +55,22 @@ export const firebaseActions = {
     const postCollection = firebase.firestore().collection('posts');
     postCollection.add(post)
       .then((postAdded) => {
-        postAdded.get()
-          .then((newPost) => {
-            func(newPost);
-          });
+        postAdded.onSnapshot((newPost) => {
+          func(newPost);
+        });
       });
   },
-  readComments(postId, func, element, clear) {
+  readComments(document) {
     firebase
       .firestore()
       .collection('posts')
-      .doc(postId)
+      .doc(document.postId)
       .collection('comments')
       .orderBy('date', 'asc')
       .onSnapshot((doc) => {
-        clear(element);
-        doc.forEach((document) => {
-          func(document, element, postId);
+        document.clear(document.element);
+        doc.forEach((docs) => {
+          document.func(docs, document.element, document.postId);
         });
       });
   },
@@ -114,24 +113,15 @@ export const firebaseActions = {
       .catch(() => {
       });
   },
-  comments(text, postId, date, postOwner) {
+  comments(document) {
     const commentsReference = firebase
       .firestore()
       .collection('posts')
-      .doc(postId)
+      .doc(document.parentId)
       .collection('comments');
     commentsReference
       .doc()
-      .set({
-        name: firebase.auth().currentUser.displayName,
-        id_user: firebase.auth().currentUser.uid,
-        date,
-        text,
-        postOwner,
-        parentId: postId,
-        likes: 0,
-        wholiked: [],
-      })
+      .set(document)
       .then(() => { })
       .catch(() => {
       });

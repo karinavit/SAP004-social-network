@@ -20,10 +20,20 @@ export function clearArea(element) {
   elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
 }
 
-export function commentsDOM(postId, ownerPost) {
+export function commentsDOM(postId, postOwner) {
   document.getElementsByClassName('post-button')[0].addEventListener('click', () => {
     const textPosted = document.getElementsByClassName('comment-input-area')[0];
-    firebaseActions.comments(textPosted.value, postId, getHoursPosted(), ownerPost);
+    const post = {
+      name: firebase.auth().currentUser.displayName,
+      id_user: firebase.auth().currentUser.uid,
+      date: getHoursPosted(),
+      text: textPosted.value,
+      postOwner,
+      parentId: postId,
+      likes: 0,
+      wholiked: [],
+    };
+    firebaseActions.comments(post);
   });
 }
 
@@ -78,8 +88,13 @@ function createElementPost(post) {
     comentario.classList.toggle('show');
     commentsDOM(post.id, post.data().id_user);
   });
-  firebaseActions.readComments(post.id, printComments, postElement, clearArea);
-
+  const readCommentsObj = {
+    postId: post.id,
+    func: printComments,
+    element: postElement,
+    clear: clearArea,
+  };
+  firebaseActions.readComments(readCommentsObj);
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
     postElement.querySelector('.delete').classList.add('visibility');
     postElement.querySelector('.edit').classList.add('visibility');
@@ -87,9 +102,8 @@ function createElementPost(post) {
   return postElement;
 }
 
-
 function readPostsDOM(post) {
-  document.querySelector('#postados').prepend(createElementPost(post));
+  document.querySelector('#post-main-area').prepend(createElementPost(post));
 }
 
 function postDOM() {
@@ -122,7 +136,7 @@ function postDOM() {
 }
 
 function pagePost() {
-  document.getElementById('postados').innerHTML = '';
+  document.getElementById('post-main-area').innerHTML = '';
   firebaseActions.readPosts(readPostsDOM);
   postDOM();
 }

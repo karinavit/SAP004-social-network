@@ -16,7 +16,7 @@ export function createElementProfilePost(post) {
       <span class="display-like">
         <div class='like'>
           <img class='like-img liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
-          <img class='like-img   like-back svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
+          <img class='like-img not-liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
         </div>
           <span class="like-value">${post.data().likes}</span> 
         </span>
@@ -45,7 +45,7 @@ export function createElementProfilePost(post) {
   postTemplate.getElementsByClassName('like')[0].addEventListener('click', () => {
     postsFunc.likePostDOM(post.id, postTemplate);
     postTemplate.getElementsByClassName('liked')[0].classList.toggle('hidden');
-    postTemplate.getElementsByClassName('like-back')[0].classList.toggle('hidden');
+    postTemplate.getElementsByClassName('not-liked')[0].classList.toggle('hidden');
   });
   postTemplate.getElementsByClassName('delete')[0].addEventListener('click', () => {
     postsFunc.deletePostDOM(post.id, postTemplate);
@@ -55,6 +55,12 @@ export function createElementProfilePost(post) {
     comentario.classList.toggle('show');
     commentsDOM(post.id, post.data().id_user);
   });
-  firebaseActions.readComments(post.id, printComments, postTemplate, clearArea);
+  const readCommentsObj = {
+    postId: post.id,
+    func: printComments,
+    element: postTemplate,
+    clear: clearArea,
+  };
+  firebaseActions.readComments(readCommentsObj);
   return postTemplate;
 }

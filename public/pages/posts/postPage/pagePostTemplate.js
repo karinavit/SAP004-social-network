@@ -28,7 +28,7 @@ export const signIn = (root, name) => {
             </button>
           </div>
         </form>
-        <ul class="width-list-post list-post-web" id="postados"></ul>
+        <ul class="width-list-post list-post-web" id="post-main-area"></ul>
       </div>
     </div>
   `;
