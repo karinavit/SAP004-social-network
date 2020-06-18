@@ -16,6 +16,6 @@ export const menuFixed = (pageRoot) => {
       <div>Perfil</div>
     </a>
   `;
-  pageRoot.prepend(container);
-  menuPost.loggoutMenuEvent();
+  pageRoot.prepend(container); //neste caso o prepend irá anexar acima do main ( ver index.html)o container.
+  menuPost.loggoutMenuEvent(); // apenas executando o loggoutmenu event que está no mainmenufixed.js
 };

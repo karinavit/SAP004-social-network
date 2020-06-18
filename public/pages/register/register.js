@@ -4,8 +4,8 @@ import { registerDOM } from './mainregister.js';
 export const register = (root) => {
   const container = document.createElement('form');
   container.id = 'form-register';
-  container.classList.add('display-column');
-  container.classList.add('display-web');
+  container.classList.add('display-column'); // clases atribuídas no nosso css, pois esses elementos não foram criados no arquvio html padrão.
+  container.classList.add('display-web'); 
 
   container.innerHTML = `
     <img class="img img-web" src="../../img/logo.png" alt="logo">
@@ -27,6 +27,6 @@ export const register = (root) => {
   `;
   const element = root;
   element.innerHTML = '';
-  element.appendChild(container);
+  element.appendChild(container); //aqui o root é rendereizado com este container, e ao ser renderizado ele traz a função de registerDom que é que garante a interação do form com o usuário. 
   registerDOM();
 };

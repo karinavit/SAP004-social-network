@@ -27,9 +27,10 @@ export const formLogin = (root) => {
 
   const element = root;
   element.innerHTML = '';
-  element.appendChild(container);
+  element.appendChild(container); 
   initFunc.loginEvent();
   initFunc.registerEvent();
   initFunc.loginEventGoogle();
   initFunc.loginEventFacebook();
 };
+// idem linha de raciocinio do register
