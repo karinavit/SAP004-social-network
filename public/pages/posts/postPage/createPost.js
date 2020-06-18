@@ -106,7 +106,7 @@ function createElementPost(post) {
 
 
 function readPostsDOM(post) {
-  document.querySelector('#postados').prepend(createElementPost(post));
+  document.querySelector('#post-main-area').prepend(createElementPost(post));
 }
 
 function postDOM() {
@@ -139,7 +139,7 @@ function postDOM() {
 }
 
 function pagePost() {
-  document.getElementById('postados').innerHTML = '';
+  document.getElementById('post-main-area').innerHTML = '';
   firebaseActions.readPosts(readPostsDOM);
   postDOM();
 }
