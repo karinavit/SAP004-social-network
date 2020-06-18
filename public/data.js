@@ -60,17 +60,17 @@ export const firebaseActions = {
           });
       });
   },
-  readComments(postId, func, element, clear) {
+  readComments(document) {
     firebase
       .firestore()
       .collection('posts')
-      .doc(postId)
+      .doc(document.postId)
       .collection('comments')
       .orderBy('date', 'asc')
       .onSnapshot((doc) => {
-        clear(element);
-        doc.forEach((document) => {
-          func(document, element, postId);
+        document.clear(document.element);
+        doc.forEach((docs) => {
+          document.func(docs, document.element, document.postId);
         });
       });
   },

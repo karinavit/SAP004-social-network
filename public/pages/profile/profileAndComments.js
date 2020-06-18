@@ -55,6 +55,13 @@ export function createElementProfilePost(post) {
     comentario.classList.toggle('show');
     commentsDOM(post.id, post.data().id_user);
   });
-  firebaseActions.readComments(post.id, printComments, postTemplate, clearArea);
+  const readCommentsObj = {
+    postId: post.id, 
+    func: printComments, 
+    element:postTemplate, 
+    clear: clearArea
+
+  }
+  firebaseActions.readComments(readCommentsObj);
   return postTemplate;
 }

@@ -78,7 +78,14 @@ function createElementPost(post) {
     comentario.classList.toggle('show');
     commentsDOM(post.id, post.data().id_user);
   });
-  firebaseActions.readComments(post.id, printComments, postElement, clearArea);
+  const readCommentsObj = {
+    postId: post.id, 
+    func: printComments, 
+    element:postElement, 
+    clear: clearArea
+
+  }
+  firebaseActions.readComments(readCommentsObj);
 
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
     postElement.querySelector('.delete').classList.add('visibility');
