@@ -56,8 +56,8 @@ export const firebaseActions = {
     postCollection.add(post)
       .then((postAdded) => {
         postAdded.onSnapshot((newPost) => {
-            func(newPost);
-          });
+          func(newPost);
+        });
       });
   },
   readComments(document) {

@@ -56,12 +56,11 @@ export function createElementProfilePost(post) {
     commentsDOM(post.id, post.data().id_user);
   });
   const readCommentsObj = {
-    postId: post.id, 
-    func: printComments, 
-    element:postTemplate, 
-    clear: clearArea
-
-  }
+    postId: post.id,
+    func: printComments,
+    element: postTemplate,
+    clear: clearArea,
+  };
   firebaseActions.readComments(readCommentsObj);
   return postTemplate;
 }
