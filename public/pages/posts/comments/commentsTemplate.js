@@ -40,15 +40,13 @@ export function printComments(doc, element, postId) {
       firebaseActions.deleteComments(postId, doc.id);
       popup.classList.remove('popup');
       popup.classList.add('popup-none');
-   
+    });
+    const cancel = document.getElementById('no');
+    cancel.addEventListener('click', () => {
+      popup.classList.remove('popup');
+      popup.classList.add('popup-none');
+    });
   });
-  const cancel = document.getElementById('no');
-  cancel.addEventListener('click', () => {
-    popup.classList.remove('popup');
-    popup.classList.add('popup-none');
-  }); 
-  })
-
   element.getElementsByClassName('edit-comment')[0].addEventListener('click', () => {
     editComments(doc.id, postId);
   });

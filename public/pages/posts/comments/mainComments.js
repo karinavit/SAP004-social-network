@@ -7,9 +7,7 @@ export function updateCommentsLikes(like, element) {
 
 export function editComments(docId, postId) {
   const element = document.getElementById(`${docId}`);
-  console.log(element);
   const commentEdited = element.getElementsByClassName('comment-posted')[0];
-  console.log(commentEdited);
   const popup = document.getElementById('popup');
   popup.innerHTML = '';
   popup.classList.remove('popup-none');
@@ -25,13 +23,11 @@ export function editComments(docId, postId) {
     textArea.focus();
   } else {
     textArea.contentEditable = false;
-    
   }
-
   buttonSave.addEventListener('click', () => {
     commentEdited.textContent = textArea.textContent;
     firebaseActions.editOrLikeComments(docId, { text: commentEdited.textContent }, postId);
     popup.classList.remove('popup');
     popup.classList.add('popup-none');
-    });
+  });
 }
