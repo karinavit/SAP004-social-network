@@ -47,11 +47,35 @@ export const postsFunc = {
       popup.classList.add("popup-none");
     });
   },
+
   deletePostDOM(postId) {
-    firebaseActions.deletePost(postId);
-    const post = document.getElementById(`post-${postId}`);
-    post.remove();
+    const popup = document.getElementById("popup");
+    popup.innerHTML ='';
+    popup.classList.remove("popup-none");
+    popup.classList.add("popup");
+    let editAreaPopUp = `<h1>Tem certeza que deseja excluir?</h1>
+    <button id='yes'>Sim</button>
+    <button id='no'>Não</button>`;
+    popup.innerHTML = editAreaPopUp;
+
+    const confirm = document.getElementById('yes')
+    confirm.addEventListener('click', () =>{
+      firebaseActions.deletePost(postId);
+      const post = document.getElementById(`post-${postId}`);
+      post.remove();
+      popup.classList.remove("popup");
+      popup.classList.add("popup-none");
+    })
+
+    const cancel = document.getElementById('no')
+    cancel.addEventListener('click', ()=>{
+    popup.classList.remove("popup");
+    popup.classList.add("popup-none");
+    })
+
+    
   },
+
   likePostDOM(postId, element) {
     const postElement = document.getElementById(`post-${postId}`);
     const likeValueElement = postElement.getElementsByClassName(
