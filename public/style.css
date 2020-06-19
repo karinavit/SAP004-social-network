@@ -369,7 +369,20 @@ footer {
   width: 30px;
   cursor: pointer;
 }
-
+.popup{
+  display: block;
+  position: absolute;
+  height: 70%;
+  width: 70%;
+  top: calc(50vh - 35%);
+  left: calc(50vw - 35%);
+  border-radius: 3px;
+  border: 2px solid yellow;
+  background-color: white;
+}
+.popup-none{
+  display: none;
+}
 
 @media only screen and (min-width: 800px) {
   .display-web {

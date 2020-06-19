@@ -20,20 +20,60 @@ export const postsFunc = {
   editPostDOM(postId) {
     const element = document.getElementById(`post-${postId}`);
     const textEditElement = element.getElementsByClassName('post-text-area')[0];
-
-    if (textEditElement.contentEditable !== 'true') {
-      textEditElement.contentEditable = true;
-      textEditElement.focus();
+    const popup = document.getElementById('popup');
+    popup.innerHTML = '';
+    popup.classList.remove('popup-none');
+    popup.classList.add('popup');
+    const editAreaPopUp = `<h1>Título</h1>
+    <p id='text-area'>${textEditElement.textContent}</p>
+    <button id='save'>Salvar</button>`;
+    popup.innerHTML = editAreaPopUp;
+    const textArea = document.getElementById('text-area');
+    const buttonSave = document.getElementById('save');
+    if (textArea.contentEditable !== 'true') {
+      textArea.contentEditable = true;
+      textArea.focus();
     } else {
-      textEditElement.contentEditable = false;
-      firebaseActions.editOrLikePost(postId, { text: textEditElement.textContent });
+      textArea.contentEditable = false;
     }
+
+    buttonSave.addEventListener('click', () => {
+      textEditElement.textContent = textArea.textContent;
+
+      firebaseActions.editOrLikePost(postId, {
+        text: textEditElement.textContent,
+      });
+      popup.classList.remove('popup');
+      popup.classList.add('popup-none');
+    });
   },
+
   deletePostDOM(postId) {
-    firebaseActions.deletePost(postId);
-    const post = document.getElementById(`post-${postId}`);
-    post.remove();
+    const popup = document.getElementById('popup');
+    popup.innerHTML = '';
+    popup.classList.remove('popup-none');
+    popup.classList.add('popup');
+    const editAreaPopUp = `<h1>Tem certeza que deseja excluir?</h1>
+    <button id='yes'>Sim</button>
+    <button id='no'>Não</button>`;
+    popup.innerHTML = editAreaPopUp;
+
+    const confirm = document.getElementById('yes');
+    confirm.addEventListener('click', () => {
+      firebaseActions.deletePost(postId);
+      const post = document.getElementById(`post-${postId}`);
+      post.remove();
+      popup.classList.remove('popup');
+      popup.classList.add('popup-none');
+    });
+
+    const cancel = document.getElementById('no');
+    cancel.addEventListener('click', () => {
+      popup.classList.remove('popup');
+      popup.classList.add('popup-none');
+    });
   },
+
   likePostDOM(postId, element) {
     const postElement = document.getElementById(`post-${postId}`);
     const likeValueElement = postElement.getElementsByClassName('like-value')[0];

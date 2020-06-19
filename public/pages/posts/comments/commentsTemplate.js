@@ -26,11 +26,29 @@ export function printComments(doc, element, postId) {
   element.getElementsByClassName('comment-area')[0].prepend(div);
 
   element.getElementsByClassName('delete-comment')[0].addEventListener('click', () => {
-    firebaseActions.deleteComments(postId, doc.id);
+    const popup = document.getElementById('popup');
+    popup.innerHTML = '';
+    popup.classList.remove('popup-none');
+    popup.classList.add('popup');
+    const editAreaPopUp = `<h1>Tem certeza que deseja excluir?</h1>
+    <button id='yes'>Sim</button>
+    <button id='no'>Não</button>`;
+    popup.innerHTML = editAreaPopUp;
+
+    const confirm = document.getElementById('yes');
+    confirm.addEventListener('click', () => {
+      firebaseActions.deleteComments(postId, doc.id);
+      popup.classList.remove('popup');
+      popup.classList.add('popup-none');
+    });
+    const cancel = document.getElementById('no');
+    cancel.addEventListener('click', () => {
+      popup.classList.remove('popup');
+      popup.classList.add('popup-none');
+    });
   });
   element.getElementsByClassName('edit-comment')[0].addEventListener('click', () => {
-    const commentEdited = element.getElementsByClassName('comment-posted')[0];
-    editComments(doc.id, commentEdited, postId);
+    editComments(doc.id, postId);
   });
   element.getElementsByClassName('like-comment')[0].addEventListener('click', () => {
     const commentsLike = Number(element.getElementsByClassName('like-value-comment')[0].textContent);
