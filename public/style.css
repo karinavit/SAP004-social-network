@@ -370,12 +370,18 @@ footer {
   cursor: pointer;
 }
 .popup{
+  display: block;
   position: absolute;
-  top: calc(50vh - 50px);
-  left: calc(50vw - 50px);
-  height: 100px;
-  width: 100px;
+  height: 70%;
+  width: 70%;
+  top: calc(50vh - 35%);
+  left: calc(50vw - 35%);
+  border-radius: 3px;
+  border: 2px solid yellow;
   background-color: white;
+}
+.popup-none{
+  display: none;
 }
 
 @media only screen and (min-width: 800px) {
