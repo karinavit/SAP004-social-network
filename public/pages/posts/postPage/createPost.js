@@ -46,6 +46,7 @@ function createElementPost(post) {
       </span>
     </div>
     <p class='post-text-area' id='text-${post.id}'>${post.data().text}</p>
+    <img src="${post.data().img}">
     <div class='name-edit-post'>
       <span class='display-like'>
       <div class='like'>
@@ -115,7 +116,18 @@ function postDOM() {
 
   img.addEventListener('click', () => {
     inputFile.click();
+    inputFile.addEventListener("change", event => {
+      let arquivo = event.target.files[0];
+      var ref = firebase.storage().ref('arquivo')
+      ref.child('arquivo' + arquivo.name).put(arquivo).then(() => {
+        ref.child('arquivo' + arquivo.name).getDownloadURL().then(url => {
+          document.querySelector(".img-preview").innerHTML = `<img src='${url}' id='${arquivo.name}'>`
+          console.log('postei')
+        })
+    })
+      
   });
+})
 
   postar.addEventListener('click', (event) => {
     event.preventDefault();
@@ -124,6 +136,7 @@ function postDOM() {
       id_user: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.displayName,
       likes: 0,
+      img: document.querySelector(".img-preview").children[0].src,
       private: true,
       visibility: privateField.checked ? 'private' : 'public',
       date: getHoursPosted(),
