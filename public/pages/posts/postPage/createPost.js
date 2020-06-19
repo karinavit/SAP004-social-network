@@ -68,13 +68,12 @@ function createElementPost(post) {
       <li class='comment-area'></li>
     </ul>
   `;
-  
   const postElement = document.createElement('li');
   postElement.classList.add('each-post');
   postElement.id = `post-${post.id}`;
   postElement.innerHTML = postTemplate;
   postElement.getElementsByClassName('edit')[0].addEventListener('click', () => {
-  postsFunc.editPostDOM(post.id);
+    postsFunc.editPostDOM(post.id);
   });
   postElement.getElementsByClassName('like')[0].addEventListener('click', () => {
     postsFunc.likePostDOM(post.id, postElement);
