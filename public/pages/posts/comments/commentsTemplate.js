@@ -29,8 +29,7 @@ export function printComments(doc, element, postId) {
     firebaseActions.deleteComments(postId, doc.id);
   });
   element.getElementsByClassName('edit-comment')[0].addEventListener('click', () => {
-    const commentEdited = element.getElementsByClassName('comment-posted')[0];
-    editComments(doc.id, commentEdited, postId);
+    editComments(doc.id, postId);
   });
   element.getElementsByClassName('like-comment')[0].addEventListener('click', () => {
     const commentsLike = Number(element.getElementsByClassName('like-value-comment')[0].textContent);
