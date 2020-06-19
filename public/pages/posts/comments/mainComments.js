@@ -5,13 +5,33 @@ export function updateCommentsLikes(like, element) {
   likeValueElement.innerHTML = like;
 }
 
-export function editComments(docId, commentEdited, postId) {
-  const comment = commentEdited;
-  if (comment.contentEditable !== 'true') {
-    comment.contentEditable = true;
-    comment.focus();
+export function editComments(docId, postId) {
+  const element = document.getElementById(`${docId}`);
+  console.log(element);
+  const commentEdited = element.getElementsByClassName('comment-posted')[0];
+  console.log(commentEdited);
+  const popup = document.getElementById('popup');
+  popup.innerHTML = '';
+  popup.classList.remove('popup-none');
+  popup.classList.add('popup');
+  const editAreaPopUp = `<h1>Título</h1>
+  <p id='text-area'>${commentEdited.textContent}</p>
+  <button id='save'>Salvar</button>`;
+  popup.innerHTML = editAreaPopUp;
+  const textArea = document.getElementById('text-area');
+  const buttonSave = document.getElementById('save');
+  if (textArea.contentEditable !== 'true') {
+    textArea.contentEditable = true;
+    textArea.focus();
   } else {
-    comment.contentEditable = false;
-    firebaseActions.editOrLikeComments(docId, { text: comment.textContent }, postId);
+    textArea.contentEditable = false;
+    
   }
+
+  buttonSave.addEventListener('click', () => {
+    commentEdited.textContent = textArea.textContent;
+    firebaseActions.editOrLikeComments(docId, { text: commentEdited.textContent }, postId);
+    popup.classList.remove('popup');
+    popup.classList.add('popup-none');
+    });
 }
