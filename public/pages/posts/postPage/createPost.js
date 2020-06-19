@@ -3,17 +3,6 @@ import { postsFunc } from './mainposts.js';
 import { printComments } from '../comments/commentsTemplate.js';
 import { menuFixed } from '../menu/menufixed.js';
 
-function editHoursPosted(dateInfo) {
-  return dateInfo < 10 ? `0${dateInfo}` : dateInfo;
-}
-
-export function getHoursPosted() {
-  const date = new Date();
-  return `${editHoursPosted(date.getDate())}/${editHoursPosted(date.getMonth() + 1)}
-  /${editHoursPosted(date.getFullYear())} 
-  ${editHoursPosted(date.getHours())}:${editHoursPosted(date.getMinutes())}
-  :${editHoursPosted(date.getSeconds())}`;
-}
 
 export function clearArea(element) {
   const elementArea = element;
@@ -26,7 +15,7 @@ export function commentsDOM(postId, postOwner) {
     const post = {
       name: firebase.auth().currentUser.displayName,
       id_user: firebase.auth().currentUser.uid,
-      date: getHoursPosted(),
+      date: new Date().toLocaleString('pt-BR'),
       text: textPosted.value,
       postOwner,
       parentId: postId,
@@ -139,7 +128,7 @@ function postDOM() {
       img: document.querySelector(".img-preview").children[0].src,
       private: true,
       visibility: privateField.checked ? 'private' : 'public',
-      date: getHoursPosted(),
+      date: new Date().toLocaleString('pt-BR'),
       wholiked: [],
     };
     postTexto.value = '';
