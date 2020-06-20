@@ -14,7 +14,7 @@ export const formLogin = (root) => {
       <input class='style-input' name='passwordInput' type='password' placeholder='Digite sua senha...' required>
       <button class='button-login login-btn-web width-button-login'  name='loginButton' type='submit'>Logar</button>
       <p class='letter-color margin-web'> Esqueceu a senha,
-        <a class='link-register' href=''>Clique aqui</a>
+        <span class='link-register forgot'>Clique aqui</span>
       </p>
       <p class='letter-color logo-google-facebook'>Entre com 
         <img class='img-g' id='google' src='../../img/google.png' alt='logo-google'>
@@ -32,4 +32,5 @@ export const formLogin = (root) => {
   initFunc.registerEvent();
   initFunc.loginEventGoogle();
   initFunc.loginEventFacebook();
+  initFunc.forgotPassword();
 };
