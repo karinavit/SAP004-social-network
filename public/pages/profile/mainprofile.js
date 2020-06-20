@@ -1,5 +1,5 @@
 import { createElementProfilePost } from './profileAndComments.js';
-import { updateNameUser, updateUsersInfoStore, firebaseActions } from '../../data.js';
+import { updateNameUser, updateUsersInfoStore, firebaseActions, updatePhotoUser} from '../../data.js';
 
 export function backPosts() {
   const buttonBack = document.querySelector('#button-back-posts');
@@ -34,9 +34,8 @@ export function editProfile(posts) {
     const buttonUpdate = document.getElementById('update-info');
     const photoUpdate = document.getElementById('update-photo');
     photoUpdate.addEventListener('change', (event) => {
-      console.log('vamos ver')
       const archive = event.target.files[0];
-      firebaseActions.storageImagesUpdate(archive, templateImageProfile, editAreaPopUp)
+      firebaseActions.storageImagesUpdate(archive, templateImageProfile)
     })
     buttonUpdate.addEventListener('click', (event) => {
       event.preventDefault();
@@ -44,6 +43,7 @@ export function editProfile(posts) {
       const birthdayUpdate = document.getElementById('update-birthday');
       const photoPreview = document.getElementById('photo-preview');
       updateNameUser(nameUpdate.value);
+      updatePhotoUser(photoPreview.children[0].src)
       const uid = firebase.auth().currentUser.uid;
       const updateProfile = {
         name: nameUpdate.value,
