@@ -22,7 +22,7 @@ export function editProfile(posts) {
     const editAreaPopUp = `<label>Nome</label> 
     <input id='update-name' type='text' value='${posts.data().nameUser}'>
     <label>Data de Nascimento</label>
-    <input type='date' value='${posts.data().birthdayUser}'>
+    <input id="update-birthday" type='date' value='${posts.data().birthdayUser}'>
     <label>Foto</label>
     <input type='file'>
     <label>Patente</label>
@@ -34,9 +34,16 @@ export function editProfile(posts) {
     buttonUpdate.addEventListener('click', (event) => {
       event.preventDefault();
       const nameUpdate = document.getElementById('update-name');
+      const birthdayUpdate = document.getElementById('update-birthday');
       updateNameUser(nameUpdate.value);
       const uid = firebase.auth().currentUser.uid;
-      updateUsersInfoStore(uid, { nameUser: nameUpdate.value });
+      const updateProfile = {
+        name: nameUpdate.value,
+        email: firebase.auth().currentUser.email,
+        birthday: birthdayUpdate.value,
+
+      }
+      updateUsersInfoStore(uid, updateProfile);
       popup.classList.remove('popup');
       popup.classList.add('popup-none');
     });
