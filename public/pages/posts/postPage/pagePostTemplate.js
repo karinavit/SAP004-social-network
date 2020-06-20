@@ -21,7 +21,6 @@ export const signIn = (root, name) => {
             <input type="file" src="../../img/image-solid.svg" class="display-none-img" id="input-file">
             <img class="posts-img" src="../../img/image-solid.svg" alt="photo-to-post" id="post-img">
             <div class="img-preview hidden">
-            <img src="null"> 
             </div>
             <span class="check-prive">
               <input type="checkbox" id="private">Privado
