@@ -39,6 +39,9 @@ export const initFunc = {
     <input type='email' id='email-user'>
     <button type='submit' id='send'>Enviar</button>`;
     popup.innerHTML = editAreaPopUp;
+    document.getElementById('send').addEventListener('click', () =>{
+      firebaseActions.recoverPassword(document.getElementById('email-user').value)
+    })
     })
   }
 };
