@@ -1,6 +1,6 @@
 import { menuFixed } from '../posts/menu/menufixed.js';
-import { backPosts, readPostsProfileDOM } from './mainprofile.js';
-import { firebaseActions } from '../../data.js';
+import { backPosts, readPostsProfileDOM, editProfile } from './mainprofile.js';
+import { firebaseActions, readUserInfo } from '../../data.js';
 
 export const profilePage = (root, name) => {
   const container = document.createElement('div');
@@ -13,6 +13,7 @@ export const profilePage = (root, name) => {
           <h1>Bem vindo ${name}</h1>
           <br>
           <p>Number One - Classic</p>
+          <div id='edit-profile'>Editar</div>
         </div>
       </div>
       <br>
@@ -25,5 +26,6 @@ export const profilePage = (root, name) => {
   element.appendChild(container);
   menuFixed(container);
   backPosts();
+  readUserInfo(editProfile);
   firebaseActions.readPostsProfile(readPostsProfileDOM, element);
 };

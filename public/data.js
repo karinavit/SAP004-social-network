@@ -187,19 +187,19 @@ export function oneLikePerUserComments(postId, docId, func, commentsLike, elemen
 }
 
 
-function readUserInfo() {
+export function readUserInfo(func) {
   const postCollection = firebase.firestore().collection('users-info').doc(firebase.auth().currentUser.uid);
   postCollection.get()
     .then((posts) => {
-      console.log(posts.data());
+    func(posts)
     });
 }
 
-function updateNameUser(newName) {
+export function updateNameUser(newName) {
   firebase.auth().currentUser.updateProfile({ displayName: newName });
 }
 
-function updateUsersInfoStore(uid, newInfoUser) {
+export function updateUsersInfoStore(uid, newInfoUser) {
   const userCollection = firebase.firestore().collection('users-info');
   userCollection.doc(uid).set(newInfoUser);
 }
