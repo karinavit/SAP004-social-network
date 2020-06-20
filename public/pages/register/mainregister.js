@@ -9,7 +9,13 @@ export function registerDOM() {
 
   form.signRegister.addEventListener('click', (event) => {
     event.preventDefault();
-    firebaseActions.register(form.emailRegister.value, form.passwordRegister.value,
-      form.nameRegister.value, form.dateRegister.value);
+    const registerObj = {
+      email:form.emailRegister.value, 
+      password:form.passwordRegister.value,
+      name:form.nameRegister.value,
+      birthday: form.dateRegister.value
+
+    }
+    firebaseActions.register(registerObj);
   });
 }

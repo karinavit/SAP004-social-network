@@ -41,21 +41,15 @@ export const firebaseActions = {
     postCollection.doc(docId).delete()
       .then(() => { });
   },
-  register(email, password, name, birthday) {
+  register(document) {
     const userCollection = firebase.firestore().collection('users-info');
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(cred => cred.user.updateProfile({ displayName: name }))
+      .createUserWithEmailAndPassword(document.email, document.password)
+      .then(cred => cred.user.updateProfile({ displayName: document.name }))
       .then(() => {
         const uid = firebase.auth().currentUser.uid;
-        const infoUser = {
-          birthdayUser: birthday,
-          emailUser: email,
-          idUser: firebase.auth().currentUser.uid,
-          nameUser: name,
-        };
-        userCollection.doc(uid).set(infoUser);
+        userCollection.doc(uid).set(document);
       })
       .catch(() => {
       });
