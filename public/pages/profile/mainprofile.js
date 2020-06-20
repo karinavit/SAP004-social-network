@@ -20,9 +20,9 @@ export function editProfile(posts) {
     popup.classList.remove('popup-none');
     popup.classList.add('popup');
     const editAreaPopUp = `<label>Nome</label> 
-    <input id='update-name' type='text' value='${posts.data().nameUser}'>
+    <input id='update-name' type='text' value='${posts.data().name}'>
     <label>Data de Nascimento</label>
-    <input id="update-birthday" type='date' value='${posts.data().birthdayUser}'>
+    <input id="update-birthday" type='date' value='${posts.data().birthday}'>
     <label>Foto</label>
     <input id='update-photo' type='file'>
     <div id='photo-preview'></div>
