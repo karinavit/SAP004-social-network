@@ -1,5 +1,5 @@
 import { createElementProfilePost } from './profileAndComments.js';
-import { updateNameUser, updateUsersInfoStore } from '../../data.js';
+import { updateNameUser, updateUsersInfoStore, firebaseActions } from '../../data.js';
 
 export function backPosts() {
   const buttonBack = document.querySelector('#button-back-posts');
@@ -32,11 +32,16 @@ export function editProfile(posts) {
     `;
     popup.innerHTML = editAreaPopUp;
     const buttonUpdate = document.getElementById('update-info');
+    const photoUpdate = document.getElementById('update-photo');
+    photoUpdate.addEventListener('change', (event) => {
+      console.log('vamos ver')
+      const archive = event.target.files[0];
+      firebaseActions.storageImagesUpdate(archive, templateImageProfile, editAreaPopUp)
+    })
     buttonUpdate.addEventListener('click', (event) => {
       event.preventDefault();
       const nameUpdate = document.getElementById('update-name');
       const birthdayUpdate = document.getElementById('update-birthday');
-      const photoUpdate = document.getElementById('update-photo');
       const photoPreview = document.getElementById('photo-preview');
       updateNameUser(nameUpdate.value);
       const uid = firebase.auth().currentUser.uid;
@@ -50,4 +55,8 @@ export function editProfile(posts) {
       popup.classList.add('popup-none');
     });
   });
+}
+
+function templateImageProfile(url, archiveName) {
+  document.getElementById('photo-preview').innerHTML = `<img src='${url}' class='image-preview' id='${archiveName}'>`
 }
