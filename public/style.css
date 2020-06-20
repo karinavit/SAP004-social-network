@@ -393,6 +393,10 @@ footer {
   .img-web {
     width: 40%;
   }
+  .image-preview {
+    height: auto;
+    width: 100px;
+  }
   .login-style-web {
     width: 40%;
   }
