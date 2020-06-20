@@ -41,6 +41,8 @@ export const initFunc = {
     popup.innerHTML = editAreaPopUp;
     document.getElementById('send').addEventListener('click', () =>{
       firebaseActions.recoverPassword(document.getElementById('email-user').value)
+      popup.classList.remove('popup');
+    popup.classList.add('popup-none');
     })
     })
   }
