@@ -139,7 +139,6 @@ function templateImagePost(url, archiveName) {
   document.querySelector('.img-preview').innerHTML = `<img src='${url}' id='${archiveName}'>`
 }
 function pagePost() {
-  document.getElementById('post-main-area').innerHTML = '';
   firebaseActions.readPosts(readPostsDOM, clearAreaPosts);
   postDOM();
 }
