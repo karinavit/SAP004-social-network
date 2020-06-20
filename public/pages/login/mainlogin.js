@@ -28,4 +28,18 @@ export const initFunc = {
       window.location = '#register';
     });
   },
+  forgotPassword(){
+    const form = document.getElementsByClassName('forgot')[0];
+    form.addEventListener('click', () => {
+    const popup = document.getElementById('popup');
+    popup.innerHTML = '';
+    popup.classList.remove('popup-none');
+    popup.classList.add('popup');
+    const editAreaPopUp = `<label>Digite seu e-mail para recuperar sua senha:</label>
+    <input type='email' id='email-user'>
+    <button type='submit' id='send'>Enviar</button>`;
+    popup.innerHTML = editAreaPopUp;
+    })
+  }
 };
+
