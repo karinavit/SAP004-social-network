@@ -193,6 +193,9 @@ export function readUserInfo(func) {
 export function updateNameUser(newName) {
   firebase.auth().currentUser.updateProfile({ displayName: newName });
 }
+export function updatePhotoUser(newPhoto) {
+  firebase.auth().currentUser.updateProfile({ photoUrl: newPhoto });
+}
 
 export function updateUsersInfoStore(uid, newInfoUser) {
   const userCollection = firebase.firestore().collection('users-info');
