@@ -9,7 +9,7 @@ export function clearArea(element) {
   elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
 }
 export function clearAreaPosts() {
-   document.getElementById('post-main-area').innerHTML = '';
+  document.getElementById('post-main-area').innerHTML = '';
 }
 
 export function commentsDOM(postId, postOwner, element) {
@@ -142,9 +142,10 @@ function postDOM() {
   });
 }
 
+
 function pagePost() {
   document.getElementById('post-main-area').innerHTML = '';
-  firebaseActions.readPosts(readPostsDOM);
+  firebaseActions.readPosts(readPostsDOM, clearAreaPosts);
   postDOM();
 }
 
