@@ -111,13 +111,7 @@ function postDOM() {
     inputFile.click();
     inputFile.addEventListener('change', (event) => {
       const archive = event.target.files[0];
-      const stringArchive = 'archive';
-      const ref = firebase.storage().ref(stringArchive);
-      ref.child(stringArchive + archive.name).put(archive).then(() => {
-        ref.child(stringArchive + archive.name).getDownloadURL().then((url) => {
-          document.querySelector('.img-preview').innerHTML = `<img src='${url}' id='${archive.name}'>`;
-        });
-      });
+      firebaseActions.storageImagesUpdate(archive, templateImagePost)
     });
   });
 
@@ -140,6 +134,9 @@ function postDOM() {
   });
 }
 
+function templateImagePost(url, archiveName) {
+  document.querySelector('.img-preview').innerHTML = `<img src='${url}' id='${archiveName}'>`
+}
 function pagePost() {
   document.getElementById('post-main-area').innerHTML = '';
   firebaseActions.readPosts(readPostsDOM, clearAreaPosts);

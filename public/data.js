@@ -12,6 +12,15 @@ export const firebaseActions = {
   takeNameData() {
     return firebase.auth().currentUser.displayName;
   },
+  storageImagesUpdate(archive, func) {
+    const stringArchive = 'archive';
+    const ref = firebase.storage().ref(stringArchive);
+    ref.child(stringArchive + archive.name).put(archive).then(() => {
+      ref.child(stringArchive + archive.name).getDownloadURL().then((url) => {
+      func(url, archive.name)
+      });
+    });
+  },
   editOrLikePost(postId, updateTextOrLike) {
     const postCollection = firebase.firestore().collection('posts');
     postCollection.doc(postId).update(updateTextOrLike)
