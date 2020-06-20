@@ -1,4 +1,5 @@
 import { login } from './firebaseservice.js';
+import { clearArea } from './pages/posts/postPage/createPost.js';
 
 export const firebaseActions = {
   loginData(email, password) {
@@ -32,7 +33,7 @@ export const firebaseActions = {
     postCollection.doc(docId).delete()
       .then(() => { });
   },
-  register(email, password, name, birthday,image) {
+  register(email, password, name, birthday, image) {
     const userCollection = firebase.firestore().collection('users-info');
     firebase
       .auth()
@@ -53,6 +54,13 @@ export const firebaseActions = {
       })
       .catch(() => {
       });
+  },
+  recoverPassword(emailAddress) {
+
+    firebase.auth().sendPasswordResetEmail(emailAddress).then(function () {
+    }).catch(function (error) {
+    });
+
   },
   postData(post, func) {
     const postCollection = firebase.firestore().collection('posts');
@@ -92,6 +100,7 @@ export const firebaseActions = {
     const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
     postCollection.get()
       .then((posts) => {
+        document.getElementById('post-main-area').innerHTML = '';
         posts.forEach((post) => {
           if (firebase.auth().currentUser.uid === post.data().id_user || post.data().visibility === 'public') {
             func(post);
@@ -117,12 +126,10 @@ export const firebaseActions = {
       });
   },
   comments(document) {
-    const commentsReference = firebase
-      .firestore()
+    firebase.firestore()
       .collection('posts')
       .doc(document.parentId)
-      .collection('comments');
-    commentsReference
+      .collection('comments')
       .doc()
       .set(document)
       .then(() => { })
