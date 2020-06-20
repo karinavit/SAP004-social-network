@@ -20,7 +20,8 @@ export const signIn = (root, name) => {
           <div class="display-posts display-post-web">
             <input type="file" class="display-none-img" id="input-file">
             <img class="posts-img" src="../../img/image-solid.svg" alt="photo-to-post" id="post-img">
-            <div class="img-preview hidden">
+            <div class="img-preview">
+            <img src=''>
             </div>
             <span class="check-prive">
               <input type="checkbox" id="private">Privado
