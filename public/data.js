@@ -18,6 +18,7 @@ export const firebaseActions = {
     ref.child(stringArchive + archive.name).put(archive).then(() => {
       ref.child(stringArchive + archive.name).getDownloadURL().then((url) => {
       func(url, archive.name)
+      console.log(url)
       });
     });
   },
@@ -194,7 +195,7 @@ export function updateNameUser(newName) {
   firebase.auth().currentUser.updateProfile({ displayName: newName });
 }
 export function updatePhotoUser(newPhoto) {
-  firebase.auth().currentUser.updateProfile({ photoUrl: newPhoto });
+  firebase.auth().currentUser.updateProfile({ photoURL: newPhoto });
 }
 
 export function updateUsersInfoStore(uid, newInfoUser) {
