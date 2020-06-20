@@ -371,7 +371,7 @@ footer {
 }
 .popup{
   display: block;
-  position: absolute;
+  position: fixed;
   height: 70%;
   width: 70%;
   top: calc(50vh - 35%);
