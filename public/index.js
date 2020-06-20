@@ -19,23 +19,24 @@ function hashs() {
   }
 }
 
-const changePages = () => {
-  window.addEventListener('hashchange', () => {
-    init()
-  });
-};
-
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      window.location.hash !== '#profile'? window.location = '#posts': window.location = '#profile'  
+      if (window.location.hash !== '#profile') window.location = '#posts';
       hashs();
     } else {
-      window.location.hash !== '#register'? window.location = '#': window.location = '#register'
+      if (window.location.hash !== '#register') window.location = '#';
       hashs();
     }
   });
 }
+
+const changePages = () => {
+  window.addEventListener('hashchange', () => {
+    init();
+  });
+};
+
 
 window.addEventListener('load', () => {
   hashs();
