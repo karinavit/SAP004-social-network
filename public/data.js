@@ -1,5 +1,4 @@
 import { login } from './firebaseservice.js';
-import { clearArea } from './pages/posts/postPage/createPost.js';
 
 export const firebaseActions = {
   loginData(email, password) {
@@ -33,15 +32,12 @@ export const firebaseActions = {
     postCollection.doc(docId).delete()
       .then(() => { });
   },
-  register(email, password, name, birthday, image) {
+  register(email, password, name, birthday) {
     const userCollection = firebase.firestore().collection('users-info');
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(cred => {
-        cred.user.updateProfile({ displayName: name })
-        cred.user.updateProfile({ photoURL: image })
-      })
+      .then(cred => cred.user.updateProfile({ displayName: name }))
       .then(() => {
         const uid = firebase.auth().currentUser.uid;
         const infoUser = {
@@ -56,11 +52,9 @@ export const firebaseActions = {
       });
   },
   recoverPassword(emailAddress) {
-
-    firebase.auth().sendPasswordResetEmail(emailAddress).then(function () {
-    }).catch(function (error) {
-    });
-
+    firebase.auth().sendPasswordResetEmail(emailAddress)
+      .then(() => { })
+      .catch(() => { });
   },
   postData(post, func) {
     const postCollection = firebase.firestore().collection('posts');
@@ -100,7 +94,7 @@ export const firebaseActions = {
     const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
     postCollection.get()
       .then((posts) => {
-        funcClear()
+        funcClear();
         posts.forEach((post) => {
           if (firebase.auth().currentUser.uid === post.data().id_user || post.data().visibility === 'public') {
             func(post);
@@ -186,12 +180,11 @@ export function oneLikePerUserComments(postId, docId, func, commentsLike, elemen
     });
 }
 
-
 export function readUserInfo(func) {
   const postCollection = firebase.firestore().collection('users-info').doc(firebase.auth().currentUser.uid);
   postCollection.get()
     .then((posts) => {
-    func(posts)
+      func(posts);
     });
 }
 
