@@ -14,7 +14,6 @@ export function clearAreaPosts() {
 
 export function commentsDOM(postId, postOwner, element) {
   element.getElementsByClassName('post-button')[0].addEventListener('click', () => {
-    console.log("clicado")
     const textPosted = element.getElementsByClassName('comment-input-area')[0];
     const post = {
       name: firebase.auth().currentUser.displayName,
@@ -110,18 +109,17 @@ function postDOM() {
 
   img.addEventListener('click', () => {
     inputFile.click();
-    inputFile.addEventListener("change", event => {
-      let arquivo = event.target.files[0];
-      var ref = firebase.storage().ref('arquivo')
-      ref.child('arquivo' + arquivo.name).put(arquivo).then(() => {
-        ref.child('arquivo' + arquivo.name).getDownloadURL().then(url => {
-          document.querySelector(".img-preview").innerHTML = `<img src='${url}' id='${arquivo.name}'>`
-          console.log('postei')
-        })
-    })
-      
+    inputFile.addEventListener('change', (event) => {
+      const archive = event.target.files[0];
+      const stringArchive = 'archive';
+      const ref = firebase.storage().ref(stringArchive);
+      ref.child(stringArchive + archive.name).put(archive).then(() => {
+        ref.child(stringArchive + archive.name).getDownloadURL().then((url) => {
+          document.querySelector('.img-preview').innerHTML = `<img src='${url}' id='${archive.name}'>`;
+        });
+      });
+    });
   });
-})
 
   postar.addEventListener('click', (event) => {
     event.preventDefault();
@@ -130,7 +128,7 @@ function postDOM() {
       id_user: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.displayName,
       likes: 0,
-      img: document.querySelector(".img-preview").children[0].src,
+      img: document.querySelector('.img-preview').children[0].src,
       private: true,
       visibility: privateField.checked ? 'private' : 'public',
       date: new Date().toLocaleString('pt-BR'),
@@ -141,7 +139,6 @@ function postDOM() {
     firebaseActions.postData(post, readPostsDOM);
   });
 }
-
 
 function pagePost() {
   document.getElementById('post-main-area').innerHTML = '';
