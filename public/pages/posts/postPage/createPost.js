@@ -129,6 +129,7 @@ function postDOM() {
       wholiked: [],
     };
     postTexto.value = '';
+    document.querySelector('.img-preview').innerHTML = ''
     privateField.checked = false;
     firebaseActions.postData(post, readPostsDOM);
   });
