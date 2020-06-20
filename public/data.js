@@ -32,12 +32,15 @@ export const firebaseActions = {
     postCollection.doc(docId).delete()
       .then(() => { });
   },
-  register(email, password, name, birthday) {
+  register(email, password, name, birthday,image) {
     const userCollection = firebase.firestore().collection('users-info');
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(cred => cred.user.updateProfile({ displayName: name }))
+      .then(cred => {
+        cred.user.updateProfile({ displayName: name })
+        cred.user.updateProfile({ photoURL: image })
+      })
       .then(() => {
         const uid = firebase.auth().currentUser.uid;
         const infoUser = {
