@@ -35,6 +35,8 @@ buttonUpdate.addEventListener('click', (event) => {
 event.preventDefault();
 const nameUpdate = document.getElementById('update-name')
 updateNameUser(nameUpdate.value)
+popup.classList.remove('popup');
+popup.classList.add('popup-none');
 
 })
 
