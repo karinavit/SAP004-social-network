@@ -19,30 +19,20 @@ function hashs() {
   }
 }
 
-function verifyUser() {
-  const user = firebase.auth().currentUser;
-  if (user) {
-    if (window.location.hash !== '#profile') {
-      window.location = '#posts';
-    }
-  } else if (window.location.hash !== '#register') {
-    window.location = '#';
-  }
-  hashs();
-}
-
 const changePages = () => {
   window.addEventListener('hashchange', () => {
-    verifyUser();
+    init()
   });
 };
 
 function init() {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-      verifyUser();
+      window.location.hash !== '#profile'? window.location = '#posts': window.location = '#profile'  
+      hashs();
     } else {
-      verifyUser();
+      window.location.hash !== '#register'? window.location = '#': window.location = '#register'
+      hashs();
     }
   });
 }
