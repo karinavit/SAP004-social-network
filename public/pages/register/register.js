@@ -13,6 +13,7 @@ export const register = (root) => {
       <h1 class="style-title title-web">Social Trekkers</h1>
       <label class="letter-color">Digite seu nome completo:</label>
       <input class="style-input" name="nameRegister" type="text" placeholder="Digite seu nome completo aqui" required>
+      <input type="file" name="profileImage">
       <label class="letter-color">Digite seu e-mail:</label>
       <input class="style-input" name="emailRegister" type="email" placeholder="email@email.com" required>
       <label class="letter-color">Digite sua data de nascimento:</label>

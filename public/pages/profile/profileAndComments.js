@@ -12,7 +12,8 @@ export function createElementProfilePost(post) {
       </span>
     </div>
     <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
-    <div class="name-edit-post">
+    <img src='${post.data().img}'>
+        <div class="name-edit-post">
       <span class="display-like">
         <div class='like'>
           <img class='like-img liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>

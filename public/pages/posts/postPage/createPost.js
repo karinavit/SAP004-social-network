@@ -3,30 +3,23 @@ import { postsFunc } from './mainposts.js';
 import { printComments } from '../comments/commentsTemplate.js';
 import { menuFixed } from '../menu/menufixed.js';
 
-function editHoursPosted(dateInfo) {
-  return dateInfo < 10 ? `0${dateInfo}` : dateInfo;
-}
-
-export function getHoursPosted() {
-  const date = new Date();
-  return `${editHoursPosted(date.getDate())}/${editHoursPosted(date.getMonth() + 1)}
-  /${editHoursPosted(date.getFullYear())} 
-  ${editHoursPosted(date.getHours())}:${editHoursPosted(date.getMinutes())}
-  :${editHoursPosted(date.getSeconds())}`;
-}
 
 export function clearArea(element) {
   const elementArea = element;
   elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
 }
+export function clearAreaPosts() {
+  document.getElementById('post-main-area').innerHTML = '';
+}
 
-export function commentsDOM(postId, postOwner) {
-  document.getElementsByClassName('post-button')[0].addEventListener('click', () => {
-    const textPosted = document.getElementsByClassName('comment-input-area')[0];
+export function commentsDOM(postId, postOwner, element) {
+  element.getElementsByClassName('post-button')[0].addEventListener('click', () => {
+    console.log("clicado")
+    const textPosted = element.getElementsByClassName('comment-input-area')[0];
     const post = {
       name: firebase.auth().currentUser.displayName,
       id_user: firebase.auth().currentUser.uid,
-      date: getHoursPosted(),
+      date: new Date().toLocaleString('pt-BR'),
       text: textPosted.value,
       postOwner,
       parentId: postId,
@@ -46,6 +39,7 @@ function createElementPost(post) {
       </span>
     </div>
     <p class='post-text-area' id='text-${post.id}'>${post.data().text}</p>
+    <img src="${post.data().img}">
     <div class='name-edit-post'>
       <span class='display-like'>
       <div class='like'>
@@ -86,7 +80,7 @@ function createElementPost(post) {
   postElement.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
     const comentario = postElement.getElementsByClassName('post-comment')[0];
     comentario.classList.toggle('show');
-    commentsDOM(post.id, post.data().id_user);
+    commentsDOM(post.id, post.data().id_user, postElement);
   });
   const readCommentsObj = {
     postId: post.id,
@@ -94,6 +88,7 @@ function createElementPost(post) {
     element: postElement,
     clear: clearArea,
   };
+  // clearAreaPosts()
   firebaseActions.readComments(readCommentsObj);
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
     postElement.querySelector('.delete').classList.add('visibility');
@@ -115,7 +110,18 @@ function postDOM() {
 
   img.addEventListener('click', () => {
     inputFile.click();
+    inputFile.addEventListener("change", event => {
+      let arquivo = event.target.files[0];
+      var ref = firebase.storage().ref('arquivo')
+      ref.child('arquivo' + arquivo.name).put(arquivo).then(() => {
+        ref.child('arquivo' + arquivo.name).getDownloadURL().then(url => {
+          document.querySelector(".img-preview").innerHTML = `<img src='${url}' id='${arquivo.name}'>`
+          console.log('postei')
+        })
+    })
+      
   });
+})
 
   postar.addEventListener('click', (event) => {
     event.preventDefault();
@@ -124,9 +130,10 @@ function postDOM() {
       id_user: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.displayName,
       likes: 0,
+      img: document.querySelector(".img-preview").children[0].src,
       private: true,
       visibility: privateField.checked ? 'private' : 'public',
-      date: getHoursPosted(),
+      date: new Date().toLocaleString('pt-BR'),
       wholiked: [],
     };
     postTexto.value = '';
@@ -135,9 +142,10 @@ function postDOM() {
   });
 }
 
+
 function pagePost() {
   document.getElementById('post-main-area').innerHTML = '';
-  firebaseActions.readPosts(readPostsDOM);
+  firebaseActions.readPosts(readPostsDOM, clearAreaPosts);
   postDOM();
 }
 
