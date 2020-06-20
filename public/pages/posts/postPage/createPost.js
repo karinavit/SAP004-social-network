@@ -8,10 +8,14 @@ export function clearArea(element) {
   const elementArea = element;
   elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
 }
+export function clearAreaPosts() {
+   document.getElementById('post-main-area').innerHTML = '';
+}
 
-export function commentsDOM(postId, postOwner) {
-  document.getElementsByClassName('post-button')[0].addEventListener('click', () => {
-    const textPosted = document.getElementsByClassName('comment-input-area')[0];
+export function commentsDOM(postId, postOwner, element) {
+  element.getElementsByClassName('post-button')[0].addEventListener('click', () => {
+    console.log("clicado")
+    const textPosted = element.getElementsByClassName('comment-input-area')[0];
     const post = {
       name: firebase.auth().currentUser.displayName,
       id_user: firebase.auth().currentUser.uid,
@@ -76,7 +80,7 @@ function createElementPost(post) {
   postElement.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
     const comentario = postElement.getElementsByClassName('post-comment')[0];
     comentario.classList.toggle('show');
-    commentsDOM(post.id, post.data().id_user);
+    commentsDOM(post.id, post.data().id_user, postElement);
   });
   const readCommentsObj = {
     postId: post.id,
@@ -84,6 +88,7 @@ function createElementPost(post) {
     element: postElement,
     clear: clearArea,
   };
+  // clearAreaPosts()
   firebaseActions.readComments(readCommentsObj);
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
     postElement.querySelector('.delete').classList.add('visibility');
