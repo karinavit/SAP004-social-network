@@ -8,8 +8,8 @@ export function clearArea(element) {
   const elementArea = element;
   elementArea.getElementsByClassName('comment-area')[0].innerHTML = '';
 }
-export function clearAreaPosts(element) {
-  element.getElementById('post-main-area').innerHTML = '';
+export function clearAreaPosts() {
+  document.getElementById('post-main-area').innerHTML = '';
 }
 
 export function commentsDOM(postId, postOwner, element) {
@@ -138,8 +138,8 @@ function postDOM() {
 function templateImagePost(url, archiveName) {
   document.querySelector('.img-preview').innerHTML = `<img src='${url}' id='${archiveName}'>`
 }
-function pagePost(container) {
-  firebaseActions.readPosts(readPostsDOM, clearAreaPosts, container);
+function pagePost() {
+  firebaseActions.readPosts(readPostsDOM, clearAreaPosts);
   postDOM();
 }
 

@@ -93,10 +93,10 @@ export const firebaseActions = {
         });
       });
   },
-  readPosts(func, funcClear, element) {
+  readPosts(func, funcClear) {
     const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
     postCollection.onSnapshot((posts) => {
-        funcClear(element);
+        funcClear();
         posts.forEach((post) => {
           if (firebase.auth().currentUser.uid === post.data().id_user || post.data().visibility === 'public') {
             func(post);
