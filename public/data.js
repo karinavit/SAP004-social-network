@@ -195,11 +195,11 @@ export function readUserInfo(func) {
     });
 }
 
-function updateNameUser(newName) {
+export function updateNameUser(newName) {
   firebase.auth().currentUser.updateProfile({ displayName: newName });
 }
 
-function updateUsersInfoStore(uid, newInfoUser) {
+export function updateUsersInfoStore(uid, newInfoUser) {
   const userCollection = firebase.firestore().collection('users-info');
   userCollection.doc(uid).set(newInfoUser);
 }
