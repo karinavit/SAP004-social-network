@@ -24,7 +24,8 @@ export function editProfile(posts) {
     <label>Data de Nascimento</label>
     <input id="update-birthday" type='date' value='${posts.data().birthdayUser}'>
     <label>Foto</label>
-    <input type='file'>
+    <input id='update-photo' type='file'>
+    <div id='photo-preview'></div>
     <label>Patente</label>
     <input type='text'>
     <button type='submit' id='update-info'>Atualizar</button>
@@ -35,13 +36,14 @@ export function editProfile(posts) {
       event.preventDefault();
       const nameUpdate = document.getElementById('update-name');
       const birthdayUpdate = document.getElementById('update-birthday');
+      const photoUpdate = document.getElementById('update-photo');
+      const photoPreview = document.getElementById('photo-preview');
       updateNameUser(nameUpdate.value);
       const uid = firebase.auth().currentUser.uid;
       const updateProfile = {
         name: nameUpdate.value,
         email: firebase.auth().currentUser.email,
         birthday: birthdayUpdate.value,
-
       }
       updateUsersInfoStore(uid, updateProfile);
       popup.classList.remove('popup');
