@@ -1,4 +1,5 @@
 import { createElementProfilePost } from './profileAndComments.js';
+import {updateNameUser, updateUsersInfoStore} from '../../data.js';
 
 export function backPosts() {
   const buttonBack = document.querySelector('#button-back-posts');
@@ -19,16 +20,23 @@ export function editProfile(posts){
     popup.classList.remove('popup-none');
     popup.classList.add('popup');
     const editAreaPopUp = `<label>Nome</label> 
-    <input type='text' value='${posts.data().nameUser}'>
+    <input id='update-name' type='text' value='${posts.data().nameUser}'>
     <label>Data de Nascimento</label>
     <input type='date' value='${posts.data().birthdayUser}'>
     <label>Foto</label>
     <input type='file'>
     <label>Patente</label>
     <input type='text'>
+    <button type='submit' id='update-info'>Atualizar</button>
     `;
     popup.innerHTML = editAreaPopUp;
+const buttonUpdate = document.getElementById('update-info')
+buttonUpdate.addEventListener('click', (event) => {
+event.preventDefault();
+const nameUpdate = document.getElementById('update-name')
+updateNameUser(nameUpdate.value)
 
+})
 
   })
 
