@@ -25,7 +25,9 @@ export function editProfile(posts) {
     <input id="update-birthday" type='date' value='${posts.data().birthday}'>
     <label>Foto</label>
     <input id='update-photo' type='file'>
-    <div id='photo-preview'></div>
+    <div id='photo-preview'>
+    <img src='null'>
+    </div>
     <label>Patente</label>
     <input type='text'>
     <button type='submit' id='update-info'>Atualizar</button>
