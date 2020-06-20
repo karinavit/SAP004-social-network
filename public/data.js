@@ -59,13 +59,13 @@ export const firebaseActions = {
       .then(() => { })
       .catch(() => { });
   },
-  postData(post, func) {
+  postData(post) {
     const postCollection = firebase.firestore().collection('posts');
     postCollection.add(post)
-      .then((postAdded) => {
-        postAdded.onSnapshot((newPost) => {
-          func(newPost);
-        });
+      .then(() => {
+        // postAdded.onSnapshot((newPost) => {
+        //   func(newPost);
+        // });
       });
   },
   readComments(document) {
@@ -93,11 +93,10 @@ export const firebaseActions = {
         });
       });
   },
-  readPosts(func, funcClear) {
+  readPosts(func, funcClear, element) {
     const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
-    postCollection.get()
-      .then((posts) => {
-        funcClear();
+    postCollection.onSnapshot((posts) => {
+        funcClear(element);
         posts.forEach((post) => {
           if (firebase.auth().currentUser.uid === post.data().id_user || post.data().visibility === 'public') {
             func(post);
