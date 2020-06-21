@@ -119,9 +119,8 @@ export const firebaseActions = {
       .then((result) => {
         const user = result.user;
         userCollection.doc(user.uid).set({
-          emailUser: user.email,
-          idUser: user.uid,
-          nameUser: user.displayName,
+          email: user.email,
+          name: user.displayName,
         });
       })
       .catch(() => {
