@@ -10,12 +10,11 @@ export function registerDOM() {
   form.signRegister.addEventListener('click', (event) => {
     event.preventDefault();
     const registerObj = {
-      email:form.emailRegister.value, 
-      password:form.passwordRegister.value,
-      name:form.nameRegister.value,
-      birthday: form.dateRegister.value
-
-    }
+      email: form.emailRegister.value,
+      password: form.passwordRegister.value,
+      name: form.nameRegister.value,
+      birthday: form.dateRegister.value,
+    };
     firebaseActions.register(registerObj);
   });
 }
