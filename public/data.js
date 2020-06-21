@@ -13,7 +13,10 @@ export const firebaseActions = {
     firebase.auth().signOut();
   },
   takeNameData() {
-    return firebase.auth().currentUser.displayName;
+    const uid = firebase.auth().currentUser.uid
+    firebase.firestore().collection('users-info').doc(uid).onSnapshot((doc) => {
+      document.getElementById('true-name').innerHTML = ""
+      document.getElementById('true-name').innerHTML = doc.data().name})
   },
   storageImagesUpdate(archive, func) {
     const stringArchive = 'archive';
