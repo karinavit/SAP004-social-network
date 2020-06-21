@@ -15,11 +15,11 @@ export const initFunc = {
       firebaseActions.googleAndFacebookLogin(provider);
     });
   },
-  loginEvent() {
+  loginEvent(errHandle) {
     const form = document.querySelector('#form-id');
     form.loginButton.addEventListener('click', (event) => {
       event.preventDefault();
-      firebaseActions.loginData(form.emailInput.value, form.passwordInput.value);
+      firebaseActions.loginData(form.emailInput.value, form.passwordInput.value, errHandle);
     });
   },
   registerEvent() {
@@ -46,7 +46,10 @@ export const initFunc = {
       });
     });
   },
-  errorsLogin() {
+  errorsLogin(err) {
+    const divError = document.querySelector('#div-error');
+
+    divError.innerHTML= `${err}`
 
   }
 };
