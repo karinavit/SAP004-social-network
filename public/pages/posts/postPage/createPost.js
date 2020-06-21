@@ -38,7 +38,7 @@ function createElementPost(post) {
       </span>
     </div>
     <p class='post-text-area' id='text-${post.id}'>${post.data().text}</p>
-    <img src="${post.data().img}">
+    <img src="${post.data().img}" class=${post.data().img === 'http://localhost:5000/'?"hidden":"image-preview"}>
     <div class='name-edit-post'>
       <span class='display-like'>
       <div class='like'>
