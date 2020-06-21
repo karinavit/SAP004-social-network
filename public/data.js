@@ -1,17 +1,31 @@
 import { login } from './firebaseservice.js';
-import { clearArea } from './pages/posts/postPage/createPost.js';
+import { errLogin } from './handleErrors.js';
 
 export const firebaseActions = {
-  loginData(email, password) {
+  loginData(email, password, func) {
     return login(email, password)
-      .catch(() => {
+      .catch((err) => {
+        const errorResult = errLogin.filter(item => item.code === err.code);
+        func(errorResult[0].message);
       });
   },
   loggoutData() {
     firebase.auth().signOut();
   },
-  takeNameData() {
-    return firebase.auth().currentUser.displayName;
+  takeNameData(func) {
+    const uid = firebase.auth().currentUser.uid;
+    firebase.firestore().collection('users-info').doc(uid).onSnapshot((doc) => {
+      func(doc.data().name);
+    });
+  },
+  storageImagesUpdate(archive, func) {
+    const stringArchive = 'archive';
+    const ref = firebase.storage().ref(stringArchive);
+    ref.child(stringArchive + archive.name).put(archive).then(() => {
+      ref.child(stringArchive + archive.name).getDownloadURL().then((url) => {
+        func(url, archive.name);
+      });
+    });
   },
   editOrLikePost(postId, updateTextOrLike) {
     const postCollection = firebase.firestore().collection('posts');
@@ -33,42 +47,31 @@ export const firebaseActions = {
     postCollection.doc(docId).delete()
       .then(() => { });
   },
-  register(email, password, name, birthday, image) {
+  register(document) {
     const userCollection = firebase.firestore().collection('users-info');
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(cred => {
-        cred.user.updateProfile({ displayName: name })
-        cred.user.updateProfile({ photoURL: image })
-      })
+      .createUserWithEmailAndPassword(document.email, document.password)
+      .then(cred => cred.user.updateProfile({ displayName: document.name }))
       .then(() => {
         const uid = firebase.auth().currentUser.uid;
-        const infoUser = {
-          birthdayUser: birthday,
-          emailUser: email,
-          idUser: firebase.auth().currentUser.uid,
-          nameUser: name,
-        };
-        userCollection.doc(uid).set(infoUser);
+        userCollection.doc(uid).set(document);
       })
       .catch(() => {
       });
   },
   recoverPassword(emailAddress) {
-
-    firebase.auth().sendPasswordResetEmail(emailAddress).then(function () {
-    }).catch(function (error) {
-    });
-
+    firebase.auth().sendPasswordResetEmail(emailAddress)
+      .then(() => { })
+      .catch(() => { });
   },
-  postData(post, func) {
+  postData(post) {
     const postCollection = firebase.firestore().collection('posts');
     postCollection.add(post)
-      .then((postAdded) => {
-        postAdded.onSnapshot((newPost) => {
-          func(newPost);
-        });
+      .then(() => {
+        // postAdded.onSnapshot((newPost) => {
+        //   func(newPost);
+        // });
       });
   },
   readComments(document) {
@@ -98,15 +101,14 @@ export const firebaseActions = {
   },
   readPosts(func, funcClear) {
     const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
-    postCollection.get()
-      .then((posts) => {
-        funcClear()
-        posts.forEach((post) => {
-          if (firebase.auth().currentUser.uid === post.data().id_user || post.data().visibility === 'public') {
-            func(post);
-          }
-        });
+    postCollection.onSnapshot((posts) => {
+      funcClear();
+      posts.forEach((post) => {
+        if (firebase.auth().currentUser.uid === post.data().id_user || post.data().visibility === 'public') {
+          func(post);
+        }
       });
+    });
   },
   googleAndFacebookLogin(provider) {
     const userCollection = firebase.firestore().collection('users-info');
@@ -187,19 +189,21 @@ export function oneLikePerUserComments(postId, docId, func, commentsLike, elemen
 }
 
 
-export function readUserInfo(func) {
-  const postCollection = firebase.firestore().collection('users-info').doc(firebase.auth().currentUser.uid);
-  postCollection.get()
-    .then((posts) => {
-    func(posts)
+export const profileUpdate = {
+  readUserInfo(func) {
+    const postCollection = firebase.firestore().collection('users-info').doc(firebase.auth().currentUser.uid);
+    postCollection.onSnapshot((posts) => {
+      func(posts);
     });
-}
-
-export function updateNameUser(newName) {
-  firebase.auth().currentUser.updateProfile({ displayName: newName });
-}
-
-export function updateUsersInfoStore(uid, newInfoUser) {
-  const userCollection = firebase.firestore().collection('users-info');
-  userCollection.doc(uid).set(newInfoUser);
-}
+  },
+  updateNameUser(newName) {
+    firebase.auth().currentUser.updateProfile({ displayName: newName });
+  },
+  updatePhotoUser(newPhoto) {
+    firebase.auth().currentUser.updateProfile({ photoURL: newPhoto });
+  },
+  updateUsersInfoStore(uid, newInfoUser) {
+    const userCollection = firebase.firestore().collection('users-info');
+    userCollection.doc(uid).set(newInfoUser);
+  },
+};

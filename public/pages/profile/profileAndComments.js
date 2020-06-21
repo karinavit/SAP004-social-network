@@ -12,7 +12,7 @@ export function createElementProfilePost(post) {
       </span>
     </div>
     <p class="post-text-area" id='text-${post.id}'>${post.data().text}</p>
-    <img src='${post.data().img}'>
+    <img src='${post.data().img}' class=${/firebasestorage/i.test(post.data().img) ? 'image-preview' : 'hidden'}>
         <div class="name-edit-post">
       <span class="display-like">
         <div class='like'>

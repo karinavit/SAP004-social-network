@@ -15,11 +15,11 @@ export const initFunc = {
       firebaseActions.googleAndFacebookLogin(provider);
     });
   },
-  loginEvent() {
+  loginEvent(errHandle) {
     const form = document.querySelector('#form-id');
     form.loginButton.addEventListener('click', (event) => {
       event.preventDefault();
-      firebaseActions.loginData(form.emailInput.value, form.passwordInput.value);
+      firebaseActions.loginData(form.emailInput.value, form.passwordInput.value, errHandle);
     });
   },
   registerEvent() {
@@ -28,23 +28,26 @@ export const initFunc = {
       window.location = '#register';
     });
   },
-  forgotPassword(){
-    const form = document.getElementsByClassName('forgot')[0];
-    form.addEventListener('click', () => {
-    const popup = document.getElementById('popup');
-    popup.innerHTML = '';
-    popup.classList.remove('popup-none');
-    popup.classList.add('popup');
-    const editAreaPopUp = `<label>Digite seu e-mail para recuperar sua senha:</label>
+  forgotPassword() {
+    const forgetPasswordButton = document.getElementsByClassName('forgot')[0];
+    forgetPasswordButton.addEventListener('click', () => {
+      const popup = document.getElementById('popup');
+      popup.innerHTML = '';
+      popup.classList.remove('popup-none');
+      popup.classList.add('popup');
+      const editAreaPopUp = `<label>Digite seu e-mail para recuperar sua senha:</label>
     <input type='email' id='email-user'>
     <button type='submit' id='send'>Enviar</button>`;
-    popup.innerHTML = editAreaPopUp;
-    document.getElementById('send').addEventListener('click', () =>{
-      firebaseActions.recoverPassword(document.getElementById('email-user').value)
-      popup.classList.remove('popup');
-    popup.classList.add('popup-none');
-    })
-    })
-  }
+      popup.innerHTML = editAreaPopUp;
+      document.getElementById('send').addEventListener('click', () => {
+        firebaseActions.recoverPassword(document.getElementById('email-user').value);
+        popup.classList.remove('popup');
+        popup.classList.add('popup-none');
+      });
+    });
+  },
+  errorsLogin(err) {
+    const divError = document.querySelector('#div-error');
+    divError.innerHTML = `${err}`;
+  },
 };
-

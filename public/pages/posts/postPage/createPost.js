@@ -14,7 +14,6 @@ export function clearAreaPosts() {
 
 export function commentsDOM(postId, postOwner, element) {
   element.getElementsByClassName('post-button')[0].addEventListener('click', () => {
-    console.log("clicado")
     const textPosted = element.getElementsByClassName('comment-input-area')[0];
     const post = {
       name: firebase.auth().currentUser.displayName,
@@ -30,6 +29,10 @@ export function commentsDOM(postId, postOwner, element) {
   });
 }
 
+function templateImagePost(url, archiveName) {
+  document.querySelector('.img-preview').innerHTML = `<img src='${url}' id='${archiveName}'>`;
+}
+
 function createElementPost(post) {
   const postTemplate = `
     <div class='name-edit-post'>
@@ -39,7 +42,7 @@ function createElementPost(post) {
       </span>
     </div>
     <p class='post-text-area' id='text-${post.id}'>${post.data().text}</p>
-    <img src="${post.data().img}">
+    <img src="${post.data().img}" class=${/firebasestorage/i.test(post.data().img) ? 'image-preview' : 'hidden'}>
     <div class='name-edit-post'>
       <span class='display-like'>
       <div class='like'>
@@ -110,18 +113,11 @@ function postDOM() {
 
   img.addEventListener('click', () => {
     inputFile.click();
-    inputFile.addEventListener("change", event => {
-      let arquivo = event.target.files[0];
-      var ref = firebase.storage().ref('arquivo')
-      ref.child('arquivo' + arquivo.name).put(arquivo).then(() => {
-        ref.child('arquivo' + arquivo.name).getDownloadURL().then(url => {
-          document.querySelector(".img-preview").innerHTML = `<img src='${url}' id='${arquivo.name}'>`
-          console.log('postei')
-        })
-    })
-      
+    inputFile.addEventListener('change', (event) => {
+      const archive = event.target.files[0];
+      firebaseActions.storageImagesUpdate(archive, templateImagePost);
+    });
   });
-})
 
   postar.addEventListener('click', (event) => {
     event.preventDefault();
@@ -130,26 +126,24 @@ function postDOM() {
       id_user: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.displayName,
       likes: 0,
-      img: document.querySelector(".img-preview").children[0].src,
-      private: true,
+      img: document.querySelector('.img-preview').children[0].src,
       visibility: privateField.checked ? 'private' : 'public',
       date: new Date().toLocaleString('pt-BR'),
       wholiked: [],
     };
     postTexto.value = '';
+    document.querySelector('.img-preview').innerHTML = '';
     privateField.checked = false;
     firebaseActions.postData(post, readPostsDOM);
   });
 }
 
-
 function pagePost() {
-  document.getElementById('post-main-area').innerHTML = '';
   firebaseActions.readPosts(readPostsDOM, clearAreaPosts);
   postDOM();
 }
 
 export function initPostsAndMenu(container) {
   menuFixed(container);
-  pagePost();
+  pagePost(container);
 }

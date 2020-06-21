@@ -1,8 +1,8 @@
 import { menuFixed } from '../posts/menu/menufixed.js';
 import { backPosts, readPostsProfileDOM, editProfile } from './mainprofile.js';
-import { firebaseActions, readUserInfo } from '../../data.js';
+import { firebaseActions, profileUpdate } from '../../data.js';
 
-export const profilePage = (root, name) => {
+export const profilePage = (root, name = '') => {
   const container = document.createElement('div');
   container.classList.add('display-column');
   container.innerHTML = `
@@ -10,7 +10,7 @@ export const profilePage = (root, name) => {
       <div class="margin-top-user profile-mobile display-web-user profile-web">
         <img class="img-user img-user-web" src="../../img/startrek_spock.jpg" alt="spock">
         <div class="name-user">
-          <h1>Bem vindo ${name}</h1>
+          <h1>Bem vindo <span id='true-name'> ${name}</span></h1>
           <br>
           <p>Number One - Classic</p>
           <div id='edit-profile'>Editar</div>
@@ -26,6 +26,6 @@ export const profilePage = (root, name) => {
   element.appendChild(container);
   menuFixed(container);
   backPosts();
-  readUserInfo(editProfile);
+  profileUpdate.readUserInfo(editProfile);
   firebaseActions.readPostsProfile(readPostsProfileDOM, element);
 };
