@@ -11,7 +11,6 @@ export const errLogin = [{
   message: 'Senha incorreta, favor tentar novamente ou solicitar a recuperação de senha abaixo',
 },
 
-
 ];
 
 export const confirmPasswordReset = [{
@@ -34,6 +33,22 @@ export const confirmPasswordReset = [{
 },
 ]
 
-
+export const createUserWithEmailAndPassword = [{
+  code: 'auth/email-already-in-use',
+  message: 'Existe uma conta com o endereço de e-mail fornecido',
+},
+{
+  code: 'auth/invalid-email',
+  message: 'O endereço de email não é válido.',
+},
+{
+  code: 'auth/operation-not-allowed',
+  message: 'As contas de email / senha não estão ativadas. Habilite as contas de email / senha no Firebase Console, na guia Auth.',
+},
+{
+  code: 'auth/weak-password',
+  message: 'A senha não é forte o suficiente.',
+},
+]
 
 
