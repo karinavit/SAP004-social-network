@@ -2,7 +2,7 @@ import { menuFixed } from '../posts/menu/menufixed.js';
 import { backPosts, readPostsProfileDOM, editProfile } from './mainprofile.js';
 import { firebaseActions, profileUpdate } from '../../data.js';
 
-export const profilePage = (root, name) => {
+export const profilePage = (root, name = '') => {
   const container = document.createElement('div');
   container.classList.add('display-column');
   container.innerHTML = `
