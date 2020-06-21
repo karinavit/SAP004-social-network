@@ -1,5 +1,5 @@
 import { login } from './firebaseservice.js';
-import {errLogin} from './handleErrors.js'
+import { errLogin } from './handleErrors.js'
 
 export const firebaseActions = {
   loginData(email, password, func) {
@@ -20,8 +20,8 @@ export const firebaseActions = {
     const ref = firebase.storage().ref(stringArchive);
     ref.child(stringArchive + archive.name).put(archive).then(() => {
       ref.child(stringArchive + archive.name).getDownloadURL().then((url) => {
-      func(url, archive.name)
-      console.log(url)
+        func(url, archive.name)
+        console.log(url)
       });
     });
   },
@@ -100,13 +100,13 @@ export const firebaseActions = {
   readPosts(func, funcClear) {
     const postCollection = firebase.firestore().collection('posts').orderBy('date', 'asc');
     postCollection.onSnapshot((posts) => {
-        funcClear();
-        posts.forEach((post) => {
-          if (firebase.auth().currentUser.uid === post.data().id_user || post.data().visibility === 'public') {
-            func(post);
-          }
-        });
+      funcClear();
+      posts.forEach((post) => {
+        if (firebase.auth().currentUser.uid === post.data().id_user || post.data().visibility === 'public') {
+          func(post);
+        }
       });
+    });
   },
   googleAndFacebookLogin(provider) {
     const userCollection = firebase.firestore().collection('users-info');
@@ -186,22 +186,23 @@ export function oneLikePerUserComments(postId, docId, func, commentsLike, elemen
     });
 }
 
-export function readUserInfo(func) {
-  const postCollection = firebase.firestore().collection('users-info').doc(firebase.auth().currentUser.uid);
-  postCollection.get()
-    .then((posts) => {
-      func(posts);
-    });
-}
 
-export function updateNameUser(newName) {
-  firebase.auth().currentUser.updateProfile({ displayName: newName });
-}
-export function updatePhotoUser(newPhoto) {
-  firebase.auth().currentUser.updateProfile({ photoURL: newPhoto });
-}
-
-export function updateUsersInfoStore(uid, newInfoUser) {
-  const userCollection = firebase.firestore().collection('users-info');
-  userCollection.doc(uid).set(newInfoUser);
+export const profileUpdate = {
+  readUserInfo(func) {
+    const postCollection = firebase.firestore().collection('users-info').doc(firebase.auth().currentUser.uid);
+    postCollection.get()
+      .then((posts) => {
+        func(posts);
+      });
+  },
+  updateNameUser(newName) {
+    firebase.auth().currentUser.updateProfile({ displayName: newName });
+  },
+  updatePhotoUser(newPhoto) {
+    firebase.auth().currentUser.updateProfile({ photoURL: newPhoto });
+  },
+  updateUsersInfoStore(uid, newInfoUser) {
+    const userCollection = firebase.firestore().collection('users-info');
+    userCollection.doc(uid).set(newInfoUser);
+  },
 }
