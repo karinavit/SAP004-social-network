@@ -13,6 +13,7 @@ export const formLogin = (root) => {
       <input class='style-input' name='emailInput' type='email' placeholder='Digite seu e-mail...' required>
       <input class='style-input' name='passwordInput' type='password' placeholder='Digite sua senha...' required>
       <button class='button-login login-btn-web width-button-login'  name='loginButton' type='submit'>Logar</button>
+      <div id="div-error" class="font-white" ></div>
       <p class='letter-color margin-web'> Esqueceu a senha,
         <span class='link-register forgot'>Clique aqui</span>
       </p>
@@ -28,7 +29,7 @@ export const formLogin = (root) => {
   const element = root;
   element.innerHTML = '';
   element.appendChild(container);
-  initFunc.loginEvent();
+  initFunc.loginEvent(initFunc.errorsLogin);
   initFunc.registerEvent();
   initFunc.loginEventGoogle();
   initFunc.loginEventFacebook();
