@@ -8,7 +8,7 @@ export const signIn = (root, name) => {
       <div class="margin-top-user profile-mobile display-web-user profile-web">
         <img class="img-user img-user-web" src="../../img/startrek_spock.jpg" alt="spock">
         <div class="name-user">
-          <h1>Bem vindo ${name}</h1>
+          <h1>Bem vindo <span id='true-name'>${name}</span></h1>
           <br>
           <p>Number One - Classic</p>
         </div>
