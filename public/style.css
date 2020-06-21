@@ -450,6 +450,39 @@ input[type="file"] {
   font-weight: bold;
 }
 
+.audio-classic {
+  width: 70%;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  padding: 5px;
+  border: 2px solid #FFCC00;
+  background-color: rgba(255, 255, 255, 0.6);
+  font-family: "futura book", sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.span-play-classic {
+  background-color: #FFCC00;
+  margin: 3px;
+  border-radius: 5px;
+  padding: 2px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.box-play {
+  padding: 8px;
+}
+
+.div-sound {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
 @media only screen and (min-width: 800px) {
   .display-web {
     flex-direction: row;

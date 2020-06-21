@@ -22,7 +22,16 @@ export const formLogin = (root) => {
         <img class='img-f'  id='facebook' src='../../img/facebook.png' alt='logo-facebook'>
       <p class='letter-color'>Caso não possua conta ainda, 
         <a class='link-register' href='#register' id='register'>Registre-se</a>
-      </p>      
+      </p>  
+      <div class="div-sound">
+        </div> 
+        <div class="audio-classic">Abertura da série Clássica
+        <audio class="play-audio-classic" src="http://trekcore.com/tos/audio/themes/season1voice.mp3"></audio>
+        <p class="box-play">
+          <span class="play-classic span-play-classic">Play</span>
+          <span class="pause-classic span-play-classic">Pause</span>
+        </p>
+        </div>    
     </div>
   `;
 
@@ -34,4 +43,5 @@ export const formLogin = (root) => {
   initFunc.loginEventGoogle();
   initFunc.loginEventFacebook();
   initFunc.forgotPassword();
+  initFunc.playSoundClassic();
 };

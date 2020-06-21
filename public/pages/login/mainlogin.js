@@ -53,4 +53,11 @@ export const initFunc = {
     const divError = document.querySelector('#div-error');
     divError.innerHTML = `${err}`;
   },
+  playSoundClassic() {
+    const sound = document.getElementsByClassName('play-classic')[0];
+    const pause = document.getElementsByClassName('pause-classic')[0];
+    const playAudio = document.getElementsByClassName('play-audio-classic')[0];
+    sound.addEventListener('click', () => playAudio.play());
+    pause.addEventListener('click', () => playAudio.pause());
+  }
 };
