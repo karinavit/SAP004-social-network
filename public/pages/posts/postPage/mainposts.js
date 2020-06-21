@@ -27,7 +27,7 @@ export const postsFunc = {
     const editAreaPopUp = `
       <h1 class="edit-title-popup-post">Edite sua mensagem viajante:</h1>
       <p id='text-area' class="edit-message-popup-post">${textEditElement.textContent}</p>
-      <button id='save'>Salvar</button>
+      <button class="button-login width-button-login" id='save'>Salvar</button>
     `;
     popup.innerHTML = editAreaPopUp;
     const textArea = document.getElementById('text-area');

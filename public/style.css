@@ -372,7 +372,10 @@ footer {
   cursor: pointer;
 }
 .popup{
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   position: fixed;
   height: 70%;
   width: 70%;
@@ -382,6 +385,7 @@ footer {
   border: 2px solid yellow;
   background-color: white;
 }
+
 .popup-none{
   display: none;
 }
