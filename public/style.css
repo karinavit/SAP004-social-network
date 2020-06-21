@@ -402,7 +402,7 @@ footer {
 }
 
 .image-preview {
-  width: 50%;
+  width: 10%;
   align-self: center;
 }
 
@@ -483,6 +483,15 @@ input[type="file"] {
   align-items: center;
 }
 
+.error-message{
+  width: 80%;
+  color: red;
+  font-family: "futura book", sans-serif;
+  padding: 7px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
 @media only screen and (min-width: 800px) {
   .display-web {
     flex-direction: row;
@@ -502,10 +511,6 @@ input[type="file"] {
   .login-btn-web:hover {
     transform: scale(1.2);
     transition: 3s;
-  }
-  .font-white{
-    color: white;
-    font-weight: bold;
   }
   .margin-web {
     margin-top: 30px;

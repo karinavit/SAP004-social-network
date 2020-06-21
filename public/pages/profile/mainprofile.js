@@ -23,7 +23,6 @@ export function editProfile(posts) {
       <label>Data de Nascimento</label>
       <input class='style-input' id="update-birthday" type='date' value='${posts.data().birthday}'>
       <label class='style-input center-input-file'><input id='update-photo' type='file'>Foto</label>
-      
       <div id='photo-preview'>
       <img src='null'>
       </div>
