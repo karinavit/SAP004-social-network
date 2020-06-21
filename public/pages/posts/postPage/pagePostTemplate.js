@@ -1,6 +1,6 @@
 import { initPostsAndMenu } from './createPost.js';
 
-export const signIn = (root, name) => {
+export const signIn = (root, name = '') => {
   const container = document.createElement('div');
   container.classList.add('display-column');
   container.innerHTML = `
