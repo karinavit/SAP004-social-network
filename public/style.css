@@ -408,6 +408,10 @@ footer {
     transform: scale(1.2);
     transition: 3s;
   }
+  .font-white{
+    color: white;
+    font-weight: bold;
+  }
   .margin-web {
     margin-top: 30px;
   }
