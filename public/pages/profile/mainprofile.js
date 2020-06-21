@@ -53,7 +53,6 @@ export function editProfile(posts) {
         birthday: birthdayUpdate.value,
       }
       profileUpdate.updateUsersInfoStore(uid, updateProfile);
-      window.location.reload()
       popup.classList.remove('popup');
       popup.classList.add('popup-none');
     });
