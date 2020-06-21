@@ -24,9 +24,12 @@ export const postsFunc = {
     popup.innerHTML = '';
     popup.classList.remove('popup-none');
     popup.classList.add('popup');
-    const editAreaPopUp = `<h1>Título</h1>
-    <p id='text-area'>${textEditElement.textContent}</p>
-    <button id='save'>Salvar</button>`;
+    const editAreaPopUp = `
+      <h1 class="edit-title-popup-post">Edite sua mensagem subespacial:</h1>
+      <img class="img-edit-popup" src="../../../img/popup-editar.svg" alt="tricorder">
+      <p id='text-area' class="edit-message-popup-post">${textEditElement.textContent}</p>
+      <button class="button-login width-button-login" id='save'>Salvar</button>
+    `;
     popup.innerHTML = editAreaPopUp;
     const textArea = document.getElementById('text-area');
     const buttonSave = document.getElementById('save');
@@ -53,10 +56,15 @@ export const postsFunc = {
     popup.innerHTML = '';
     popup.classList.remove('popup-none');
     popup.classList.add('popup');
-    const editAreaPopUp = `<h1>Tem certeza que deseja excluir?</h1>
-    <button id='yes'>Sim</button>
-    <button id='no'>Não</button>`;
-    popup.innerHTML = editAreaPopUp;
+    const deleteAreaPopUp = `
+      <h1 class="edit-title-popup-post">Tem certeza que deseja excluir essa mensagem subespacial?</h1>
+      <img class="img-edit-popup" src="../../../img/klingon-head.svg" alt="klingon-head">
+      <div>
+        <button class="button-login width-button-login" id='yes'>Sim</button>
+        <button class="button-login width-button-login" id='no'>Não</button>
+      </div>
+    `;
+    popup.innerHTML = deleteAreaPopUp;
 
     const confirm = document.getElementById('yes');
     confirm.addEventListener('click', () => {

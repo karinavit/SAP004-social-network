@@ -161,7 +161,8 @@ footer {
 
 .name-user {
   width: 60%;
-  font-family: "futura book", sans-serif;
+  font-family: "startrek classic", sans-serif;
+  font-size: 20px;
 }
 
 .display-form {
@@ -274,6 +275,7 @@ footer {
   display: flex;
   width: 95%;
   justify-content: space-between;
+  align-items: center;
 }
 
 .width-list-post {
@@ -329,6 +331,16 @@ footer {
   cursor: pointer;
 }
 
+.back-posts {
+  display: none;
+  position: fixed;
+  margin-top: 160px;
+  background-color: white;
+  width: 100%;
+  height: 50px;
+  z-index: 10;
+}
+
 .profile {
   display: none;
   position: fixed;
@@ -369,8 +381,12 @@ footer {
   width: 30px;
   cursor: pointer;
 }
+
 .popup{
-  display: block;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
   position: fixed;
   height: 70%;
   width: 70%;
@@ -380,8 +396,100 @@ footer {
   border: 2px solid yellow;
   background-color: white;
 }
+
 .popup-none{
   display: none;
+}
+
+.image-preview {
+  width: 10%;
+  align-self: center;
+}
+
+.edit-title-popup-post {
+  font-family: "startrek classic", sans-serif;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.edit-message-popup-post {
+  font-family: "futura book", sans-serif;
+  font-size: 18px;
+  padding: 5px;
+}
+
+.img-posts-preview {
+  width: 90%;
+}
+
+.img-preview {
+  width: 50px;
+}
+
+.img-edit-popup {
+  width: 40%;
+}
+
+.popup-edit-profile-font {
+  font-family: "startrek classic", sans-serif;
+  font-size: 25px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.center-input-file {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.forgot {
+  font-weight: bold;
+}
+
+.audio-classic {
+  width: 70%;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  padding: 5px;
+  border: 2px solid #FFCC00;
+  background-color: rgba(255, 255, 255, 0.6);
+  font-family: "futura book", sans-serif;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.span-play-classic {
+  background-color: #FFCC00;
+  margin: 3px;
+  border-radius: 5px;
+  padding: 2px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.box-play {
+  padding: 8px;
+}
+
+.div-sound {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.error-message{
+  width: 80%;
+  color: red;
+  font-family: "futura book", sans-serif;
+  padding: 7px;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 @media only screen and (min-width: 800px) {
@@ -393,10 +501,6 @@ footer {
   .img-web {
     width: 40%;
   }
-  .image-preview {
-    height: auto;
-    width: 100px;
-  }
   .login-style-web {
     width: 40%;
   }
@@ -407,10 +511,6 @@ footer {
   .login-btn-web:hover {
     transform: scale(1.2);
     transition: 3s;
-  }
-  .font-white{
-    color: white;
-    font-weight: bold;
   }
   .margin-web {
     margin-top: 30px;

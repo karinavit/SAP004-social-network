@@ -12,9 +12,12 @@ export function editComments(docId, postId) {
   popup.innerHTML = '';
   popup.classList.remove('popup-none');
   popup.classList.add('popup');
-  const editAreaPopUp = `<h1>Título</h1>
-  <p id='text-area'>${commentEdited.textContent}</p>
-  <button id='save'>Salvar</button>`;
+  const editAreaPopUp = `
+    <h1 class="edit-title-popup-post">Edite sua mensagem subespacial:</h1>
+    <img class="img-edit-popup" src="../../../img/img-edit-popup.svg" alt="tricorder">
+    <p id='text-area' class="edit-message-popup-post">${commentEdited.textContent}</p>
+    <button class="button-login width-button-login" id='save'>Salvar</button>
+  `;
   popup.innerHTML = editAreaPopUp;
   const textArea = document.getElementById('text-area');
   const buttonSave = document.getElementById('save');

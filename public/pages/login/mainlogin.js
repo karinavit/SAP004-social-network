@@ -35,10 +35,13 @@ export const initFunc = {
       popup.innerHTML = '';
       popup.classList.remove('popup-none');
       popup.classList.add('popup');
-      const editAreaPopUp = `<label>Digite seu e-mail para recuperar sua senha:</label>
-    <input type='email' id='email-user'>
-    <button type='submit' id='send'>Enviar</button>`;
-      popup.innerHTML = editAreaPopUp;
+      const passwordAreaPopUp = `
+        <label class="edit-title-popup-post">Digite seu e-mail para recuperar seu codigo de acesso a nave:</label>
+        <input class="style-input" type='email' id='email-user' placeholder="exemplo@exemplo.com">
+        <img class="img-edit-popup" src="../../img/nave.svg" alt="star-trek-ship">
+        <button class="button-login width-button-login" type='submit' id='send'>Enviar</button>
+      `;
+      popup.innerHTML = passwordAreaPopUp;
       document.getElementById('send').addEventListener('click', () => {
         firebaseActions.recoverPassword(document.getElementById('email-user').value);
         popup.classList.remove('popup');
@@ -49,5 +52,12 @@ export const initFunc = {
   errorsLogin(err) {
     const divError = document.querySelector('#div-error');
     divError.innerHTML = `${err}`;
+  },
+  playSoundClassic() {
+    const sound = document.getElementsByClassName('play-classic')[0];
+    const pause = document.getElementsByClassName('pause-classic')[0];
+    const playAudio = document.getElementsByClassName('play-audio-classic')[0];
+    sound.addEventListener('click', () => playAudio.play());
+    pause.addEventListener('click', () => playAudio.pause());
   },
 };
