@@ -13,7 +13,7 @@ export const profilePage = (root, name = '') => {
           <h1>Bem vindo <span id='true-name'> ${name}</span></h1>
           <br>
           <p>Number One - Classic</p>
-          <div id='edit-profile'>Editar</div>
+          <img class="edit" id='edit-profile' src="../../img/edit-regular.svg" alt="edit-profile">
         </div>
       </div>
       <br>
