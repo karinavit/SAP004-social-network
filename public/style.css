@@ -415,6 +415,10 @@ footer {
   width: 50px;
 }
 
+.img-edit-popup {
+  width: 40%;
+}
+
 @media only screen and (min-width: 800px) {
   .display-web {
     flex-direction: row;

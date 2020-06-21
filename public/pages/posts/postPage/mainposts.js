@@ -26,6 +26,7 @@ export const postsFunc = {
     popup.classList.add('popup');
     const editAreaPopUp = `
       <h1 class="edit-title-popup-post">Edite sua mensagem viajante:</h1>
+      <img class="img-edit-popup" src="../../../img/popup-editar.svg" alt="tricorder">
       <p id='text-area' class="edit-message-popup-post">${textEditElement.textContent}</p>
       <button class="button-login width-button-login" id='save'>Salvar</button>
     `;
