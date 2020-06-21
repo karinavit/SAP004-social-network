@@ -1,5 +1,6 @@
 import routes from './routes.js';
 import { firebaseActions } from './data.js';
+import { postsFunc } from './pages/posts/postPage/mainposts.js';
 
 const root = document.querySelector('#root');
 
@@ -14,7 +15,7 @@ function hashs() {
     routes[hashPage](root);
   } else {
     setTimeout(() => {
-      routes[hashPage](root, firebaseActions.takeNameData());
+      routes[hashPage](root, firebaseActions.takeNameData(postsFunc.updateNameData));
     }, 1000);
   }
 }
