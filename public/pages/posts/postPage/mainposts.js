@@ -24,9 +24,11 @@ export const postsFunc = {
     popup.innerHTML = '';
     popup.classList.remove('popup-none');
     popup.classList.add('popup');
-    const editAreaPopUp = `<h1>Título</h1>
-    <p id='text-area'>${textEditElement.textContent}</p>
-    <button id='save'>Salvar</button>`;
+    const editAreaPopUp = `
+      <h1 class="edit-title-popup-post">Edite sua mensagem viajante:</h1>
+      <p id='text-area' class="edit-message-popup-post">${textEditElement.textContent}</p>
+      <button id='save'>Salvar</button>
+    `;
     popup.innerHTML = editAreaPopUp;
     const textArea = document.getElementById('text-area');
     const buttonSave = document.getElementById('save');

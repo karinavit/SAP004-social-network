@@ -390,6 +390,18 @@ footer {
   align-self: center;
 }
 
+.edit-title-popup-post {
+  font-family: "startrek classic", sans-serif;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.edit-message-popup-post {
+  font-family: "futura book", sans-serif;
+  font-size: 18px;
+  padding: 5px;
+}
+
 @media only screen and (min-width: 800px) {
   .display-web {
     flex-direction: row;
