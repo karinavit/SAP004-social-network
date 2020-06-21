@@ -3,6 +3,10 @@ export const errLogin = [{
   message: 'E-mail inválido, por favor confira se ele foi escrito corretamente',
 },
 {
+  code: 'auth/user-disabled',
+  message: 'O usuário correspondente ao email especificado tiver sido desativado.',
+},
+{
   code: 'auth/user-not-found',
   message: 'E-mail não cadastrado, por favor se registre antes de tentar login novamente',
 },
