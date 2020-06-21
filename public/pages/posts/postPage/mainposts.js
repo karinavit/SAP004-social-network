@@ -81,7 +81,7 @@ export const postsFunc = {
     oneLikePerUser(postId, likes, updateLikeDOM, element);
   },
   updateNameData(data) {
-    document.getElementById('true-name').innerHTML = ""
-    document.getElementById('true-name').innerHTML = data
+    document.getElementById('true-name').innerHTML = '';
+    document.getElementById('true-name').innerHTML = data;
   },
 };
