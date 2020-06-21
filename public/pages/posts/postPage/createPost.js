@@ -29,6 +29,10 @@ export function commentsDOM(postId, postOwner, element) {
   });
 }
 
+function templateImagePost(url, archiveName) {
+  document.querySelector('.img-preview').innerHTML = `<img src='${url}' id='${archiveName}'>`;
+}
+
 function createElementPost(post) {
   const postTemplate = `
     <div class='name-edit-post'>
@@ -38,7 +42,7 @@ function createElementPost(post) {
       </span>
     </div>
     <p class='post-text-area' id='text-${post.id}'>${post.data().text}</p>
-    <img src="${post.data().img}" class=${/firebasestorage/i.test(post.data().img)?'image-preview':'hidden'}>
+    <img src="${post.data().img}" class=${/firebasestorage/i.test(post.data().img) ? 'image-preview' : 'hidden'}>
     <div class='name-edit-post'>
       <span class='display-like'>
       <div class='like'>
@@ -111,12 +115,11 @@ function postDOM() {
     inputFile.click();
     inputFile.addEventListener('change', (event) => {
       const archive = event.target.files[0];
-      firebaseActions.storageImagesUpdate(archive, templateImagePost)
+      firebaseActions.storageImagesUpdate(archive, templateImagePost);
     });
   });
 
   postar.addEventListener('click', (event) => {
-    console.log(document.querySelector('.img-preview').children[0].src === "unknown")
     event.preventDefault();
     const post = {
       text: postTexto.value,
@@ -129,15 +132,12 @@ function postDOM() {
       wholiked: [],
     };
     postTexto.value = '';
-    document.querySelector('.img-preview').innerHTML = ''
+    document.querySelector('.img-preview').innerHTML = '';
     privateField.checked = false;
     firebaseActions.postData(post, readPostsDOM);
   });
 }
 
-function templateImagePost(url, archiveName) {
-  document.querySelector('.img-preview').innerHTML = `<img src='${url}' id='${archiveName}'>`
-}
 function pagePost() {
   firebaseActions.readPosts(readPostsDOM, clearAreaPosts);
   postDOM();
