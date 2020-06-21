@@ -38,7 +38,7 @@ function createElementPost(post) {
       </span>
     </div>
     <p class='post-text-area' id='text-${post.id}'>${post.data().text}</p>
-    <img src="${post.data().img}" class=${post.data().img === 'http://localhost:5000/'?"hidden":"image-preview"}>
+    <img src="${post.data().img}" class=${/firebasestorage/i.test(post.data().img)?'image-preview':'hidden'}>
     <div class='name-edit-post'>
       <span class='display-like'>
       <div class='like'>
@@ -116,6 +116,7 @@ function postDOM() {
   });
 
   postar.addEventListener('click', (event) => {
+    console.log(document.querySelector('.img-preview').children[0].src === "unknown")
     event.preventDefault();
     const post = {
       text: postTexto.value,
@@ -123,7 +124,6 @@ function postDOM() {
       name: firebase.auth().currentUser.displayName,
       likes: 0,
       img: document.querySelector('.img-preview').children[0].src,
-      private: true,
       visibility: privateField.checked ? 'private' : 'public',
       date: new Date().toLocaleString('pt-BR'),
       wholiked: [],
