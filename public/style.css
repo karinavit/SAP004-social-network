@@ -381,6 +381,7 @@ footer {
   width: 30px;
   cursor: pointer;
 }
+
 .popup{
   display: flex;
   flex-direction: column;
@@ -443,6 +444,10 @@ input[type="file"] {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+.forgot {
+  font-weight: bold;
 }
 
 @media only screen and (min-width: 800px) {
