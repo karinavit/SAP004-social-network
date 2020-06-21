@@ -1,5 +1,5 @@
 import { menuFixed } from '../posts/menu/menufixed.js';
-import { backPosts, readPostsProfileDOM, editProfile } from './mainprofile.js';
+import { readPostsProfileDOM, editProfile } from './mainprofile.js';
 import { firebaseActions, profileUpdate } from '../../data.js';
 
 export const profilePage = (root, name = '') => {
@@ -19,13 +19,11 @@ export const profilePage = (root, name = '') => {
       <br>
       <ul class="width-post-profile posts-web" id="profile-posts"></ul>
     </div>
-    <button id="button-back-posts" class="button-login width-button-login">Voltar posts</button>
   `;
   const element = root;
   element.innerHTML = '';
   element.appendChild(container);
   menuFixed(container);
-  backPosts();
   profileUpdate.readUserInfo(editProfile);
   firebaseActions.readPostsProfile(readPostsProfileDOM, element);
 };
