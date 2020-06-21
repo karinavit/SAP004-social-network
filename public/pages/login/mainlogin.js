@@ -29,8 +29,8 @@ export const initFunc = {
     });
   },
   forgotPassword() {
-    const form = document.getElementsByClassName('forgot')[0];
-    form.addEventListener('click', () => {
+    const forgetPasswordButton = document.getElementsByClassName('forgot')[0];
+    forgetPasswordButton.addEventListener('click', () => {
       const popup = document.getElementById('popup');
       popup.innerHTML = '';
       popup.classList.remove('popup-none');
@@ -46,4 +46,7 @@ export const initFunc = {
       });
     });
   },
+  errorsLogin() {
+
+  }
 };
