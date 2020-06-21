@@ -1,5 +1,5 @@
 import { createElementProfilePost } from './profileAndComments.js';
-import { firebaseActions, profileUpdate} from '../../data.js';
+import { firebaseActions, profileUpdate } from '../../data.js';
 
 export function backPosts() {
   const buttonBack = document.querySelector('#button-back-posts');
@@ -10,6 +10,10 @@ export function backPosts() {
 
 export function readPostsProfileDOM(post, element) {
   element.querySelector('#profile-posts').prepend(createElementProfilePost(post));
+}
+
+function templateImageProfile(url, archiveName) {
+  document.getElementById('photo-preview').innerHTML = `<img src='${url}' class='image-preview' id='${archiveName}'>`;
 }
 
 export function editProfile(posts) {
@@ -37,28 +41,24 @@ export function editProfile(posts) {
     const photoUpdate = document.getElementById('update-photo');
     photoUpdate.addEventListener('change', (event) => {
       const archive = event.target.files[0];
-      firebaseActions.storageImagesUpdate(archive, templateImageProfile)
-    })
+      firebaseActions.storageImagesUpdate(archive, templateImageProfile);
+    });
     buttonUpdate.addEventListener('click', (event) => {
       event.preventDefault();
       const nameUpdate = document.getElementById('update-name');
       const birthdayUpdate = document.getElementById('update-birthday');
       const photoPreview = document.getElementById('photo-preview');
       profileUpdate.updateNameUser(nameUpdate.value);
-      profileUpdate.updatePhotoUser(photoPreview.children[0].src)
+      profileUpdate.updatePhotoUser(photoPreview.children[0].src);
       const uid = firebase.auth().currentUser.uid;
       const updateProfile = {
         name: nameUpdate.value,
         email: firebase.auth().currentUser.email,
         birthday: birthdayUpdate.value,
-      }
+      };
       profileUpdate.updateUsersInfoStore(uid, updateProfile);
       popup.classList.remove('popup');
       popup.classList.add('popup-none');
     });
   });
-}
-
-function templateImageProfile(url, archiveName) {
-  document.getElementById('photo-preview').innerHTML = `<img src='${url}' class='image-preview' id='${archiveName}'>`
 }
