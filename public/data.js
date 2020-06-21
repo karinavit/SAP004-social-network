@@ -1,30 +1,29 @@
 import { login } from './firebaseservice.js';
-import { errLogin } from './handleErrors.js'
+import { errLogin } from './handleErrors.js';
 
 export const firebaseActions = {
   loginData(email, password, func) {
     return login(email, password)
       .catch((err) => {
-        const errorResult = errLogin.filter(item => item.code === err.code)
-        func(errorResult[0].message)
+        const errorResult = errLogin.filter(item => item.code === err.code);
+        func(errorResult[0].message);
       });
   },
   loggoutData() {
     firebase.auth().signOut();
   },
   takeNameData(func) {
-    const uid = firebase.auth().currentUser.uid
+    const uid = firebase.auth().currentUser.uid;
     firebase.firestore().collection('users-info').doc(uid).onSnapshot((doc) => {
-      func(doc.data().name)
-    })
+      func(doc.data().name);
+    });
   },
   storageImagesUpdate(archive, func) {
     const stringArchive = 'archive';
     const ref = firebase.storage().ref(stringArchive);
     ref.child(stringArchive + archive.name).put(archive).then(() => {
       ref.child(stringArchive + archive.name).getDownloadURL().then((url) => {
-        func(url, archive.name)
-        console.log(url)
+        func(url, archive.name);
       });
     });
   },
@@ -207,4 +206,4 @@ export const profileUpdate = {
     const userCollection = firebase.firestore().collection('users-info');
     userCollection.doc(uid).set(newInfoUser);
   },
-}
+};
