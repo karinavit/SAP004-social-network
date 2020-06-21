@@ -48,8 +48,6 @@ export const initFunc = {
   },
   errorsLogin(err) {
     const divError = document.querySelector('#div-error');
-
-    divError.innerHTML= `${err}`
-
-  }
+    divError.innerHTML = `${err}`;
+  },
 };
