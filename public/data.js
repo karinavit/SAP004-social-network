@@ -1,9 +1,20 @@
 import { login } from './firebaseservice.js';
 
 export const firebaseActions = {
-  loginData(email, password) {
+  loginData(email, password, func) {
     return login(email, password)
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
+        const errArray = [{
+          code: 'auth/invalid-email',
+          message: 'E-mail inválido, por favor confira se ele foi escrito corretamente'
+        }]
+        const errorResult = errArray.filter(item => item.code === err.code)
+
+        console.log(errorResult[0].message)
+        func(errorResult[0].message)
+
+
       });
   },
   loggoutData() {
