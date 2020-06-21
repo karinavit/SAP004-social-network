@@ -23,18 +23,20 @@ export function editProfile(posts) {
     popup.innerHTML = '';
     popup.classList.remove('popup-none');
     popup.classList.add('popup');
-    const editAreaPopUp = `<label>Nome</label> 
-    <input id='update-name' type='text' value='${posts.data().name}'>
-    <label>Data de Nascimento</label>
-    <input id="update-birthday" type='date' value='${posts.data().birthday}'>
-    <label>Foto</label>
-    <input id='update-photo' type='file'>
-    <div id='photo-preview'>
-    <img src='null'>
-    </div>
-    <label>Patente</label>
-    <input type='text'>
-    <button type='submit' id='update-info'>Atualizar</button>
+    popup.classList.add('popup-edit-profile-font')
+    const editAreaPopUp = `
+      <label>Nome</label> 
+      <input class='style-input' id='update-name' type='text' value='${posts.data().name}'>
+      <label>Data de Nascimento</label>
+      <input class='style-input' id="update-birthday" type='date' value='${posts.data().birthday}'>
+      <label class='style-input center-input-file'><input id='update-photo' type='file'>Foto</label>
+      
+      <div id='photo-preview'>
+      <img src='null'>
+      </div>
+      <label>Patente</label>
+      <input class='style-input' type='text'>
+      <button class="button-login width-button-login" type='submit' id='update-info'>Atualizar</button>
     `;
     popup.innerHTML = editAreaPopUp;
     const buttonUpdate = document.getElementById('update-info');
@@ -59,6 +61,7 @@ export function editProfile(posts) {
       profileUpdate.updateUsersInfoStore(uid, updateProfile);
       popup.classList.remove('popup');
       popup.classList.add('popup-none');
+      popup.classList.remove('popup-edit-profile-font')
     });
   });
 }

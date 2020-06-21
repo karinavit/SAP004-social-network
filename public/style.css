@@ -419,6 +419,22 @@ footer {
   width: 40%;
 }
 
+.popup-edit-profile-font {
+  font-family: "startrek classic", sans-serif;
+  font-size: 25px;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.center-input-file {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
 @media only screen and (min-width: 800px) {
   .display-web {
     flex-direction: row;
