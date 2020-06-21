@@ -384,6 +384,11 @@ footer {
   display: none;
 }
 
+.image-preview {
+  width: 50%;
+  align-self: center;
+}
+
 @media only screen and (min-width: 800px) {
   .display-web {
     flex-direction: row;
@@ -392,10 +397,6 @@ footer {
   }
   .img-web {
     width: 40%;
-  }
-  .image-preview {
-    height: auto;
-    width: 100px;
   }
   .login-style-web {
     width: 40%;
