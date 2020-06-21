@@ -16,7 +16,7 @@ export function editProfile(posts) {
     popup.innerHTML = '';
     popup.classList.remove('popup-none');
     popup.classList.add('popup');
-    popup.classList.add('popup-edit-profile-font')
+    popup.classList.add('popup-edit-profile-font');
     const editAreaPopUp = `
       <label>Nome</label> 
       <input class='style-input' id='update-name' type='text' value='${posts.data().name}'>
@@ -53,7 +53,7 @@ export function editProfile(posts) {
       profileUpdate.updateUsersInfoStore(uid, updateProfile);
       popup.classList.remove('popup');
       popup.classList.add('popup-none');
-      popup.classList.remove('popup-edit-profile-font')
+      popup.classList.remove('popup-edit-profile-font');
     });
   });
 }

@@ -59,5 +59,5 @@ export const initFunc = {
     const playAudio = document.getElementsByClassName('play-audio-classic')[0];
     sound.addEventListener('click', () => playAudio.play());
     pause.addEventListener('click', () => playAudio.pause());
-  }
+  },
 };
