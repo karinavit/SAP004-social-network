@@ -193,8 +193,7 @@ export function oneLikePerUserComments(postId, docId, func, commentsLike, elemen
 export const profileUpdate = {
   readUserInfo(func) {
     const postCollection = firebase.firestore().collection('users-info').doc(firebase.auth().currentUser.uid);
-    postCollection.get()
-      .then((posts) => {
+    postCollection.onSnapshot((posts) => {
         func(posts);
       });
   },
