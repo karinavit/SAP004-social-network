@@ -12,11 +12,11 @@ export const firebaseActions = {
   loggoutData() {
     firebase.auth().signOut();
   },
-  takeNameData() {
+  takeNameData(func) {
     const uid = firebase.auth().currentUser.uid
     firebase.firestore().collection('users-info').doc(uid).onSnapshot((doc) => {
-      document.getElementById('true-name').innerHTML = ""
-      document.getElementById('true-name').innerHTML = doc.data().name})
+      func(doc.data().name)
+    })
   },
   storageImagesUpdate(archive, func) {
     const stringArchive = 'archive';
@@ -194,8 +194,8 @@ export const profileUpdate = {
   readUserInfo(func) {
     const postCollection = firebase.firestore().collection('users-info').doc(firebase.auth().currentUser.uid);
     postCollection.onSnapshot((posts) => {
-        func(posts);
-      });
+      func(posts);
+    });
   },
   updateNameUser(newName) {
     firebase.auth().currentUser.updateProfile({ displayName: newName });
