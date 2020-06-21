@@ -30,7 +30,7 @@ export function commentsDOM(postId, postOwner, element) {
 }
 
 function templateImagePost(url, archiveName) {
-  document.querySelector('.img-preview').innerHTML = `<img src='${url}' id='${archiveName}'>`;
+  document.querySelector('.img-preview').innerHTML = `<img src='${url}' class="img-posts-preview" id='${archiveName}'>`;
 }
 
 function createElementPost(post) {

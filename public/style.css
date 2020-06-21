@@ -402,6 +402,14 @@ footer {
   padding: 5px;
 }
 
+.img-posts-preview {
+  width: 90%;
+}
+
+.img-preview {
+  width: 50px;
+}
+
 @media only screen and (min-width: 800px) {
   .display-web {
     flex-direction: row;
