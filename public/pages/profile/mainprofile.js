@@ -49,6 +49,7 @@ export function editProfile(posts) {
         name: nameUpdate.value,
         email: firebase.auth().currentUser.email,
         birthday: birthdayUpdate.value,
+        photo: photoPreview.children[0].src
       };
       profileUpdate.updateUsersInfoStore(uid, updateProfile);
       popup.classList.remove('popup');
