@@ -15,6 +15,11 @@ export function registerDOM() {
       name: form.nameRegister.value,
       birthday: form.dateRegister.value,
     };
-    firebaseActions.register(registerObj);
+    firebaseActions.register(registerObj, errosRegister);
   });
+}
+
+function errorsRegister(err) {
+  const divError = document.querySelector('#error-area-register');
+  divError.innerHTML = `${err}`;
 }
