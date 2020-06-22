@@ -1,5 +1,5 @@
 import { login } from './firebaseservice.js';
-import { errLogin } from './handleErrors.js';
+import { errLogin, errorRegister } from './handleErrors.js';
 
 export const firebaseActions = {
   loginData(email, password, func) {
@@ -47,7 +47,7 @@ export const firebaseActions = {
     postCollection.doc(docId).delete()
       .then(() => { });
   },
-  register(document) {
+  register(document, errorFunc) {
     const userCollection = firebase.firestore().collection('users-info');
     firebase
       .auth()
@@ -57,7 +57,11 @@ export const firebaseActions = {
         const uid = firebase.auth().currentUser.uid;
         userCollection.doc(uid).set(document);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error.code)
+        const errorResult = errorRegister.filter(item => item.code === error.code);
+        errorFunc(errorResult[0].message);
+
       });
   },
   recoverPassword(emailAddress) {
