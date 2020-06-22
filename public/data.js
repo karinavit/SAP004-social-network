@@ -21,7 +21,6 @@ export const firebaseActions = {
   takePhotoUser(func) {
     const uid = firebase.auth().currentUser.uid;
     firebase.firestore().collection('users-info').doc(uid).onSnapshot((doc) => {
-      console.log(doc.data().photo)
       func(doc.data().photo);
     });
     },
