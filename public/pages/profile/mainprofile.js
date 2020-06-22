@@ -19,16 +19,15 @@ export function editProfile(posts) {
     popup.classList.add('popup');
     popup.classList.add('popup-edit-profile-font');
     const editAreaPopUp = `
+      <p class="close-popup" id="close-popup">X</p>
       <label>Nome</label> 
       <input class='style-input' id='update-name' type='text' maxlength="25" value='${posts.data().name}'>
       <label>Data de Nascimento</label>
       <input class='style-input' id="update-birthday" type='date' value='${posts.data().birthday}'>
       <label class='style-input center-input-file'><input id='update-photo' type='file'>Foto</label>
       <div id='photo-preview'>
-      <img src='null' class='hidden'>
+        <img src='null' class='hidden'>
       </div>
-      <label>Patente</label>
-      <input class='style-input' type='text'>
       <button class="button-login width-button-login" type='submit' id='update-info'>Atualizar</button>
     `;
     popup.innerHTML = editAreaPopUp;
@@ -61,6 +60,11 @@ export function editProfile(posts) {
         photo: /firebasestorage/i.test(photoPreview.children[0].src) ? photoPreview.children[0].src : firebase.auth().currentUser.photoURL
       };
       profileUpdate.updateUsersInfoStore(uid, updateProfile);
+      popup.classList.remove('popup');
+      popup.classList.add('popup-none');
+      popup.classList.remove('popup-edit-profile-font');
+    });
+    document.getElementById('close-popup').addEventListener('click', () => {
       popup.classList.remove('popup');
       popup.classList.add('popup-none');
       popup.classList.remove('popup-edit-profile-font');
