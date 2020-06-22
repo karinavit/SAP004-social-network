@@ -30,7 +30,7 @@ export function commentsDOM(postId, postOwner, element) {
 }
 
 function templateImagePost(url, archiveName) {
-  document.getElementById('submit-post').disabled = false
+  document.getElementById('submit-post').disabled = false;
   document.querySelector('.img-preview').innerHTML = `<img src='${url}' class="img-posts-preview" id='${archiveName}'>`;
 }
 
@@ -92,7 +92,6 @@ function createElementPost(post) {
     element: postElement,
     clear: clearArea,
   };
-  // clearAreaPosts()
   firebaseActions.readComments(readCommentsObj);
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
     postElement.querySelector('.delete').classList.add('visibility');
@@ -119,6 +118,7 @@ function postDOM() {
   img.addEventListener('click', () => {
     inputFile.click();
     inputFile.addEventListener('change', (event) => {
+      document.getElementById('submit-post').disabled = true;
       const archive = event.target.files[0];
       firebaseActions.storageImagesUpdate(archive, templateImagePost);
     });
