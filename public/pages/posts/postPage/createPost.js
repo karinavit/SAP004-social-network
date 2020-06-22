@@ -30,6 +30,7 @@ export function commentsDOM(postId, postOwner, element) {
 }
 
 function templateImagePost(url, archiveName) {
+  document.getElementById('submit-post').disabled = false
   document.querySelector('.img-preview').innerHTML = `<img src='${url}' class="img-posts-preview" id='${archiveName}'>`;
 }
 
