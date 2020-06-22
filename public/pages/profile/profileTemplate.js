@@ -2,13 +2,13 @@ import { menuFixed } from '../posts/menu/menufixed.js';
 import { readPostsProfileDOM, editProfile } from './mainprofile.js';
 import { firebaseActions, profileUpdate } from '../../data.js';
 
-export const profilePage = (root, name = '') => {
+export const profilePage = (root, name = '', photo) => {
   const container = document.createElement('div');
   container.classList.add('display-column');
   container.innerHTML = `
     <div class="display-mobile display-web-row">
       <div class="margin-top-user profile-mobile display-web-user profile-web">
-        <img class="img-user img-user-web" src="../../img/startrek_spock.jpg" alt="spock">
+        <img class="img-user img-user-profile" src=${photo} alt="spock">
         <div class="name-user">
           <h1>Bem vindo <span id='true-name'> ${name}</span></h1>
           <br>
