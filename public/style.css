@@ -334,7 +334,6 @@ footer {
   font-family: "futura book", sans-serif;
   font-size: 20px;
   margin: 5px;
-  height: 50px;
 }
 
 .comment-button {
@@ -410,6 +409,11 @@ footer {
 
 .popup-none{
   display: none;
+}
+
+.img-posts {
+  width: 40%;
+  align-self: center;
 }
 
 .image-preview {
