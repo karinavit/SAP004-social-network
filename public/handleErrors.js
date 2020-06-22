@@ -37,7 +37,7 @@ export const confirmPasswordReset = [{
 },
 ]
 
-export const createUserWithEmailAndPassword = [{
+export const errorRegister = [{
   code: 'auth/email-already-in-use',
   message: 'Existe uma conta com o endereço de e-mail fornecido',
 },
