@@ -111,6 +111,10 @@ function postDOM() {
   const inputFile = document.querySelector('#input-file');
   const privateField = document.querySelector('#private');
 
+  postText.addEventListener('keydown', () => {
+    postText.value.length>0 ? document.getElementById('submit-post').disabled = false : document.getElementById('submit-post').disabled = true;
+  })
+
   img.addEventListener('click', () => {
     inputFile.click();
     inputFile.addEventListener('change', (event) => {
