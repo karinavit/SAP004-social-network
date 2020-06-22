@@ -18,6 +18,9 @@ export const firebaseActions = {
       func(doc.data().name);
     });
   },
+  takePhotoUser() {
+    return firebase.auth().currentUser.photoURL
+  },
   storageImagesUpdate(archive, func) {
     const stringArchive = 'archive';
     const ref = firebase.storage().ref(stringArchive);
