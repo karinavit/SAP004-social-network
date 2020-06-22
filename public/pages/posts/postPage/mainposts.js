@@ -27,7 +27,7 @@ export const postsFunc = {
     const editAreaPopUp = `
       <p class="close-popup" id="close-popup">X</p>
       <h1 class="edit-title-popup-post">Edite sua mensagem subespacial:</h1>
-      <img class="img-edit-popup" src="../../../img/popup-editar.svg" alt="tricorder">
+      <img class="img-edit-popup" src="../../../img/popup-editar.svg" alt="communicator">
       <p id='text-area' class="edit-message-popup-post">${textEditElement.textContent}</p>
       <button class="button-login width-button-login" id='save'>Salvar</button>
     `;
