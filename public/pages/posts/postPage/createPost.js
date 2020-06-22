@@ -13,8 +13,14 @@ export function clearAreaPosts() {
 }
 
 export function commentsDOM(postId, postOwner, element) {
-  element.getElementsByClassName('post-button')[0].addEventListener('click', () => {
-    const textPosted = element.getElementsByClassName('comment-input-area')[0];
+  const textPosted = element.getElementsByClassName('comment-input-area')[0];
+  const postCommentButton = element.getElementsByClassName('post-button')[0];
+    textPosted.addEventListener('keydown', () => {
+      textPosted.value.length>0?postCommentButton.disabled = false: postCommentButton.disabled = true; 
+
+  })
+  postCommentButton.addEventListener('click', () => {
+    postCommentButton.disabled = true
     const post = {
       name: firebase.auth().currentUser.displayName,
       id_user: firebase.auth().currentUser.uid,
@@ -82,6 +88,7 @@ function createElementPost(post) {
     postsFunc.deletePostDOM(post.id);
   });
   postElement.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
+    postElement.getElementsByClassName('post-button')[0].disabled= true;
     const comentario = postElement.getElementsByClassName('post-comment')[0];
     comentario.classList.toggle('show');
     commentsDOM(post.id, post.data().id_user, postElement);
