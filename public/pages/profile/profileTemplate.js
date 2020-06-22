@@ -8,15 +8,15 @@ export const profilePage = (root, name = '') => {
   container.innerHTML = `
     <div class="display-mobile display-web-row">
       <div class="margin-top-user profile-mobile display-web-user profile-web">
-      <div class="img-user img-user-web" id='photo-area' alt="spock"></div>
-      <div class="name-user">
-          <h1>Bem vindo <span id='true-name'> ${name}</span></h1>
+        <div class="img-user" id='photo-area'></div>
+        <div class="name-user">
+          <h1>
+            <span id='true-name'>${name}</span>
+          </h1>
           <br>
-          <p>Number One - Classic</p>
           <img class="edit" id='edit-profile' src="../../img/edit-regular.svg" alt="edit-profile">
         </div>
       </div>
-      <br>
       <ul class="width-post-profile posts-web" id="profile-posts"></ul>
     </div>
   `;

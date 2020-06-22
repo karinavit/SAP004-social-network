@@ -171,7 +171,7 @@ footer {
 }
 
 .name-user {
-  width: 60%;
+  width: 50%;
   font-family: "startrek classic", sans-serif;
   font-size: 20px;
 }
@@ -385,6 +385,7 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .like-img {

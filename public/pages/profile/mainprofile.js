@@ -20,7 +20,7 @@ export function editProfile(posts) {
     popup.classList.add('popup-edit-profile-font');
     const editAreaPopUp = `
       <label>Nome</label> 
-      <input class='style-input' id='update-name' type='text' value='${posts.data().name}'>
+      <input class='style-input' id='update-name' type='text' maxlength="25" value='${posts.data().name}'>
       <label>Data de Nascimento</label>
       <input class='style-input' id="update-birthday" type='date' value='${posts.data().birthday}'>
       <label class='style-input center-input-file'><input id='update-photo' type='file'>Foto</label>
