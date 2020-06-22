@@ -130,6 +130,7 @@ export const firebaseActions = {
         userCollection.doc(user.uid).set({
           email: user.email,
           name: user.displayName,
+          photo: user.photoURL,
         });
       })
       .catch(() => {
