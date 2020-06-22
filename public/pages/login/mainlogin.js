@@ -39,7 +39,7 @@ export const initFunc = {
         <p class="close-popup" id="close-popup">X</p>
         <label class="edit-title-popup-post">Digite seu e-mail para recuperar seu codigo de acesso a nave:</label>
         <input class="style-input" type='email' id='email-user' placeholder="exemplo@exemplo.com">
-        <img class="img-edit-popup" src="../../img/nave.svg" alt="star-trek-ship">
+        <img class="img-forgot-popup" src="../../img/nave.svg" alt="star-trek-ship">
         <button class="button-login width-button-login" type='submit' id='send'>Enviar</button>
       `;
       popup.innerHTML = passwordAreaPopUp;
