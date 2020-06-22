@@ -57,7 +57,7 @@ export function printComments(doc, element, postId) {
   });
   element.getElementsByClassName('like-comment')[0].addEventListener('click', () => {
     const commentsLike = Number(element.getElementsByClassName('like-value-comment')[0].textContent);
-    oneLikePerUserComments(postId, doc.id, updateCommentsLikes, commentsLike, element);
+    oneLikePerUserComments({postId, docId: doc.id, func: updateCommentsLikes, commentsLike, element});
     element.getElementsByClassName('liked-comment')[0].classList.toggle('hidden');
     element.getElementsByClassName('like-back-comment')[0].classList.toggle('hidden');
   });
