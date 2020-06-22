@@ -37,7 +37,10 @@ export function commentsDOM(postId, postOwner, element) {
 
 function templateImagePost(url, archiveName) {
   document.getElementById('submit-post').disabled = false;
-  document.querySelector('.img-preview').innerHTML = `<img src='${url}' class="img-posts-preview" id='${archiveName}'>`;
+  document.querySelector('.img-preview').innerHTML = `
+    <img src='${url}' class="img-posts-preview" id='${archiveName}'>
+    <span class="close-img-preview">X</span>
+  `;
 }
 
 function createElementPost(post) {
@@ -52,10 +55,10 @@ function createElementPost(post) {
     <img src="${post.data().img}" class=${/firebasestorage/i.test(post.data().img) ? 'img-posts' : 'hidden'}>
     <div class='name-edit-post'>
       <span class='display-like'>
-      <div class='like'>
-        <img class='like-img liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
-        <img class='like-img   like-back svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
-  </div>
+        <div class='like'>
+          <img class='like-img liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
+          <img class='like-img   like-back svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
+        </div>
         <span class='like-value'>${post.data().wholiked.length}</span>
       </span>
       <p class='style-hour'>${post.data().date}</p>

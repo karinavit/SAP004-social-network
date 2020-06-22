@@ -439,7 +439,16 @@ footer {
 }
 
 .img-preview {
+  display: flex;
+  font-family: "futura book", sans-serif;
+  font-size: 15px;
+  font-weight: bold;
   width: 50px;
+}
+
+.close-img-preview {
+  cursor: pointer;
+  margin-left: 5px;
 }
 
 .img-edit-popup {
