@@ -106,7 +106,7 @@ function readPostsDOM(post) {
 
 function postDOM() {
   const submitPost = document.querySelector('#submit-post');
-  const postTexto = document.querySelector('#post-text');
+  const postText = document.querySelector('#post-text');
   const img = document.querySelector('#post-img');
   const inputFile = document.querySelector('#input-file');
   const privateField = document.querySelector('#private');
@@ -122,7 +122,7 @@ function postDOM() {
   submitPost.addEventListener('click', (event) => {
     event.preventDefault();
     const post = {
-      text: postTexto.value,
+      text: postText.value,
       id_user: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.displayName,
       likes: 0,
@@ -131,7 +131,7 @@ function postDOM() {
       date: new Date().toLocaleString('pt-BR'),
       wholiked: [],
     };
-    postTexto.value = '';
+    postText.value = '';
     document.querySelector('.img-preview').innerHTML = '';
     privateField.checked = false;
     firebaseActions.postData(post, readPostsDOM);

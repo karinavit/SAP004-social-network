@@ -39,5 +39,5 @@ export const signIn = (root, name = '') => {
   element.innerHTML = '';
   element.appendChild(container);
   initPostsAndMenu(container);
-
+  document.getElementById('submit-post').disabled = true;
 };
