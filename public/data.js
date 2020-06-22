@@ -2,11 +2,11 @@ import { login } from './firebaseservice.js';
 import { errLogin, errorRegister } from './handleErrors.js';
 
 export const firebaseActions = {
-  loginData(email, password, func) {
+  loginData(email, password, funcError) {
     return login(email, password)
       .catch((err) => {
         const errorResult = errLogin.filter(item => item.code === err.code);
-        func(errorResult[0].message);
+        funcError(errorResult[0].message);
       });
   },
   loggoutData() {
