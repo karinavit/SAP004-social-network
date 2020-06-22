@@ -58,7 +58,10 @@ export const firebaseActions = {
     firebase
       .auth()
       .createUserWithEmailAndPassword(document.email, document.password)
-      .then(cred => cred.user.updateProfile({ displayName: document.name }))
+      .then(cred => {
+        cred.user.updateProfile({ displayName: document.name })
+        cred.user.updateProfile({ photoURL: 'https://assets.b9.com.br/wp-content/uploads/2015/02/mr-spock.jpg' })
+      })
       .then(() => {
         const uid = firebase.auth().currentUser.uid;
         userCollection.doc(uid).set(document);
