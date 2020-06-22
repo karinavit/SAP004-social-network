@@ -92,4 +92,8 @@ export const postsFunc = {
     document.getElementById('true-name').innerHTML = '';
     document.getElementById('true-name').innerHTML = data;
   },
+  updatePhotoData(data) {
+    document.getElementById('photo-area').innerHTML = '';
+    document.getElementById('photo-area').innerHTML = `<img class="img-user img-user-web" id='photo-area' src='${data}' alt="spock">`
+  },
 };
