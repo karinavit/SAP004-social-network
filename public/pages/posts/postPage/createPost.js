@@ -56,7 +56,7 @@ function createElementPost(post) {
         <img class='like-img liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
         <img class='like-img   like-back svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
   </div>
-        <span class='like-value'>${post.data().likes}</span>
+        <span class='like-value'>${post.data().wholiked.length}</span>
       </span>
       <p class='style-hour'>${post.data().date}</p>
       <span>
@@ -137,7 +137,6 @@ function postDOM() {
       text: postText.value,
       id_user: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.displayName,
-      likes: 0,
       img: document.querySelector('.img-preview').children[0].src,
       visibility: privateField.checked ? 'private' : 'public',
       date: new Date().toLocaleString('pt-BR'),
