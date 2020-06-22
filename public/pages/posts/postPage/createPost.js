@@ -105,7 +105,7 @@ function readPostsDOM(post) {
 }
 
 function postDOM() {
-  const postar = document.querySelector('#postar');
+  const submitPost = document.querySelector('#submit-post');
   const postTexto = document.querySelector('#post-text');
   const img = document.querySelector('#post-img');
   const inputFile = document.querySelector('#input-file');
@@ -119,7 +119,7 @@ function postDOM() {
     });
   });
 
-  postar.addEventListener('click', (event) => {
+  submitPost.addEventListener('click', (event) => {
     event.preventDefault();
     const post = {
       text: postTexto.value,

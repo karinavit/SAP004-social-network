@@ -26,7 +26,7 @@ export const signIn = (root, name = '') => {
             <span class="check-prive">
               <input type="checkbox" id="private">Privado
             </span>
-            <button class="button-login width-button-login" id="postar" type="submit">
+            <button class="button-login width-button-login class disabled" id="submit-post" type="submit">
             Publicar
             </button>
           </div>
@@ -39,4 +39,5 @@ export const signIn = (root, name = '') => {
   element.innerHTML = '';
   element.appendChild(container);
   initPostsAndMenu(container);
+
 };
