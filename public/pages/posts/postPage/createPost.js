@@ -69,7 +69,7 @@ function createElementPost(post) {
     </div>
     <ul>
       <li class='post-comment'>
-        <input type='text' class='comment-input-area input-comment'>
+        <textarea class='comment-input-area input-comment'></textarea>
         <button type='submit' class='post-button width-button-login button-login'>Comentário</button>
       </li>
       <li class='comment-area'></li>

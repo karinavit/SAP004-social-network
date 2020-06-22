@@ -15,7 +15,7 @@ export const signIn = (root, name = '') => {
       </div>
       <div class="id-user display-web-user posts-web">
         <form class="display-form form-web-display">
-          <input class="input-posts" type=text id="post-text">
+          <textarea class="input-posts" id="post-text"></textarea>
           <div class="display-posts display-post-web">
             <input type="file" class="display-none-img" id="input-file">
             <img class="posts-img" src="../../img/image-solid.svg" alt="photo-to-post" id="post-img">
