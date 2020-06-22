@@ -58,7 +58,6 @@ export const firebaseActions = {
         userCollection.doc(uid).set(document);
       })
       .catch((error) => {
-        console.log(error.code)
         const errorResult = errorRegister.filter(item => item.code === error.code);
         errorFunc(errorResult[0].message);
 
@@ -73,9 +72,6 @@ export const firebaseActions = {
     const postCollection = firebase.firestore().collection('posts');
     postCollection.add(post)
       .then(() => {
-        // postAdded.onSnapshot((newPost) => {
-        //   func(newPost);
-        // });
       });
   },
   readComments(document) {
