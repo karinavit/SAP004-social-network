@@ -404,7 +404,7 @@ footer {
   top: calc(50vh - 35%);
   left: calc(50vw - 35%);
   border-radius: 3px;
-  border: 2px solid yellow;
+  border: 2px solid #FFCC00;
   background-color: white;
 }
 
@@ -508,6 +508,16 @@ input[type="file"] {
   font-weight: bold;
 }
 
+.close-popup {
+  display: flex;
+  align-self: flex-end;
+  padding: 15px;
+  font-family: "futura book", sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 @media only screen and (min-width: 800px) {
   .display-web {
     flex-direction: row;
@@ -584,5 +594,11 @@ input[type="file"] {
   }
   .svg-class:active {
     transform: scale(1.2);
+  }
+  .popup{
+    height: 70%;
+    width: 50%;
+    top: calc(50vh - 35%);
+    left: calc(50vw - 25%);
   }
 }
