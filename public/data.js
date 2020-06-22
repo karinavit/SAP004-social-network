@@ -18,9 +18,13 @@ export const firebaseActions = {
       func(doc.data().name);
     });
   },
-  takePhotoUser() {
-    return firebase.auth().currentUser.photoURL
-  },
+  takePhotoUser(func) {
+    const uid = firebase.auth().currentUser.uid;
+    firebase.firestore().collection('users-info').doc(uid).onSnapshot((doc) => {
+      console.log(doc.data().photo)
+      func(doc.data().photo);
+    });
+    },
   storageImagesUpdate(archive, func) {
     const stringArchive = 'archive';
     const ref = firebase.storage().ref(stringArchive);
