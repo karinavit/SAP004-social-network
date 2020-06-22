@@ -136,7 +136,9 @@ footer {
 
 .profile-mobile {
   display: flex;
-  width: 90%;
+  height: 80px;
+  width: 87%;
+  align-items: center;
   justify-content: space-around;
   margin-bottom: 20px;
   background-color: white;
@@ -538,9 +540,8 @@ input[type="file"] {
     justify-content: space-around;
   }
   .profile-web {
-    width: 30%;
-    height: 40vh;
-    align-items: center;
+    width: 25%;
+    height: 260px;
     margin-top: 140px;
   }
   .posts-web {

@@ -6,14 +6,13 @@ export const signIn = (root, name = '') => {
   container.innerHTML = `
     <div class="display-mobile display-web-row">
       <div class="margin-top-user profile-mobile display-web-user profile-web">
-        <div class="img-user img-user-web" id='photo-area' alt="spock"></div>
+        <div class="img-user img-user-web" id='photo-area'></div>
         <div class="name-user">
-          <h1>Bem vindo <span id='true-name'>${name}</span></h1>
-          <br>
-          <p>Number One - Classic</p>
+          <h1>Bem vindo 
+            <span id='true-name'>${name}</span>
+          </h1>
         </div>
       </div>
-      <br>
       <div class="id-user display-web-user posts-web">
         <form class="display-form form-web-display">
           <input class="input-posts" type=text id="post-text">
