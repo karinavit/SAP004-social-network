@@ -86,7 +86,7 @@ export const postsFunc = {
     const postElement = document.getElementById(`post-${postId}`);
     const likeValueElement = postElement.getElementsByClassName('like-value')[0];
     const likes = Number(likeValueElement.textContent);
-    oneLikePerUser(postId, likes, updateLikeDOM, element);
+    oneLikePerUser({postId, likes, func: updateLikeDOM, element});
   },
   updateNameData(data) {
     document.getElementById('true-name').innerHTML = '';
