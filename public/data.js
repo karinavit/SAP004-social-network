@@ -169,27 +169,27 @@ export function oneLikePerUser(document) {
     });
 }
 
-export function oneLikePerUserComments(postId, docId, func, commentsLike, element) {
-  let likeComment = commentsLike;
+export function oneLikePerUserComments(document) {
+  let likeComment = document.commentsLike;
   const postCollection = firebase.firestore().collection('posts')
-    .doc(postId).collection('comments')
-    .doc(docId);
+    .doc(document.postId).collection('comments')
+    .doc(document.docId);
   postCollection.get()
     .then((posts) => {
       if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
         likeComment -= 1;
-        func(likeComment, element);
-        firebaseActions.editOrLikeComments(docId, {
+        document.func(likeComment, document.element);
+        firebaseActions.editOrLikeComments(document.docId, {
           wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
           likes: likeComment,
-        }, postId);
+        }, document.postId);
       } else {
         likeComment += 1;
-        func(likeComment, element);
-        firebaseActions.editOrLikeComments(docId, {
+        document.func(likeComment, document.element);
+        firebaseActions.editOrLikeComments(document.docId, {
           likes: likeComment,
           wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
-        }, postId);
+        }, document.postId);
       }
     });
 }
