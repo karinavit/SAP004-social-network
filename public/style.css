@@ -136,7 +136,7 @@ footer {
 
 .profile-mobile {
   display: flex;
-  height: 80px;
+  height: 90px;
   width: 87%;
   align-items: center;
   justify-content: space-around;
@@ -158,8 +158,16 @@ footer {
 }
 
 .img-user {
-  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 50%;
   border-radius: 2px;
+}
+
+.photo-user {
+  height: 85%;
 }
 
 .name-user {
@@ -549,8 +557,9 @@ input[type="file"] {
     width: 60%;
     background-color: transparent;
   }
-  .img-user-web {
-    width: 14vw;
+  .img-user {
+    height: 70%;
+    width: 0;
   }
   .img-user-profile {
     width: 12vw;

@@ -91,6 +91,6 @@ export const postsFunc = {
   },
   updatePhotoData(data) {
     document.getElementById('photo-area').innerHTML = '';
-    document.getElementById('photo-area').innerHTML = `<img class="img-user img-user-web" id='photo-area' src='${data}' alt="spock">`
+    document.getElementById('photo-area').innerHTML = `<img class="photo-user" id='photo-area' src='${data}' alt="photo-user">`
   },
 };

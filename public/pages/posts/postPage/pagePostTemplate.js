@@ -6,7 +6,7 @@ export const signIn = (root, name = '') => {
   container.innerHTML = `
     <div class="display-mobile display-web-row">
       <div class="margin-top-user profile-mobile display-web-user profile-web">
-        <div class="img-user img-user-web" id='photo-area'></div>
+        <div class="img-user" id='photo-area'></div>
         <div class="name-user">
           <h1>Bem vindo 
             <span id='true-name'>${name}</span>
