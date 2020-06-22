@@ -51,7 +51,7 @@ export const errorRegister = [{
 },
 {
   code: 'auth/weak-password',
-  message: 'A senha não é forte o suficiente.',
+  message: 'A senha não é forte o suficiente. Favor considerar que ela precisa ter no mínimo 6 caracteres',
 },
 ]
 
