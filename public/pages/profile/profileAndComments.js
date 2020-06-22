@@ -54,7 +54,7 @@ export function createElementProfilePost(post) {
   postTemplate.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
     const comentario = postTemplate.getElementsByClassName('post-comment')[0];
     comentario.classList.toggle('show');
-    commentsDOM(post.id, post.data().id_user);
+    commentsDOM(post.id, post.data().id_user, postTemplate);
   });
   const readCommentsObj = {
     postId: post.id,
