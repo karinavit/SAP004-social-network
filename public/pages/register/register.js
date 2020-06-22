@@ -19,6 +19,7 @@ export const register = (root) => {
       <input class="style-input" name="dateRegister" type="date" required>
       <label class="letter-color">Digite uma senha:</label>
       <input class="style-input" name="passwordRegister" type="password" minlength="6" required>
+      <p id='error-area-register' class="error-message"></p>
       <div class="register-display-buttons margin-web-register">
         <button class="button-login width-button-login login-btn-web" name="backButton">Voltar</button>
         <button class="button-login width-button-login login-btn-web" name="signRegister">Registrar-se</button>

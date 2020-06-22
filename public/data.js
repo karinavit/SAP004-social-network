@@ -1,12 +1,12 @@
 import { login } from './firebaseservice.js';
-import { errLogin } from './handleErrors.js';
+import { errLogin, errorRegister } from './handleErrors.js';
 
 export const firebaseActions = {
-  loginData(email, password, func) {
+  loginData(email, password, funcError) {
     return login(email, password)
       .catch((err) => {
         const errorResult = errLogin.filter(item => item.code === err.code);
-        func(errorResult[0].message);
+        funcError(errorResult[0].message);
       });
   },
   loggoutData() {
@@ -18,6 +18,12 @@ export const firebaseActions = {
       func(doc.data().name);
     });
   },
+  takePhotoUser(func) {
+    const uid = firebase.auth().currentUser.uid;
+    firebase.firestore().collection('users-info').doc(uid).onSnapshot((doc) => {
+      func(doc.data().photo);
+    });
+    },
   storageImagesUpdate(archive, func) {
     const stringArchive = 'archive';
     const ref = firebase.storage().ref(stringArchive);
@@ -32,9 +38,9 @@ export const firebaseActions = {
     postCollection.doc(postId).update(updateTextOrLike)
       .then(() => { });
   },
-  editOrLikeComments(docId, valueToUpdate, postId) {
-    const postCollection = firebase.firestore().collection('posts').doc(postId).collection('comments');
-    postCollection.doc(docId).update(valueToUpdate)
+  editOrLikeComments(document) {
+    const postCollection = firebase.firestore().collection('posts').doc(document.postId).collection('comments');
+    postCollection.doc(document.docId).update(document.update)
       .then(() => { });
   },
   deletePost(postId) {
@@ -47,17 +53,23 @@ export const firebaseActions = {
     postCollection.doc(docId).delete()
       .then(() => { });
   },
-  register(document) {
+  register(document, errorFunc) {
     const userCollection = firebase.firestore().collection('users-info');
     firebase
       .auth()
       .createUserWithEmailAndPassword(document.email, document.password)
-      .then(cred => cred.user.updateProfile({ displayName: document.name }))
+      .then(cred => {
+        cred.user.updateProfile({ displayName: document.name })
+        cred.user.updateProfile({ photoURL: 'https://assets.b9.com.br/wp-content/uploads/2015/02/mr-spock.jpg' })
+      })
       .then(() => {
         const uid = firebase.auth().currentUser.uid;
         userCollection.doc(uid).set(document);
       })
-      .catch(() => {
+      .catch((error) => {
+        const errorResult = errorRegister.filter(item => item.code === error.code);
+        errorFunc(errorResult[0].message);
+
       });
   },
   recoverPassword(emailAddress) {
@@ -69,9 +81,6 @@ export const firebaseActions = {
     const postCollection = firebase.firestore().collection('posts');
     postCollection.add(post)
       .then(() => {
-        // postAdded.onSnapshot((newPost) => {
-        //   func(newPost);
-        // });
       });
   },
   readComments(document) {
@@ -121,6 +130,7 @@ export const firebaseActions = {
         userCollection.doc(user.uid).set({
           email: user.email,
           name: user.displayName,
+          photo: user.photoURL,
         });
       })
       .catch(() => {
@@ -139,50 +149,48 @@ export const firebaseActions = {
   },
 };
 
-export function oneLikePerUser(postId, likes, func, element) {
-  let likeValue = likes;
-  const postCollection = firebase.firestore().collection('posts').doc(postId);
+export function oneLikePerUser(document) {
+  const postCollection = firebase.firestore().collection('posts').doc(document.postId);
   postCollection.get()
     .then((posts) => {
+      let likeValue = posts.data().wholiked.length;
       if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
         likeValue -= 1;
-        func(likeValue, postId, element);
-        firebaseActions.editOrLikePost(postId, {
+        document.func(likeValue, document.postId, document.element);
+        firebaseActions.editOrLikePost(document.postId, {
           wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
-          likes: likeValue,
         });
       } else {
         likeValue += 1;
-        func(likeValue, postId, element);
-        firebaseActions.editOrLikePost(postId, {
-          likes: likeValue,
+        document.func(likeValue, document.postId, document.element);
+        firebaseActions.editOrLikePost(document.postId, {
           wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
         });
       }
     });
 }
 
-export function oneLikePerUserComments(postId, docId, func, commentsLike, element) {
-  let likeComment = commentsLike;
+export function oneLikePerUserComments(document) {
   const postCollection = firebase.firestore().collection('posts')
-    .doc(postId).collection('comments')
-    .doc(docId);
+    .doc(document.postId).collection('comments')
+    .doc(document.docId);
   postCollection.get()
     .then((posts) => {
+      let likeComment = posts.data().wholiked.length;
       if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
         likeComment -= 1;
-        func(likeComment, element);
-        firebaseActions.editOrLikeComments(docId, {
+        document.func(likeComment, document.element);
+        firebaseActions.editOrLikeComments(document.docId, {
           wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
           likes: likeComment,
-        }, postId);
+        }, document.postId);
       } else {
         likeComment += 1;
-        func(likeComment, element);
-        firebaseActions.editOrLikeComments(docId, {
+        document.func(likeComment, document.element);
+        firebaseActions.editOrLikeComments(document.docId, {
           likes: likeComment,
           wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
-        }, postId);
+        }, document.postId);
       }
     });
 }

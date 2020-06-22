@@ -83,13 +83,14 @@ export const postsFunc = {
   },
 
   likePostDOM(postId, element) {
-    const postElement = document.getElementById(`post-${postId}`);
-    const likeValueElement = postElement.getElementsByClassName('like-value')[0];
-    const likes = Number(likeValueElement.textContent);
-    oneLikePerUser(postId, likes, updateLikeDOM, element);
+    oneLikePerUser({postId, func: updateLikeDOM, element});
   },
   updateNameData(data) {
     document.getElementById('true-name').innerHTML = '';
     document.getElementById('true-name').innerHTML = data;
+  },
+  updatePhotoData(data) {
+    document.getElementById('photo-area').innerHTML = '';
+    document.getElementById('photo-area').innerHTML = `<img class="img-user img-user-web" id='photo-area' src='${data}' alt="spock">`
   },
 };

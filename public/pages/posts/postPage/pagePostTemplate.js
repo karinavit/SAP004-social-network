@@ -6,7 +6,7 @@ export const signIn = (root, name = '') => {
   container.innerHTML = `
     <div class="display-mobile display-web-row">
       <div class="margin-top-user profile-mobile display-web-user profile-web">
-        <img class="img-user img-user-web" src="../../img/startrek_spock.jpg" alt="spock">
+        <div class="img-user img-user-web" id='photo-area' alt="spock"></div>
         <div class="name-user">
           <h1>Bem vindo <span id='true-name'>${name}</span></h1>
           <br>
@@ -26,7 +26,7 @@ export const signIn = (root, name = '') => {
             <span class="check-prive">
               <input type="checkbox" id="private">Privado
             </span>
-            <button class="button-login width-button-login" id="postar" type="submit">
+            <button class="button-login width-button-login class" id="submit-post" type="submit">
             Publicar
             </button>
           </div>
@@ -39,4 +39,5 @@ export const signIn = (root, name = '') => {
   element.innerHTML = '';
   element.appendChild(container);
   initPostsAndMenu(container);
+  document.getElementById('submit-post').disabled = true;
 };

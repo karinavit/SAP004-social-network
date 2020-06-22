@@ -548,7 +548,10 @@ input[type="file"] {
     background-color: transparent;
   }
   .img-user-web {
-    width: 65%;
+    width: 14vw;
+  }
+  .img-user-profile {
+    width: 12vw;
   }
   .form-web-display {
     background-color: white;

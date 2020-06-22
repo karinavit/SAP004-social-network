@@ -13,8 +13,14 @@ export function clearAreaPosts() {
 }
 
 export function commentsDOM(postId, postOwner, element) {
-  element.getElementsByClassName('post-button')[0].addEventListener('click', () => {
-    const textPosted = element.getElementsByClassName('comment-input-area')[0];
+  const textPosted = element.getElementsByClassName('comment-input-area')[0];
+  const postCommentButton = element.getElementsByClassName('post-button')[0];
+    textPosted.addEventListener('keydown', () => {
+      textPosted.value.length>0?postCommentButton.disabled = false: postCommentButton.disabled = true; 
+
+  })
+  postCommentButton.addEventListener('click', () => {
+    postCommentButton.disabled = true
     const post = {
       name: firebase.auth().currentUser.displayName,
       id_user: firebase.auth().currentUser.uid,
@@ -30,6 +36,7 @@ export function commentsDOM(postId, postOwner, element) {
 }
 
 function templateImagePost(url, archiveName) {
+  document.getElementById('submit-post').disabled = false;
   document.querySelector('.img-preview').innerHTML = `<img src='${url}' class="img-posts-preview" id='${archiveName}'>`;
 }
 
@@ -49,7 +56,7 @@ function createElementPost(post) {
         <img class='like-img liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
         <img class='like-img   like-back svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
   </div>
-        <span class='like-value'>${post.data().likes}</span>
+        <span class='like-value'>${post.data().wholiked.length}</span>
       </span>
       <p class='style-hour'>${post.data().date}</p>
       <span>
@@ -81,6 +88,7 @@ function createElementPost(post) {
     postsFunc.deletePostDOM(post.id);
   });
   postElement.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
+    postElement.getElementsByClassName('post-button')[0].disabled= true;
     const comentario = postElement.getElementsByClassName('post-comment')[0];
     comentario.classList.toggle('show');
     commentsDOM(post.id, post.data().id_user, postElement);
@@ -91,7 +99,6 @@ function createElementPost(post) {
     element: postElement,
     clear: clearArea,
   };
-  // clearAreaPosts()
   firebaseActions.readComments(readCommentsObj);
   if (post.data().id_user !== firebase.auth().currentUser.uid) {
     postElement.querySelector('.delete').classList.add('visibility');
@@ -105,33 +112,37 @@ function readPostsDOM(post) {
 }
 
 function postDOM() {
-  const postar = document.querySelector('#postar');
-  const postTexto = document.querySelector('#post-text');
+  const submitPost = document.querySelector('#submit-post');
+  const postText = document.querySelector('#post-text');
   const img = document.querySelector('#post-img');
   const inputFile = document.querySelector('#input-file');
   const privateField = document.querySelector('#private');
 
+  postText.addEventListener('keydown', () => {
+    postText.value.length>0 ? document.getElementById('submit-post').disabled = false : document.getElementById('submit-post').disabled = true;
+  })
+
   img.addEventListener('click', () => {
     inputFile.click();
     inputFile.addEventListener('change', (event) => {
+      document.getElementById('submit-post').disabled = true;
       const archive = event.target.files[0];
       firebaseActions.storageImagesUpdate(archive, templateImagePost);
     });
   });
 
-  postar.addEventListener('click', (event) => {
+  submitPost.addEventListener('click', (event) => {
     event.preventDefault();
     const post = {
-      text: postTexto.value,
+      text: postText.value,
       id_user: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.displayName,
-      likes: 0,
       img: document.querySelector('.img-preview').children[0].src,
       visibility: privateField.checked ? 'private' : 'public',
       date: new Date().toLocaleString('pt-BR'),
       wholiked: [],
     };
-    postTexto.value = '';
+    postText.value = '';
     document.querySelector('.img-preview').innerHTML = '';
     privateField.checked = false;
     firebaseActions.postData(post, readPostsDOM);

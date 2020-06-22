@@ -14,7 +14,13 @@ export function registerDOM() {
       password: form.passwordRegister.value,
       name: form.nameRegister.value,
       birthday: form.dateRegister.value,
+      photo: 'https://assets.b9.com.br/wp-content/uploads/2015/02/mr-spock.jpg',
     };
-    firebaseActions.register(registerObj);
+    firebaseActions.register(registerObj, errorsRegister);
   });
+}
+
+function errorsRegister(err) {
+  const divError = document.querySelector('#error-area-register');
+  divError.innerHTML = `${err}`;
 }

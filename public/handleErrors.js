@@ -37,7 +37,7 @@ export const confirmPasswordReset = [{
 },
 ]
 
-export const createUserWithEmailAndPassword = [{
+export const errorRegister = [{
   code: 'auth/email-already-in-use',
   message: 'Existe uma conta com o endereço de e-mail fornecido',
 },
@@ -51,7 +51,7 @@ export const createUserWithEmailAndPassword = [{
 },
 {
   code: 'auth/weak-password',
-  message: 'A senha não é forte o suficiente.',
+  message: 'A senha não é forte o suficiente. Favor considerar que ela precisa ter no mínimo 6 caracteres',
 },
 ]
 

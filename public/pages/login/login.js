@@ -13,7 +13,7 @@ export const formLogin = (root) => {
       <input class='style-input' name='emailInput' type='email' placeholder='Digite seu e-mail...' required>
       <input class='style-input' name='passwordInput' type='password' placeholder='Digite sua senha...' required>
       <button class='button-login login-btn-web width-button-login'  name='loginButton' type='submit'>Logar</button>
-      <div id="div-error" class="error-message" ></div>
+      <p id="div-error" class="error-message" ></p>
       <p class='letter-color margin-web'> Esqueceu a senha,
         <span class='link-register forgot'>Clique aqui</span>
       </p>

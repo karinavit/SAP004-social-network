@@ -15,7 +15,7 @@ function hashs() {
     routes[hashPage](root);
   } else {
     setTimeout(() => {
-      routes[hashPage](root, firebaseActions.takeNameData(postsFunc.updateNameData));
+      routes[hashPage](root, firebaseActions.takeNameData(postsFunc.updateNameData), firebaseActions.takePhotoUser(postsFunc.updatePhotoData));
     }, 1000);
   }
 }

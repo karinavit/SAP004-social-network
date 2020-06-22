@@ -8,8 +8,8 @@ export const profilePage = (root, name = '') => {
   container.innerHTML = `
     <div class="display-mobile display-web-row">
       <div class="margin-top-user profile-mobile display-web-user profile-web">
-        <img class="img-user img-user-web" src="../../img/startrek_spock.jpg" alt="spock">
-        <div class="name-user">
+      <div class="img-user img-user-web" id='photo-area' alt="spock"></div>
+      <div class="name-user">
           <h1>Bem vindo <span id='true-name'> ${name}</span></h1>
           <br>
           <p>Number One - Classic</p>
