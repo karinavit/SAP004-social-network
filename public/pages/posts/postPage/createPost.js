@@ -131,25 +131,25 @@ function readPostsDOM(post) {
   document.querySelector('#post-main-area').prepend(createElementPost(post));
 }
 
-function postDOM() {
-  const submitPost = document.querySelector('#submit-post');
-  const postText = document.querySelector('#post-text');
-  const img = document.querySelector('#post-img');
-  const inputFile = document.querySelector('#input-file');
-  const privateField = document.querySelector('#private');
+function postDOM(element) {
+  const submitPost = element.querySelector('#submit-post');
+  const postText = element.querySelector('#post-text');
+  const img = element.querySelector('#post-img');
+  const inputFile = element.querySelector('#input-file');
+  const privateField = element.querySelector('#private');
 
   postText.addEventListener('keydown', () => {
     if (postText.value.length > 0) {
-      document.getElementById('submit-post').disabled = false;
+      element.querySelector('#submit-post').disabled = false;
     } else {
-      document.getElementById('submit-post').disabled = true;
+      element.querySelector('#submit-post').disabled = true;
     }
   });
 
   img.addEventListener('click', () => {
     inputFile.click();
     inputFile.addEventListener('change', (event) => {
-      document.getElementById('submit-post').disabled = true;
+      element.querySelector('#submit-post').disabled = true;
       const archive = event.target.files[0];
       firebaseActions.storageImagesUpdate(archive, templateImagePost);
     });
@@ -161,21 +161,23 @@ function postDOM() {
       text: postText.value,
       id_user: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.displayName,
-      img: document.querySelector('.img-preview').children[0].src,
+      img: element.querySelector('.img-preview').children[0].src,
       visibility: privateField.checked ? 'private' : 'public',
       date: new Date().toLocaleString('pt-BR'),
       wholiked: [],
     };
     postText.value = '';
-    document.querySelector('.img-preview').innerHTML = '';
     privateField.checked = false;
     firebaseActions.postData(post, readPostsDOM);
+    element.querySelector('.img-preview').innerHTML = `
+      <img src=''>
+    `;
   });
 }
 
-function pagePost() {
+function pagePost(element) {
   firebaseActions.readPosts(readPostsDOM, clearAreaPosts);
-  postDOM();
+  postDOM(element);
 }
 
 export function initPostsAndMenu(container) {
