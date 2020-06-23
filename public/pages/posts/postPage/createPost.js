@@ -50,6 +50,7 @@ function createElementPost(post) {
   const postTemplate = `
     <div class='name-edit-post'>
       <p class='post-user-name'>${post.data().name}</p>
+      <p>${post.data().visibility}</p>
       <span class='edit'>
           <img src='../../img/edit-regular.svg' alt='edit-posts'>
       </span>
