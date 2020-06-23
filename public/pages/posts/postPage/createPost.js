@@ -38,6 +38,18 @@ export function commentsDOM(postId, postOwner, element) {
   });
 }
 
+function iconPrivateAndPublicPost(postVisibility, element) {
+  if (postVisibility === 'public') {
+    return element.querySelector('.private-icon').innerHTML = `
+      <i class="material-icons">public</i>
+    `;
+  } else {
+    return element.querySelector('.private-icon').innerHTML = `
+      <i class='fas fa-lock'></i>
+    `;
+  }
+}
+
 function templateImagePost(url, archiveName) {
   document.getElementById('submit-post').disabled = false;
   document.querySelector('.img-preview').innerHTML = `
@@ -50,7 +62,7 @@ function createElementPost(post) {
   const postTemplate = `
     <div class='name-edit-post'>
       <p class='post-user-name'>${post.data().name}</p>
-      <p>${post.data().visibility}</p>
+      <p class='private-icon'>${post.data().visibility}</p>
       <span class='edit'>
           <img src='../../img/edit-regular.svg' alt='edit-posts'>
       </span>
@@ -111,6 +123,7 @@ function createElementPost(post) {
     postElement.querySelector('.delete').classList.add('visibility');
     postElement.querySelector('.edit').classList.add('visibility');
   }
+  iconPrivateAndPublicPost(post.data().visibility, postElement);
   return postElement;
 }
 
