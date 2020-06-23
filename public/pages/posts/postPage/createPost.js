@@ -58,6 +58,10 @@ function templateImagePost(url, archiveName) {
     <img src='${url}' class='img-posts-preview' id='${archiveName}'>
     <span class='close-img-preview'>X</span>
   `;
+
+  document.getElementsByClassName('close-img-preview')[0].addEventListener('click', () => {
+    document.querySelector('.img-preview').innerHTML = '<img src="">'
+  })
 }
 
 function createElementPost(post) {
@@ -157,6 +161,8 @@ function postDOM(element) {
       firebaseActions.storageImagesUpdate(archive, templateImagePost);
     });
   });
+
+
 
   submitPost.addEventListener('click', (event) => {
     event.preventDefault();
