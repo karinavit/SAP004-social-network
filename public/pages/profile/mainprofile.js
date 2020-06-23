@@ -19,17 +19,18 @@ export function editProfile(posts) {
     popup.classList.add('popup');
     popup.classList.add('popup-edit-profile-font');
     const editAreaPopUp = `
+      <p class='close-popup' id='close-popup'>X</p>
       <label>Nome</label> 
-      <input class='style-input' id='update-name' type='text' value='${posts.data().name}'>
+      <input class='style-input' id='update-name' type='text' maxlength='25' value='${posts.data().name}'>
       <label>Data de Nascimento</label>
-      <input class='style-input' id="update-birthday" type='date' value='${posts.data().birthday}'>
-      <label class='style-input center-input-file'><input id='update-photo' type='file'>Foto</label>
+      <input class='style-input' id='update-birthday' type='date' value='${posts.data().birthday}'>
+      <label class='style-input center-input-file'>
+        <input id='update-photo' type='file'>Troque sua foto
+      </label>
       <div id='photo-preview'>
-      <img src='null' class='hidden'>
+        <img src='null' class='hidden'>
       </div>
-      <label>Patente</label>
-      <input class='style-input' type='text'>
-      <button class="button-login width-button-login" type='submit' id='update-info'>Atualizar</button>
+      <button class='button-login width-button-login' type='submit' id='update-info'>Atualizar</button>
     `;
     popup.innerHTML = editAreaPopUp;
     const nameUpdate = document.getElementById('update-name');
@@ -40,10 +41,10 @@ export function editProfile(posts) {
     buttonUpdate.disabled = true;
     birthdayUpdate.addEventListener('keydown', () => {
       buttonUpdate.disabled = false;
-    })
+    });
     nameUpdate.addEventListener('input', () => {
       buttonUpdate.disabled = false;
-    })
+    });
     photoUpdate.addEventListener('change', (event) => {
       buttonUpdate.disabled = true;
       const archive = event.target.files[0];
@@ -58,9 +59,14 @@ export function editProfile(posts) {
         name: nameUpdate.value,
         email: firebase.auth().currentUser.email,
         birthday: birthdayUpdate.value,
-        photo: /firebasestorage/i.test(photoPreview.children[0].src) ? photoPreview.children[0].src : firebase.auth().currentUser.photoURL
+        photo: /firebasestorage/i.test(photoPreview.children[0].src) ? photoPreview.children[0].src : firebase.auth().currentUser.photoURL,
       };
       profileUpdate.updateUsersInfoStore(uid, updateProfile);
+      popup.classList.remove('popup');
+      popup.classList.add('popup-none');
+      popup.classList.remove('popup-edit-profile-font');
+    });
+    document.getElementById('close-popup').addEventListener('click', () => {
       popup.classList.remove('popup');
       popup.classList.add('popup-none');
       popup.classList.remove('popup-edit-profile-font');

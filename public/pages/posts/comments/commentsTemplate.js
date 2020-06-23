@@ -5,20 +5,20 @@ export function printComments(doc, element, postId) {
   const div = document.createElement('div');
   div.id = doc.id;
   div.innerHTML = `
-    <p class="comment-name">${doc.data().name}</p>
-    <p class="comment-posted">${doc.data().text}</p>
-    <div class="display-comments">
+    <p class='comment-name'>${doc.data().name}</p>
+    <p class='comment-posted'>${doc.data().text}</p>
+    <div class='display-comments'>
       <span>
         <div class='like-comment display-like'>
           <img class='like-img liked-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
           <img class='like-img like-back-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
-          <span class="like-value-comment">${doc.data().likes}</span>
+          <span class='like-value-comment'>${doc.data().likes}</span>
         </div>
       </span>
       <p>${doc.data().date}</p>
-      <span class="comment-edit-delete">
-        <img class="edit-comment edit" src="../../img/edit-regular.svg" alt="edit-posts">
-        <img class="delete-comment delete" src="../../img/trash-alt-regular.svg" alt="delete-posts">
+      <span class='comment-edit-delete'>
+        <img class='edit-comment edit' src='../../img/edit-regular.svg' alt='edit-posts'>
+        <img class='delete-comment delete' src='../../img/trash-alt-regular.svg' alt='delete-posts'>
       </span>
     </div>
   `;
@@ -31,11 +31,11 @@ export function printComments(doc, element, postId) {
     popup.classList.remove('popup-none');
     popup.classList.add('popup');
     const deleteAreaPopUp = `
-      <h1 class="edit-title-popup-post">Tem certeza que deseja excluir essa mensagem subespacial?</h1>
-      <img class="img-edit-popup" src="../../../img/klingon-head.svg" alt="klingon-head">
-      <div>
-        <button class="button-login width-button-login" id='yes'>Sim</button>
-        <button class="button-login width-button-login" id='no'>Não</button>
+      <h1 class='edit-title-popup-post'>Tem certeza que deseja excluir essa mensagem subespacial?</h1>
+      <img class='img-edit-popup' src='../../../img/klingon-head.svg' alt='klingon-head'>
+      <div class='button-delete-div-popup'>
+        <button class='button-login width-button-login border-btn-del-yes' id='yes'>Excluir</button>
+        <button class='button-login width-button-login border-btn-del-cancel' id='no'>Cancelar</button>
       </div>
     `;
     popup.innerHTML = deleteAreaPopUp;
@@ -57,7 +57,12 @@ export function printComments(doc, element, postId) {
   });
   element.getElementsByClassName('like-comment')[0].addEventListener('click', () => {
     const commentsLike = Number(element.getElementsByClassName('like-value-comment')[0].textContent);
-    oneLikePerUserComments({postId, docId: doc.id, func: updateCommentsLikes, element});
+    oneLikePerUserComments({
+      postId,
+      docId: doc.id,
+      func: updateCommentsLikes,
+      element,
+    });
     element.getElementsByClassName('liked-comment')[0].classList.toggle('hidden');
     element.getElementsByClassName('like-back-comment')[0].classList.toggle('hidden');
   });

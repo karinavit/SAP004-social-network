@@ -1,5 +1,10 @@
 import { firebaseActions } from '../../data.js';
 
+function errorsRegister(err) {
+  const divError = document.querySelector('#error-area-register');
+  divError.innerHTML = `${err}`;
+}
+
 export function registerDOM() {
   const form = document.querySelector('#form-register');
 
@@ -18,9 +23,4 @@ export function registerDOM() {
     };
     firebaseActions.register(registerObj, errorsRegister);
   });
-}
-
-function errorsRegister(err) {
-  const divError = document.querySelector('#error-area-register');
-  divError.innerHTML = `${err}`;
 }

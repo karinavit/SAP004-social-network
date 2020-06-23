@@ -13,7 +13,7 @@ export const formLogin = (root) => {
       <input class='style-input' name='emailInput' type='email' placeholder='Digite seu e-mail...' required>
       <input class='style-input' name='passwordInput' type='password' placeholder='Digite sua senha...' required>
       <button class='button-login login-btn-web width-button-login'  name='loginButton' type='submit'>Logar</button>
-      <p id="div-error" class="error-message" ></p>
+      <p id='div-error' class='error-message' ></p>
       <p class='letter-color margin-web'> Esqueceu a senha,
         <span class='link-register forgot'>Clique aqui</span>
       </p>
@@ -23,13 +23,13 @@ export const formLogin = (root) => {
       <p class='letter-color'>Caso não possua conta ainda, 
         <a class='link-register' href='#register' id='register'>Registre-se</a>
       </p>  
-      <div class="div-sound">
+      <div class='div-sound'>
         </div> 
-        <div class="audio-classic">Abertura da série Clássica
-        <audio class="play-audio-classic" src="http://trekcore.com/tos/audio/themes/season1voice.mp3"></audio>
-        <p class="box-play">
-          <span class="play-classic span-play-classic">Play</span>
-          <span class="pause-classic span-play-classic">Pause</span>
+        <div class='audio-classic'>Abertura da série Clássica
+        <audio class='play-audio-classic' src='http://trekcore.com/tos/audio/themes/season1voice.mp3'></audio>
+        <p class='box-play'>
+          <span class='play-classic span-play-classic'>Play</span>
+          <span class='pause-classic span-play-classic'>Pause</span>
         </p>
         </div>    
     </div>
