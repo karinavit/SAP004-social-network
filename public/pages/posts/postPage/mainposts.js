@@ -64,9 +64,9 @@ export const postsFunc = {
     const deleteAreaPopUp = `
       <h1 class="edit-title-popup-post">Tem certeza que deseja excluir essa mensagem subespacial?</h1>
       <img class="img-edit-popup" src="../../../img/klingon-head.svg" alt="klingon-head">
-      <div>
-        <button class="button-login width-button-login" id='yes'>Sim</button>
-        <button class="button-login width-button-login" id='no'>Não</button>
+      <div class="button-delete-div-popup">
+        <button class="button-login width-button-login border-btn-del-yes" id='yes'>Excluir</button>
+        <button class="button-login width-button-login border-btn-del-cancel" id='no'>Cancelar</button>
       </div>
     `;
     popup.innerHTML = deleteAreaPopUp;

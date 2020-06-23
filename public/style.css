@@ -399,10 +399,10 @@ footer {
   align-items: center;
   justify-content: space-around;
   position: fixed;
-  height: 70%;
-  width: 70%;
-  top: calc(50vh - 35%);
-  left: calc(50vw - 35%);
+  height: 80%;
+  width: 80%;
+  top: calc(50vh - 40%);
+  left: calc(50vw - 40%);
   border-radius: 3px;
   border: 2px solid #FFCC00;
   background-color: white;
@@ -410,6 +410,24 @@ footer {
 
 .popup-none{
   display: none;
+}
+
+.button-delete-div-popup {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.border-btn-del-yes {
+  border: 3px solid red;
+  font-family: "futura book", sans-serif;
+  font-size: 18px;
+}
+
+.border-btn-del-cancel {
+  border: 3px solid green;
+  font-family: "futura book", sans-serif;
+  font-size: 18px;
 }
 
 .img-posts {
@@ -623,9 +641,10 @@ input[type="file"] {
     transform: scale(1.2);
   }
   .popup{
-    height: 70%;
-    width: 50%;
-    top: calc(50vh - 35%);
-    left: calc(50vw - 25%);
+    width: 40%;
+    left: calc(50vw - 20%);
+  }
+  .button-delete-div-popup {
+    width: 80%;
   }
 }
