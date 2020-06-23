@@ -175,24 +175,31 @@ export function oneLikePerUserComments(document) {
     .doc(document.docId);
   postCollection.get()
     .then((posts) => {
-      let likeComment = posts.data().wholiked.length;
       if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
+        let likeComment = posts.data().wholiked.length;
         likeComment -= 1;
         document.func(likeComment, document.element);
-        firebaseActions.editOrLikeComments(document.docId, {
-          wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
-          likes: likeComment,
-        }, document.postId);
+        firebaseActions.editOrLikeComments({
+          docId: document.docId, 
+          update: {
+            wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
+            likes: likeComment,
+            }, 
+        postId: document.postId});
       } else {
+        let likeComment = posts.data().wholiked.length;
         likeComment += 1;
         document.func(likeComment, document.element);
-        firebaseActions.editOrLikeComments(document.docId, {
-          likes: likeComment,
-          wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
-        }, document.postId);
+        firebaseActions.editOrLikeComments({
+          docId: document.docId, 
+          update: {
+            wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
+            likes: likeComment,
+            }, 
+        postId: document.postId});
       }
-    });
-}
+      })}
+    
 
 
 export const profileUpdate = {
