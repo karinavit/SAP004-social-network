@@ -34,6 +34,7 @@ export function commentsDOM(postId, postOwner, element) {
       likes: 0,
       wholiked: [],
     };
+    textPosted.value = ''
     firebaseActions.comments(post);
   });
 }
