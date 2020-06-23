@@ -647,4 +647,7 @@ input[type='file'] {
   .button-delete-div-popup {
     width: 80%;
   }
+  .photo-user {
+    height: 70%;
+  }
 }
