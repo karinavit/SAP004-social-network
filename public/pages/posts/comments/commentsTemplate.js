@@ -12,7 +12,7 @@ export function printComments(doc, element, postId) {
         <div class='like-comment display-like'>
           <img class='like-img liked-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
           <img class='like-img like-back-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
-          <span class='like-value-comment'>${doc.data().likes}</span>
+          <span class='like-value-comment'>${doc.data().wholiked.length}</span>
         </div>
       </span>
       <p>${doc.data().date}</p>
