@@ -19,18 +19,18 @@ export function editProfile(posts) {
     popup.classList.add('popup');
     popup.classList.add('popup-edit-profile-font');
     const editAreaPopUp = `
-      <p class="close-popup" id="close-popup">X</p>
+      <p class='close-popup' id='close-popup'>X</p>
       <label>Nome</label> 
-      <input class='style-input' id='update-name' type='text' maxlength="25" value='${posts.data().name}'>
+      <input class='style-input' id='update-name' type='text' maxlength='25' value='${posts.data().name}'>
       <label>Data de Nascimento</label>
-      <input class='style-input' id="update-birthday" type='date' value='${posts.data().birthday}'>
+      <input class='style-input' id='update-birthday' type='date' value='${posts.data().birthday}'>
       <label class='style-input center-input-file'>
         <input id='update-photo' type='file'>Troque sua foto
       </label>
       <div id='photo-preview'>
         <img src='null' class='hidden'>
       </div>
-      <button class="button-login width-button-login" type='submit' id='update-info'>Atualizar</button>
+      <button class='button-login width-button-login' type='submit' id='update-info'>Atualizar</button>
     `;
     popup.innerHTML = editAreaPopUp;
     const nameUpdate = document.getElementById('update-name');

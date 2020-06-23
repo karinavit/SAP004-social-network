@@ -1,10 +1,10 @@
 @font-face {
-  font-family: "futura book";
+  font-family: 'futura book';
   src: url('img/futura\ book\ font.ttf');
 }
 
 @font-face {
-  font-family: "startrek classic";
+  font-family: 'startrek classic';
   src: url('img/FEC_____.TTF');
 }
 
@@ -14,7 +14,7 @@ html {
 }
 
 .style-title {
-  font-family: "startrek classic", sans-serif;
+  font-family: 'startrek classic', sans-serif;
   font-size: 40px;
   color: #FFCC00;
 }
@@ -89,7 +89,7 @@ main {
 
 .letter-color {
   color: #FFCC00;
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   margin: 5px 0px;
 }
 
@@ -125,7 +125,7 @@ footer {
 
 .logo-name-posts-nav {
   width: 65%;
-  font-family: "startrek classic", sans-serif;
+  font-family: 'startrek classic', sans-serif;
   font-size: 35px;
   color: #FFCC00;
 }
@@ -172,7 +172,7 @@ footer {
 
 .name-user {
   width: 50%;
-  font-family: "startrek classic", sans-serif;
+  font-family: 'startrek classic', sans-serif;
   font-size: 20px;
 }
 
@@ -211,12 +211,12 @@ footer {
 }
 
 .comment-name {
-  font-family: "startrek classic", sans-serif;
+  font-family: 'startrek classic', sans-serif;
   font-size: 22px;
 }
 
 .comment-posted {
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   font-size: 20px;
 }
 
@@ -248,7 +248,7 @@ footer {
 
 .style-comment-area {
   width: calc(100% - 4px);
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   border: 2px solid #FFCC00;
   background-color: rgb(253, 252, 200);
   padding: 10px 0px;
@@ -269,12 +269,12 @@ footer {
 }
 
 .check-prive {
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   align-self: center;
 }
 
 .style-hour {
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
 }
 
 .display-like {
@@ -303,7 +303,7 @@ footer {
   background-color: white;
   margin: 20px 0px;
   border-radius: 2px;
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
 }
 
 .name-edit-post {
@@ -315,7 +315,7 @@ footer {
 }
 
 .post-user-name {
-  font-family: "startrek classic", sans-serif;
+  font-family: 'startrek classic', sans-serif;
   width: 60%;
   font-size: 24px;
 }
@@ -331,7 +331,7 @@ footer {
 }
 
 .post-text-area {
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   font-size: 20px;
   margin: 5px;
 }
@@ -376,7 +376,7 @@ footer {
   align-items: center;
   justify-content: center;
   font-size: 30px;
-  font-family: "startrek classic", sans-serif;
+  font-family: 'startrek classic', sans-serif;
   border: 2px solid #FFCC00;
   font-weight: normal;
 }
@@ -420,13 +420,13 @@ footer {
 
 .border-btn-del-yes {
   border: 3px solid red;
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   font-size: 18px;
 }
 
 .border-btn-del-cancel {
   border: 3px solid green;
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   font-size: 18px;
 }
 
@@ -441,13 +441,13 @@ footer {
 }
 
 .edit-title-popup-post {
-  font-family: "startrek classic", sans-serif;
+  font-family: 'startrek classic', sans-serif;
   padding: 10px;
   font-size: 20px;
 }
 
 .edit-message-popup-post {
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   font-size: 18px;
   padding: 5px;
 }
@@ -458,7 +458,7 @@ footer {
 
 .img-preview {
   display: flex;
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   font-size: 15px;
   font-weight: bold;
   width: 50px;
@@ -478,11 +478,11 @@ footer {
 }
 
 .popup-edit-profile-font {
-  font-family: "startrek classic", sans-serif;
+  font-family: 'startrek classic', sans-serif;
   font-size: 25px;
 }
 
-input[type="file"] {
+input[type='file'] {
   display: none;
 }
 
@@ -505,7 +505,7 @@ input[type="file"] {
   padding: 5px;
   border: 2px solid #FFCC00;
   background-color: rgba(255, 255, 255, 0.6);
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   font-size: 12px;
   font-weight: bold;
 }
@@ -534,7 +534,7 @@ input[type="file"] {
 .error-message{
   width: 80%;
   color: red;
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   padding: 7px;
   font-size: 14px;
   font-weight: bold;
@@ -544,7 +544,7 @@ input[type="file"] {
   display: flex;
   align-self: flex-end;
   padding: 15px;
-  font-family: "futura book", sans-serif;
+  font-family: 'futura book', sans-serif;
   font-size: 20px;
   font-weight: bold;
   cursor: pointer;
