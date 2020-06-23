@@ -167,7 +167,7 @@ footer {
 }
 
 .photo-user {
-  height: 85%;
+  height: 80%;
 }
 
 .name-user {
@@ -558,7 +558,7 @@ input[type='file'] {
   outline: none;
 }
 
-@media only screen and (min-width: 800px) {
+@media only screen and (min-width: 900px) {
   .display-web {
     flex-direction: row;
     justify-content: space-around;
