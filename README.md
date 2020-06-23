@@ -15,7 +15,7 @@ ATUALIZAÇÃO DO README v5 - TÓPICO 4 E 6 A REVISAR ANTES DA ENTREGA LOGO DEPOI
 * [8. Considerações Finais](#6-Considerações-Finais)
 
 ## 1.Definiçao de Produto
-Este projeto foi desenvolvido por Caroline Pinheiro, Jéssica Melise e Karina Vitangelo, alunas da 4a Geração da Laboratoria Brasil (SAP004).
+Este projeto foi desenvolvido por [Caroline Pinheiro](https://github.com/CarolPinheiro/), [Jéssica Melise](https://github.com/jessicamelise) e [Karina Vitangelo](https://github.com/karinavit) alunas da 4a Geração da [Laboratoria](https://github.com/Laboratoria) (SAP004).
 
 A proposta deste projeto é criar uma rede social. Escolhemos trabalhar com o tema de Star Trek. 
 Como entregável final termos uma página que será uma Single-Page Application (SPA), desenhada com enfoque no mobile first.
