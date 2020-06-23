@@ -532,6 +532,14 @@ input[type="file"] {
   cursor: pointer;
 }
 
+.textarea-edit-popup {
+  height: 80px;
+  border: 1px solid #FFCC00;
+  border-radius: 5px;
+  width: 80%;
+  outline: none;
+}
+
 @media only screen and (min-width: 800px) {
   .display-web {
     flex-direction: row;

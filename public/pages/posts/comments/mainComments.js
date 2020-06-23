@@ -16,7 +16,7 @@ export function editComments(docId, postId) {
     <p class="close-popup" id="close-popup">X</p>
     <h1 class="edit-title-popup-post">Edite sua mensagem subespacial:</h1>
     <img class="img-edit-popup" src="../../../img/popup-editar.svg" alt="communicator">
-    <p id='text-area' class="edit-message-popup-post">${commentEdited.textContent}</p>
+    <textarea id='text-area' class="edit-message-popup-post textarea-edit-popup">${commentEdited.textContent}</textarea>
     <button class="button-login width-button-login" id='save'>Salvar</button>
   `;
   popup.innerHTML = editAreaPopUp;
@@ -29,7 +29,7 @@ export function editComments(docId, postId) {
     textArea.contentEditable = false;
   }
   buttonSave.addEventListener('click', () => {
-    commentEdited.textContent = textArea.textContent;
+    commentEdited.textContent = textArea.value;
     firebaseActions.editOrLikeComments({docId, update:{ text: commentEdited.textContent }, postId});
     popup.classList.remove('popup');
     popup.classList.add('popup-none');

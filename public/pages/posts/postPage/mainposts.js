@@ -28,7 +28,7 @@ export const postsFunc = {
       <p class="close-popup" id="close-popup">X</p>
       <h1 class="edit-title-popup-post">Edite sua mensagem subespacial:</h1>
       <img class="img-edit-popup" src="../../../img/popup-editar.svg" alt="communicator">
-      <p id='text-area' class="edit-message-popup-post">${textEditElement.textContent}</p>
+      <textarea id='text-area' class="edit-message-popup-post textarea-edit-popup">${textEditElement.textContent}</textarea>
       <button class="button-login width-button-login" id='save'>Salvar</button>
     `;
     popup.innerHTML = editAreaPopUp;
@@ -42,7 +42,7 @@ export const postsFunc = {
     }
 
     buttonSave.addEventListener('click', () => {
-      textEditElement.textContent = textArea.textContent;
+      textEditElement.textContent = textArea.value;
 
       firebaseActions.editOrLikePost(postId, {
         text: textEditElement.textContent,
