@@ -15,12 +15,15 @@ export function clearAreaPosts() {
 export function commentsDOM(postId, postOwner, element) {
   const textPosted = element.getElementsByClassName('comment-input-area')[0];
   const postCommentButton = element.getElementsByClassName('post-button')[0];
-    textPosted.addEventListener('keydown', () => {
-      textPosted.value.length>0?postCommentButton.disabled = false: postCommentButton.disabled = true; 
-
-  })
+  textPosted.addEventListener('keydown', () => {
+    if (textPosted.value.length > 0) {
+      postCommentButton.disabled = false;
+    } else {
+      postCommentButton.disabled = true;
+    }
+  });
   postCommentButton.addEventListener('click', () => {
-    postCommentButton.disabled = true
+    postCommentButton.disabled = true;
     const post = {
       name: firebase.auth().currentUser.displayName,
       id_user: firebase.auth().currentUser.uid,
@@ -35,27 +38,44 @@ export function commentsDOM(postId, postOwner, element) {
   });
 }
 
+function iconPrivateAndPublicPost(postVisibility, element) {
+  const elementDiv = element;
+  if (postVisibility === 'public') {
+    elementDiv.querySelector('.private-icon').innerHTML = `
+      <i class="material-icons">public</i>
+    `;
+  } else {
+    elementDiv.querySelector('.private-icon').innerHTML = `
+      <i class='fas fa-lock'></i>
+    `;
+  }
+}
+
 function templateImagePost(url, archiveName) {
   document.getElementById('submit-post').disabled = false;
-  document.querySelector('.img-preview').innerHTML = `<img src='${url}' class="img-posts-preview" id='${archiveName}'>`;
+  document.querySelector('.img-preview').innerHTML = `
+    <img src='${url}' class='img-posts-preview' id='${archiveName}'>
+    <span class='close-img-preview'>X</span>
+  `;
 }
 
 function createElementPost(post) {
   const postTemplate = `
     <div class='name-edit-post'>
       <p class='post-user-name'>${post.data().name}</p>
+      <p class='private-icon'>${post.data().visibility}</p>
       <span class='edit'>
           <img src='../../img/edit-regular.svg' alt='edit-posts'>
       </span>
     </div>
     <p class='post-text-area' id='text-${post.id}'>${post.data().text}</p>
-    <img src="${post.data().img}" class=${/firebasestorage/i.test(post.data().img) ? 'image-preview' : 'hidden'}>
+    <img src='${post.data().img}' class=${/firebasestorage/i.test(post.data().img) ? 'img-posts' : 'hidden'}>
     <div class='name-edit-post'>
       <span class='display-like'>
-      <div class='like'>
-        <img class='like-img liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
-        <img class='like-img   like-back svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
-  </div>
+        <div class='like'>
+          <img class='like-img liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
+          <img class='like-img   like-back svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
+        </div>
         <span class='like-value'>${post.data().wholiked.length}</span>
       </span>
       <p class='style-hour'>${post.data().date}</p>
@@ -66,7 +86,7 @@ function createElementPost(post) {
     </div>
     <ul>
       <li class='post-comment'>
-        <input type='text' class='comment-input-area input-comment'>
+        <textarea class='comment-input-area input-comment'></textarea>
         <button type='submit' class='post-button width-button-login button-login'>Comentário</button>
       </li>
       <li class='comment-area'></li>
@@ -88,7 +108,7 @@ function createElementPost(post) {
     postsFunc.deletePostDOM(post.id);
   });
   postElement.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
-    postElement.getElementsByClassName('post-button')[0].disabled= true;
+    postElement.getElementsByClassName('post-button')[0].disabled = true;
     const comentario = postElement.getElementsByClassName('post-comment')[0];
     comentario.classList.toggle('show');
     commentsDOM(post.id, post.data().id_user, postElement);
@@ -104,6 +124,7 @@ function createElementPost(post) {
     postElement.querySelector('.delete').classList.add('visibility');
     postElement.querySelector('.edit').classList.add('visibility');
   }
+  iconPrivateAndPublicPost(post.data().visibility, postElement);
   return postElement;
 }
 
@@ -111,21 +132,26 @@ function readPostsDOM(post) {
   document.querySelector('#post-main-area').prepend(createElementPost(post));
 }
 
-function postDOM() {
-  const submitPost = document.querySelector('#submit-post');
-  const postText = document.querySelector('#post-text');
-  const img = document.querySelector('#post-img');
-  const inputFile = document.querySelector('#input-file');
-  const privateField = document.querySelector('#private');
+function postDOM(element) {
+  const submitPost = element.querySelector('#submit-post');
+  const postText = element.querySelector('#post-text');
+  const img = element.querySelector('#post-img');
+  const inputFile = element.querySelector('#input-file');
+  const privateField = element.querySelector('#private');
+  const imgPreview = element.querySelector('.img-preview');
 
   postText.addEventListener('keydown', () => {
-    postText.value.length>0 ? document.getElementById('submit-post').disabled = false : document.getElementById('submit-post').disabled = true;
-  })
+    if (postText.value.length > 0) {
+      submitPost.disabled = false;
+    } else {
+      submitPost.disabled = true;
+    }
+  });
 
   img.addEventListener('click', () => {
     inputFile.click();
     inputFile.addEventListener('change', (event) => {
-      document.getElementById('submit-post').disabled = true;
+      submitPost.disabled = true;
       const archive = event.target.files[0];
       firebaseActions.storageImagesUpdate(archive, templateImagePost);
     });
@@ -137,21 +163,23 @@ function postDOM() {
       text: postText.value,
       id_user: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.displayName,
-      img: document.querySelector('.img-preview').children[0].src,
+      img: imgPreview.children[0].src,
       visibility: privateField.checked ? 'private' : 'public',
       date: new Date().toLocaleString('pt-BR'),
       wholiked: [],
     };
     postText.value = '';
-    document.querySelector('.img-preview').innerHTML = '';
     privateField.checked = false;
     firebaseActions.postData(post, readPostsDOM);
+    imgPreview.innerHTML = `
+      <img src=''>
+    `;
   });
 }
 
-function pagePost() {
+function pagePost(element) {
   firebaseActions.readPosts(readPostsDOM, clearAreaPosts);
-  postDOM();
+  postDOM(element);
 }
 
 export function initPostsAndMenu(container) {
