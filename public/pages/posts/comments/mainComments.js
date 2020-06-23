@@ -30,7 +30,11 @@ export function editComments(docId, postId) {
   }
   buttonSave.addEventListener('click', () => {
     commentEdited.textContent = textArea.value;
-    firebaseActions.editOrLikeComments({docId, update:{ text: commentEdited.textContent }, postId});
+    firebaseActions.editOrLikeComments({
+      docId,
+      update: { text: commentEdited.textContent },
+      postId,
+    });
     popup.classList.remove('popup');
     popup.classList.add('popup-none');
   });

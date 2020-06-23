@@ -15,12 +15,15 @@ export function clearAreaPosts() {
 export function commentsDOM(postId, postOwner, element) {
   const textPosted = element.getElementsByClassName('comment-input-area')[0];
   const postCommentButton = element.getElementsByClassName('post-button')[0];
-    textPosted.addEventListener('keydown', () => {
-      textPosted.value.length>0?postCommentButton.disabled = false: postCommentButton.disabled = true; 
-
-  })
+  textPosted.addEventListener('keydown', () => {
+    if (textPosted.value.length > 0) {
+      postCommentButton.disabled = false;
+    } else {
+      postCommentButton.disabled = true;
+    }
+  });
   postCommentButton.addEventListener('click', () => {
-    postCommentButton.disabled = true
+    postCommentButton.disabled = true;
     const post = {
       name: firebase.auth().currentUser.displayName,
       id_user: firebase.auth().currentUser.uid,
@@ -91,7 +94,7 @@ function createElementPost(post) {
     postsFunc.deletePostDOM(post.id);
   });
   postElement.getElementsByClassName('comment-button')[0].addEventListener('click', () => {
-    postElement.getElementsByClassName('post-button')[0].disabled= true;
+    postElement.getElementsByClassName('post-button')[0].disabled = true;
     const comentario = postElement.getElementsByClassName('post-comment')[0];
     comentario.classList.toggle('show');
     commentsDOM(post.id, post.data().id_user, postElement);
@@ -122,8 +125,12 @@ function postDOM() {
   const privateField = document.querySelector('#private');
 
   postText.addEventListener('keydown', () => {
-    postText.value.length>0 ? document.getElementById('submit-post').disabled = false : document.getElementById('submit-post').disabled = true;
-  })
+    if (postText.value.length > 0) {
+      document.getElementById('submit-post').disabled = false;
+    } else {
+      document.getElementById('submit-post').disabled = true;
+    }
+  });
 
   img.addEventListener('click', () => {
     inputFile.click();

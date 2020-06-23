@@ -41,10 +41,10 @@ export function editProfile(posts) {
     buttonUpdate.disabled = true;
     birthdayUpdate.addEventListener('keydown', () => {
       buttonUpdate.disabled = false;
-    })
+    });
     nameUpdate.addEventListener('input', () => {
       buttonUpdate.disabled = false;
-    })
+    });
     photoUpdate.addEventListener('change', (event) => {
       buttonUpdate.disabled = true;
       const archive = event.target.files[0];
@@ -59,7 +59,7 @@ export function editProfile(posts) {
         name: nameUpdate.value,
         email: firebase.auth().currentUser.email,
         birthday: birthdayUpdate.value,
-        photo: /firebasestorage/i.test(photoPreview.children[0].src) ? photoPreview.children[0].src : firebase.auth().currentUser.photoURL
+        photo: /firebasestorage/i.test(photoPreview.children[0].src) ? photoPreview.children[0].src : firebase.auth().currentUser.photoURL,
       };
       profileUpdate.updateUsersInfoStore(uid, updateProfile);
       popup.classList.remove('popup');

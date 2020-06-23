@@ -23,7 +23,7 @@ export const firebaseActions = {
     firebase.firestore().collection('users-info').doc(uid).onSnapshot((doc) => {
       func(doc.data().photo);
     });
-    },
+  },
   storageImagesUpdate(archive, func) {
     const stringArchive = 'archive';
     const ref = firebase.storage().ref(stringArchive);
@@ -58,9 +58,9 @@ export const firebaseActions = {
     firebase
       .auth()
       .createUserWithEmailAndPassword(document.email, document.password)
-      .then(cred => {
-        cred.user.updateProfile({ displayName: document.name })
-        cred.user.updateProfile({ photoURL: 'https://assets.b9.com.br/wp-content/uploads/2015/02/mr-spock.jpg' })
+      .then((cred) => {
+        cred.user.updateProfile({ displayName: document.name });
+        cred.user.updateProfile({ photoURL: 'https://assets.b9.com.br/wp-content/uploads/2015/02/mr-spock.jpg' });
       })
       .then(() => {
         const uid = firebase.auth().currentUser.uid;
@@ -69,7 +69,6 @@ export const firebaseActions = {
       .catch((error) => {
         const errorResult = errorRegister.filter(item => item.code === error.code);
         errorFunc(errorResult[0].message);
-
       });
   },
   recoverPassword(emailAddress) {
