@@ -17,7 +17,7 @@ export const profilePage = (root, name = '') => {
           <img class="edit" id='edit-profile' src="../../img/edit-regular.svg" alt="edit-profile">
         </div>
       </div>
-      <ul class="width-post-profile posts-web" id="profile-posts"></ul>
+      <ul class="width-post-profile profile-posts-web" id="profile-posts"></ul>
     </div>
   `;
   const element = root;

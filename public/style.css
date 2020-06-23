@@ -594,6 +594,11 @@ input[type="file"] {
     width: 60%;
     background-color: transparent;
   }
+  .profile-posts-web {
+    margin-top: 120px;
+    width: 60%;
+    background-color: transparent;
+  }
   .img-user {
     height: 70%;
     width: 0;
