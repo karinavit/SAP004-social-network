@@ -39,12 +39,13 @@ export function commentsDOM(postId, postOwner, element) {
 }
 
 function iconPrivateAndPublicPost(postVisibility, element) {
+  const elementDiv = element;
   if (postVisibility === 'public') {
-    return element.querySelector('.private-icon').innerHTML = `
+    elementDiv.querySelector('.private-icon').innerHTML = `
       <i class="material-icons">public</i>
     `;
   } else {
-    return element.querySelector('.private-icon').innerHTML = `
+    elementDiv.querySelector('.private-icon').innerHTML = `
       <i class='fas fa-lock'></i>
     `;
   }
@@ -137,19 +138,20 @@ function postDOM(element) {
   const img = element.querySelector('#post-img');
   const inputFile = element.querySelector('#input-file');
   const privateField = element.querySelector('#private');
+  const imgPreview = element.querySelector('.img-preview');
 
   postText.addEventListener('keydown', () => {
     if (postText.value.length > 0) {
-      element.querySelector('#submit-post').disabled = false;
+      submitPost.disabled = false;
     } else {
-      element.querySelector('#submit-post').disabled = true;
+      submitPost.disabled = true;
     }
   });
 
   img.addEventListener('click', () => {
     inputFile.click();
     inputFile.addEventListener('change', (event) => {
-      element.querySelector('#submit-post').disabled = true;
+      submitPost.disabled = true;
       const archive = event.target.files[0];
       firebaseActions.storageImagesUpdate(archive, templateImagePost);
     });
@@ -161,7 +163,7 @@ function postDOM(element) {
       text: postText.value,
       id_user: firebase.auth().currentUser.uid,
       name: firebase.auth().currentUser.displayName,
-      img: element.querySelector('.img-preview').children[0].src,
+      img: imgPreview.children[0].src,
       visibility: privateField.checked ? 'private' : 'public',
       date: new Date().toLocaleString('pt-BR'),
       wholiked: [],
@@ -169,7 +171,7 @@ function postDOM(element) {
     postText.value = '';
     privateField.checked = false;
     firebaseActions.postData(post, readPostsDOM);
-    element.querySelector('.img-preview').innerHTML = `
+    imgPreview.innerHTML = `
       <img src=''>
     `;
   });
