@@ -13,7 +13,7 @@ export const profilePage = (root, name = '') => {
           <h1>
             <span id='true-name'>${name}</span>
           </h1>
-          <a href='#posts'><button class=''>Voltar</button></a>
+          <a href='#posts'><button class='button-login width-button-login'>Voltar</button></a>
           <br>
           <img class='edit' id='edit-profile' src='../../img/edit-regular.svg' alt='edit-profile'>
         </div>
