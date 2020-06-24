@@ -140,7 +140,20 @@ E para realizar os testes utilize o comando:
 
 `npm run test`
 
-## 6. REVISAR Implementações Futuras
+## 6. Implementações Futuras
+Abaixo um checklist com ideias pata implementações futuras:
+- []Hacker Edition - Implementar os testes
+- []Colocar patente no Perfil
+- []Usuários poderem colocar imagens em comentários
+- []Possibilitar do usuário escolher uma foto logo na tela de registro
+- []Possibilitar adicionar amigos e restringir interação do feed somente entre amigos
+- []Colocar um botão de scroll para a pessoa ir direto para o topo da página
+- []Refatoração do código
+- []Implementar webpack
+- []Pesquisa UX com usuário - Mudar palavras do botão do popup de deletar mensagens e comentários por questões de UX e coletar opiniões dpara futuras melhorias.
+- []Definir regras para senha válidas
+- []Autenticação do e-mail nas regras
+
 
 
 ## 7. Autores
