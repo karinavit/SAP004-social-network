@@ -172,7 +172,7 @@ footer {
 }
 
 .photo-user {
-  height: 80%;
+  height: 70%;
 }
 
 .name-user {
@@ -653,6 +653,6 @@ input[type='file'] {
     width: 80%;
   }
   .photo-user {
-    height: 70%;
+    height: 60%;
   }
 }
