@@ -65,8 +65,8 @@ Nosso protótipo foi implementado no powerpoint, conforme sequência de imagens 
 #### Imagem 04 - Tela da Aplicação Versão Web
 ![Slide4](https://user-images.githubusercontent.com/61189470/84066070-c34f4a80-a99b-11ea-8c2c-9a928d6f7288.png)
 
-## 4. REVISAR (inserir link do deploy) Implementação da Interface e Critérios de Aceitação
-Em nossa aplicação que pode ser visualizada neste [Link] ( ). 
+## 4. Implementação da Interface e Critérios de Aceitação
+Em nossa aplicação que pode ser visualizada neste [Link](https://social-trekker.web.app/). 
 O usuário pode escolher registrar-se em nosso formulário na tela de registro ou realizar login com a sua conta do google ou facebook.
 Nosso projeto foi desenvolvido utilizando o Firebase [Link](https://firebase.google.com/?hl=pt-br),
 
@@ -142,17 +142,17 @@ E para realizar os testes utilize o comando:
 
 ## 6. Implementações Futuras
 Abaixo um checklist com ideias pata implementações futuras:
-- []Hacker Edition - Implementar os testes
-- []Colocar patente no Perfil
-- []Usuários poderem colocar imagens em comentários
-- []Possibilitar do usuário escolher uma foto logo na tela de registro
-- []Possibilitar adicionar amigos e restringir interação do feed somente entre amigos
-- []Colocar um botão de scroll para a pessoa ir direto para o topo da página
-- []Refatoração do código
-- []Implementar webpack
-- []Pesquisa UX com usuário - Mudar palavras do botão do popup de deletar mensagens e comentários por questões de UX e coletar opiniões dpara futuras melhorias.
-- []Definir regras para senha válidas
-- []Autenticação do e-mail nas regras
+- [ ] Hacker Edition - Implementar os testes.
+- [ ] Colocar patente no Perfil.
+- [ ] Usuários poderem colocar imagens em comentários.
+- [ ] Possibilitar do usuário escolher uma foto logo na tela de registro.
+- [ ] Possibilitar adicionar amigos e restringir interação do feed somente entre amigos.
+- [ ] Colocar um botão de scroll para a pessoa ir direto para o topo da página.
+- [ ] Refatoração do código.
+- [ ] Implementar webpack.
+- [ ] Pesquisa UX com usuário - Mudar palavras do botão do popup de deletar mensagens e comentários por questões de UX e coletar opiniões dpara futuras melhorias.
+- [ ] Definir regras para senha válidas.
+- [ ] Autenticação do e-mail nas regras.
 
 
 
