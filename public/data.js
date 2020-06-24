@@ -155,18 +155,19 @@ export function oneLikePerUser(document) {
       let likeValue = posts.data().wholiked.length;
       if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
         likeValue -= 1;
-        document.func(likeValue, document.postId, document.element);
-        firebaseActions.editOrLikePost(document.postId, {
-          wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
-        });
+        updateLikePostsValue(likeValue,"arrayRemove", document)
       } else {
         likeValue += 1;
-        document.func(likeValue, document.postId, document.element);
-        firebaseActions.editOrLikePost(document.postId, {
-          wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
-        });
+        updateLikePostsValue(likeValue,"arrayUnion", document)
       }
     });
+}
+
+function updateLikePostsValue(likeValue, arrayAction,document) {
+  document.func(likeValue, document.postId, document.element);
+  firebaseActions.editOrLikePost(document.postId, {
+    wholiked: firebase.firestore.FieldValue[arrayAction](firebase.auth().currentUser.uid),
+  });
 }
 
 export function oneLikePerUserComments(document) {
