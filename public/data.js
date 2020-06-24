@@ -147,6 +147,12 @@ export const firebaseActions = {
       });
   },
 };
+function updateLikePostsValue(likeValue, arrayAction, document) {
+  document.func(likeValue, document.postId, document.element);
+  firebaseActions.editOrLikePost(document.postId, {
+    wholiked: firebase.firestore.FieldValue[arrayAction](firebase.auth().currentUser.uid),
+  });
+}
 
 export function oneLikePerUser(document) {
   const postCollection = firebase.firestore().collection('posts').doc(document.postId);
@@ -155,18 +161,23 @@ export function oneLikePerUser(document) {
       let likeValue = posts.data().wholiked.length;
       if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
         likeValue -= 1;
-        document.func(likeValue, document.postId, document.element);
-        firebaseActions.editOrLikePost(document.postId, {
-          wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
-        });
+        updateLikePostsValue(likeValue, 'arrayRemove', document);
       } else {
         likeValue += 1;
-        document.func(likeValue, document.postId, document.element);
-        firebaseActions.editOrLikePost(document.postId, {
-          wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
-        });
+        updateLikePostsValue(likeValue, 'arrayUnion', document);
       }
     });
+}
+
+function updateLikeCommentsValue(likeComment, arrayAction, document) {
+  document.func(likeComment, document.element);
+  firebaseActions.editOrLikeComments({
+    docId: document.docId,
+    update: {
+      wholiked: firebase.firestore.FieldValue[arrayAction](firebase.auth().currentUser.uid),
+    },
+    postId: document.postId,
+  });
 }
 
 export function oneLikePerUserComments(document) {
@@ -175,25 +186,17 @@ export function oneLikePerUserComments(document) {
     .doc(document.docId);
   postCollection.get()
     .then((posts) => {
-      let likeComment = posts.data().wholiked.length;
       if (posts.data().wholiked.includes(firebase.auth().currentUser.uid)) {
+        let likeComment = posts.data().wholiked.length;
         likeComment -= 1;
-        document.func(likeComment, document.element);
-        firebaseActions.editOrLikeComments(document.docId, {
-          wholiked: firebase.firestore.FieldValue.arrayRemove(firebase.auth().currentUser.uid),
-          likes: likeComment,
-        }, document.postId);
+        updateLikeCommentsValue(likeComment, 'arrayRemove', document);
       } else {
+        let likeComment = posts.data().wholiked.length;
         likeComment += 1;
-        document.func(likeComment, document.element);
-        firebaseActions.editOrLikeComments(document.docId, {
-          likes: likeComment,
-          wholiked: firebase.firestore.FieldValue.arrayUnion(firebase.auth().currentUser.uid),
-        }, document.postId);
+        updateLikeCommentsValue(likeComment, 'arrayUnion', document);
       }
     });
 }
-
 
 export const profileUpdate = {
   readUserInfo(func) {

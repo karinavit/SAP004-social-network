@@ -19,7 +19,7 @@ export function createElementProfilePost(post) {
           <img class='like-img liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
           <img class='like-img not-liked svg-class ${post.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
         </div>
-          <span class='like-value'>${post.data().likes}</span> 
+          <span class='like-value'>${post.data().wholiked.length}</span> 
         </span>
         <p class='style-hour'>${post.data().date}</p>
         <span >

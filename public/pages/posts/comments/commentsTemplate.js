@@ -12,7 +12,7 @@ export function printComments(doc, element, postId) {
         <div class='like-comment display-like'>
           <img class='like-img liked-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? '' : 'hidden'}' src='../../img/like-spock.svg' alt='like-button'>
           <img class='like-img like-back-comment svg-class ${doc.data().wholiked.includes(firebase.auth().currentUser.uid) ? 'hidden' : ''}' src='../../img/notliked.svg' alt='like-button'>
-          <span class='like-value-comment'>${doc.data().likes}</span>
+          <span class='like-value-comment'>${doc.data().wholiked.length}</span>
         </div>
       </span>
       <p>${doc.data().date}</p>
@@ -56,7 +56,6 @@ export function printComments(doc, element, postId) {
     editComments(doc.id, postId);
   });
   element.getElementsByClassName('like-comment')[0].addEventListener('click', () => {
-    const commentsLike = Number(element.getElementsByClassName('like-value-comment')[0].textContent);
     oneLikePerUserComments({
       postId,
       docId: doc.id,
@@ -70,7 +69,8 @@ export function printComments(doc, element, postId) {
   if (doc.data().id_user !== firebase.auth().currentUser.uid) {
     element.querySelector('.delete-comment').classList.add('visibility');
     element.querySelector('.edit-comment').classList.add('visibility');
-  } else if (doc.data().postOwner === firebase.auth().currentUser.uid) {
-    element.querySelector('.delete-comment').classList.add('show-delete-comment');
+    if (doc.data().postOwner === firebase.auth().currentUser.uid) {
+      element.querySelector('.delete-comment').classList.remove('visibility');
+    }
   }
 }

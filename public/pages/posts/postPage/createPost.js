@@ -34,6 +34,7 @@ export function commentsDOM(postId, postOwner, element) {
       likes: 0,
       wholiked: [],
     };
+    textPosted.value = '';
     firebaseActions.comments(post);
   });
 }
@@ -57,6 +58,10 @@ function templateImagePost(url, archiveName) {
     <img src='${url}' class='img-posts-preview' id='${archiveName}'>
     <span class='close-img-preview'>X</span>
   `;
+
+  document.getElementsByClassName('close-img-preview')[0].addEventListener('click', () => {
+    document.querySelector('.img-preview').innerHTML = '<img src="">';
+  });
 }
 
 function createElementPost(post) {
