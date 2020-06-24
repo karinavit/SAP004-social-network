@@ -69,7 +69,8 @@ export function printComments(doc, element, postId) {
   if (doc.data().id_user !== firebase.auth().currentUser.uid) {
     element.querySelector('.delete-comment').classList.add('visibility');
     element.querySelector('.edit-comment').classList.add('visibility');
-  } else if (doc.data().postOwner === firebase.auth().currentUser.uid) {
-    element.querySelector('.delete-comment').classList.add('show-delete-comment');
+    if (doc.data().postOwner === firebase.auth().currentUser.uid) {
+      element.querySelector('.delete-comment').classList.remove('visibility');
+    }
   }
 }
