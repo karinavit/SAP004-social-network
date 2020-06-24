@@ -6,7 +6,7 @@ export const menuFixed = (pageRoot) => {
   container.innerHTML = `
     <div class='nav-posts'>
       <img id='bar-menu' class='bar-menu' src='../../img/bars-solid.svg' alt='bar'>
-      <h1 class='logo-name-posts-nav'>Social Trekkers</h1>
+      <h1 class='logo-name-posts-nav'><a href='#posts'>Social Trekkers</a></h1>
       <img class='menu-posts' src='../../img/logo.png' alt='logo'>
     </div>
     <a id='loggout' class='loggout' href='#'>
