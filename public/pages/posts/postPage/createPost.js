@@ -34,7 +34,7 @@ export function commentsDOM(postId, postOwner, element) {
       likes: 0,
       wholiked: [],
     };
-    textPosted.value = ''
+    textPosted.value = '';
     firebaseActions.comments(post);
   });
 }
@@ -60,8 +60,8 @@ function templateImagePost(url, archiveName) {
   `;
 
   document.getElementsByClassName('close-img-preview')[0].addEventListener('click', () => {
-    document.querySelector('.img-preview').innerHTML = '<img src="">'
-  })
+    document.querySelector('.img-preview').innerHTML = '<img src="">';
+  });
 }
 
 function createElementPost(post) {
@@ -161,8 +161,6 @@ function postDOM(element) {
       firebaseActions.storageImagesUpdate(archive, templateImagePost);
     });
   });
-
-
 
   submitPost.addEventListener('click', (event) => {
     event.preventDefault();
